@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../data/filter_param.dart';
+import '../utils/constant.dart';
+import 'dart:convert';
 
 class SearchCategoryPage extends StatefulWidget {
+  
   @override
   _SearchCategoryPageState createState() => _SearchCategoryPageState();
 }
 
 class _SearchCategoryPageState extends State<SearchCategoryPage> {
+  SharedPreferences sharedPreferences;
   List<String> listCategory = new List<String>();
 
 /*
@@ -53,9 +59,31 @@ for demo hardcode
     );
   }
 
-  _onTap(BuildContext context, selectedCategory) {
-    final snackBar = SnackBar(content: Text(selectedCategory));
-    Scaffold.of(context).showSnackBar(snackBar);
+  _onTap(BuildContext context, selectedCategory) async {
+    sharedPreferences = await SharedPreferences.getInstance();      
+    FilterParam filterParam = new FilterParam(selectedCategory,"","");
+    // encode to string json
+    const JsonEncoder encoder = const JsonEncoder();
+    String stringJson = encoder.convert(filterParam);
+    print(stringJson);
+
+    // decode from string json to object
+    // const JsonDecoder decoder = const JsonDecoder();
+    // Map filterParamMap = decoder.convert(stringJson);
+    // var filterParamNew = new FilterParam.fromJson(filterParamMap);
+    // filterParamNew.cityName = "agus";
+    // print(filterParamNew.toString());
+
+    // set ke shared preference
+    sharedPreferences.setString(keyFilterParam, stringJson);   
+
+    // get dari shared preference
+    // String pref = sharedPreferences.getString(keyFilterParam);   
+    // print(pref);  
+
+    // final snackBar = SnackBar(content: Text(selectedCategory));
+    // Scaffold.of(context).showSnackBar(snackBar);
+    Navigator.pop(context, '/');
   }
 
   Widget _buildRow(BuildContext context, int index) {

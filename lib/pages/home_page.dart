@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../data/filter_param.dart';
+import '../utils/constant.dart';
 
 class HomePageLayout extends StatelessWidget {
   @override
@@ -135,13 +138,18 @@ class CategoryButton extends StatefulWidget {
 }
 
 class _CategoryButtonState extends State<CategoryButton> {
+  // SharedPreferences sharedPreferences;
   int counter = 0;
   List<String> strings = ["Flutter", "Is", "Awesome"];
   String displayedString = "";
 
   void initState() {
     super.initState();
+    // sharedPreferences = await SharedPreferences.getInstance();  
     displayedString = "All Categories";
+    // get dari shared preference
+    // String pref = sharedPreferences.getString(keyFilterParam);   
+    // print(pref);  
   }
 
   @override

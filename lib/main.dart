@@ -9,6 +9,11 @@ void main() {
 // Create the router.
   Router router = new Router();
 
+  // Define our home page.
+  router.define('/', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new HomePageLayout();
+  }));
   // Define our search category page.
   router.define('/searchCategory', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {

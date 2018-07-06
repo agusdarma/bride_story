@@ -6,3 +6,4 @@
 // const Color kTelkomselLightGrey = Color(0xFFAFB1B3);
 
 const String lblTitleApplication = 'Bride Story';
+const String keyFilterParam = 'keyFilterParam';
