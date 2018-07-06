@@ -3,6 +3,7 @@ import 'utils/constant.dart';
 import 'pages/home_page.dart';
 import 'pages/search_category_page.dart';
 import 'package:fluro/fluro.dart';
+import 'pages/search_country_page.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
@@ -14,10 +15,17 @@ void main() {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new HomePageLayout();
   }));
+  
   // Define our search category page.
   router.define('/searchCategory', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new SearchCategoryPage();
+  }));
+
+  // Define our search country page.
+  router.define('/searchCountry', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new SearchCountryPage();
   }));
   
   runApp(new MyApp(router: router));

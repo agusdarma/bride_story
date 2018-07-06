@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../data/filter_param.dart';
-import '../utils/constant.dart';
 
 class HomePageLayout extends StatelessWidget {
   @override
@@ -89,19 +86,16 @@ class CountryButton extends StatefulWidget {
 }
 
 class _CountryButtonState extends State<CountryButton> {
-  int counter = 0;
-  List<String> strings = ["Flutter", "Is", "Awesome"];
   String displayedString = "";
 
   void initState() {
     super.initState();
     displayedString = "Indonesia";
   }
-
-  void onPressed() {
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/searchCountry');
     setState(() {
-      displayedString = strings[counter];
-      counter = counter < 2 ? counter + 1 : 0;
+      displayedString = result;
     });
   }
 
@@ -125,7 +119,10 @@ class _CountryButtonState extends State<CountryButton> {
                 ],
               ),
               color: Colors.white,
-              onPressed: onPressed),
+              onPressed: () {        
+              _navigateAndDisplaySelection(context);
+              },
+            ),
         )
       ],
     );
@@ -138,18 +135,18 @@ class CategoryButton extends StatefulWidget {
 }
 
 class _CategoryButtonState extends State<CategoryButton> {
-  // SharedPreferences sharedPreferences;
-  int counter = 0;
-  List<String> strings = ["Flutter", "Is", "Awesome"];
   String displayedString = "";
 
   void initState() {
     super.initState();
-    // sharedPreferences = await SharedPreferences.getInstance();  
     displayedString = "All Categories";
-    // get dari shared preference
-    // String pref = sharedPreferences.getString(keyFilterParam);   
-    // print(pref);  
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/searchCategory');
+    setState(() {
+      displayedString = result;
+    });
   }
 
   @override
@@ -158,25 +155,24 @@ class _CategoryButtonState extends State<CategoryButton> {
       children: <Widget>[
         Expanded(
           child: new RaisedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Expanded(
-                    child: new Text(displayedString,
-                        style: TextStyle(
-                          // fontFamily: 'Roboto',
-                          fontSize: 15.0,
-                        )),
-                  ),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-              color: Colors.white,
-              // onPressed: onPressed
-              onPressed: (){
-                Navigator.pushNamed(context, '/searchCategory');
-                },
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(
+                  child: new Text(displayedString,
+                      style: TextStyle(
+                        // fontFamily: 'Roboto',
+                        fontSize: 15.0,
+                      )),
+                ),
+                Icon(Icons.arrow_forward),
+              ],
+            ),
+            color: Colors.white,
+            onPressed: () {        
+              _navigateAndDisplaySelection(context);
+            },
+          ),
         )
       ],
     );
