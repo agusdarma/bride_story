@@ -22,22 +22,20 @@ for demo hardcode
     listCategories.add(new CategoryModel("All Category", true));
     listCategories.add(new CategoryModel("Bridal", false));
     listCategories.add(new CategoryModel("Catering", false));
-
-    // listCategory.add("Catering");
-    // listCategory.add("Dance & Choreography");
-    // listCategory.add("Decoration & Lighting");
-    // listCategory.add("Dress & Attire");
-    // listCategory.add("Entertainment (MC)");
-    // listCategory.add("Entertainment (DJ)");
-    // listCategory.add("Entertainment (Music)");
-    // listCategory.add("Event Rentals");
-    // listCategory.add("Favors & Gifts");
-    // listCategory.add("Flowers");
-    // listCategory.add("Hair & Makeup");
-    // listCategory.add("Health & Beauty");
-    // listCategory.add("Honeymoon");
-    // listCategory.add("Invitation");
-    // listCategory.add("Jewelry");
+    listCategories.add(new CategoryModel("Dance & Choreography", false));
+    listCategories.add(new CategoryModel("Decoration & Lighting", false));
+    listCategories.add(new CategoryModel("Dress & Attire", false));
+    listCategories.add(new CategoryModel("Entertainment (MC)", false));
+    listCategories.add(new CategoryModel("Entertainment (DJ)", false));
+    listCategories.add(new CategoryModel("Entertainment (Music)", false));
+    listCategories.add(new CategoryModel("Event Rentals", false));
+    listCategories.add(new CategoryModel("Favors & Gifts", false));
+    listCategories.add(new CategoryModel("Flowers", false));
+    listCategories.add(new CategoryModel("Hair & Makeup", false));
+    listCategories.add(new CategoryModel("Health & Beauty", false));
+    listCategories.add(new CategoryModel("Honeymoon", false));
+    listCategories.add(new CategoryModel("Invitation", false));
+    listCategories.add(new CategoryModel("Jewelry", false));
   }
 
   void checkAlreadySelected() async {
@@ -108,7 +106,7 @@ for demo hardcode
     // encode to string json
     const JsonEncoder encoder = const JsonEncoder();
     String stringJson = encoder.convert(filterParam);
-    print(stringJson);
+    // print(stringJson);
 
     // decode from string json to object
     // const JsonDecoder decoder = const JsonDecoder();
@@ -130,32 +128,46 @@ for demo hardcode
   }
 
   Widget _buildRow(BuildContext context, int index) {
-    return new Container(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          child: new ListTile(
-            onTap: () {
-              _onTap(
-                  context, listCategories.elementAt(index).categoryName, index);
-            },
-            title: new Text(listCategories.elementAt(index).categoryName),
-          ),
-        ));
+    return new Column(
+      children: <Widget>[
+        new Container(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              child: new ListTile(
+                onTap: () {
+                  _onTap(context, listCategories.elementAt(index).categoryName,
+                      index);
+                },
+                title: new Text(listCategories.elementAt(index).categoryName),
+              ),
+            )),
+        new Divider(
+          height: 2.0,
+        )
+      ],
+    );
   }
 
   Widget _buildRowSelected(BuildContext context, int index) {
-    return new Container(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          child: new ListTile(
-            onTap: () {
-              _onTap(
-                  context, listCategories.elementAt(index).categoryName, index);
-            },
-            title: new Text(listCategories.elementAt(index).categoryName),
-            trailing: Icon(Icons.check),
-          ),
-        ));
+    return new Column(
+      children: <Widget>[
+        new Container(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              child: new ListTile(
+                onTap: () {
+                  _onTap(context, listCategories.elementAt(index).categoryName,
+                      index);
+                },
+                title: new Text(listCategories.elementAt(index).categoryName),
+                trailing: Icon(Icons.check),
+              ),
+            )),
+        new Divider(
+          height: 2.0,
+        )
+      ],
+    );
   }
 
   @override

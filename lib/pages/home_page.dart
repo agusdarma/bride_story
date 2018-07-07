@@ -37,8 +37,6 @@ class CityButton extends StatefulWidget {
 }
 
 class _CityButtonState extends State<CityButton> {
-  int counter = 0;
-  List<String> strings = ["Flutter", "Is", "Awesome"];
   String displayedString = "";
 
   void initState() {
@@ -46,11 +44,13 @@ class _CityButtonState extends State<CityButton> {
     displayedString = "Jakarta";
   }
 
-  void onPressed() {
-    setState(() {
-      displayedString = strings[counter];
-      counter = counter < 2 ? counter + 1 : 0;
-    });
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/searchCity');
+    if (result != null) {
+      setState(() {
+        displayedString = result;
+      });
+    }
   }
 
   @override
@@ -59,21 +59,23 @@ class _CityButtonState extends State<CityButton> {
       children: <Widget>[
         Expanded(
           child: new RaisedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Expanded(
-                    child: new Text(displayedString,
-                        style: TextStyle(
-                          // fontFamily: 'Roboto',
-                          fontSize: 15.0,
-                        )),
-                  ),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-              color: Colors.white,
-              onPressed: onPressed),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(
+                  child: new Text(displayedString,
+                      style: TextStyle(                      
+                        fontSize: 15.0,
+                      )),
+                ),
+                Icon(Icons.arrow_forward),
+              ],
+            ),
+            color: Colors.white,
+            onPressed: () {
+              _navigateAndDisplaySelection(context);
+            },
+          ),
         )
       ],
     );
@@ -92,61 +94,14 @@ class _CountryButtonState extends State<CountryButton> {
     super.initState();
     displayedString = "Indonesia";
   }
+
   _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.pushNamed(context, '/searchCountry');
-    setState(() {
-      displayedString = result;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: new RaisedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Expanded(
-                    child: new Text(displayedString,
-                        style: TextStyle(
-                          // fontFamily: 'Roboto',
-                          fontSize: 15.0,
-                        )),
-                  ),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-              color: Colors.white,
-              onPressed: () {        
-              _navigateAndDisplaySelection(context);
-              },
-            ),
-        )
-      ],
-    );
-  }
-}
-
-class CategoryButton extends StatefulWidget {
-  @override
-  _CategoryButtonState createState() => _CategoryButtonState();
-}
-
-class _CategoryButtonState extends State<CategoryButton> {
-  String displayedString = "";
-
-  void initState() {
-    super.initState();
-    displayedString = "All Categories";
-  }
-
-  _navigateAndDisplaySelection(BuildContext context) async {
-    final result = await Navigator.pushNamed(context, '/searchCategory');
-    setState(() {
-      displayedString = result;
-    });
+    if (result != null) {
+      setState(() {
+        displayedString = result;
+      });
+    }
   }
 
   @override
@@ -169,7 +124,59 @@ class _CategoryButtonState extends State<CategoryButton> {
               ],
             ),
             color: Colors.white,
-            onPressed: () {        
+            onPressed: () {
+              _navigateAndDisplaySelection(context);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CategoryButton extends StatefulWidget {
+  @override
+  _CategoryButtonState createState() => _CategoryButtonState();
+}
+
+class _CategoryButtonState extends State<CategoryButton> {
+  String displayedString = "";
+
+  void initState() {
+    super.initState();
+    displayedString = "All Categories";
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/searchCategory');
+    if (result != null) {
+      setState(() {
+        displayedString = result;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: new RaisedButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(
+                  child: new Text(displayedString,
+                      style: TextStyle(
+                        // fontFamily: 'Roboto',
+                        fontSize: 15.0,
+                      )),
+                ),
+                Icon(Icons.arrow_forward),
+              ],
+            ),
+            color: Colors.white,
+            onPressed: () {
               _navigateAndDisplaySelection(context);
             },
           ),

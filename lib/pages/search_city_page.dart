@@ -1,41 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
-import '../models/country_model.dart';
+import '../models/city_model.dart';
 import '../utils/constant.dart';
 import 'dart:convert';
 
-class SearchCountryPage extends StatefulWidget {
+class SearchCityPage extends StatefulWidget {
   @override
-  _SearchCountryPageState createState() => _SearchCountryPageState();
+  _SearchCityPageState createState() => _SearchCityPageState();
 }
 
-class _SearchCountryPageState extends State<SearchCountryPage> {
+class _SearchCityPageState extends State<SearchCityPage> {
   SharedPreferences sharedPreferences;
-  // List<String> listCountry = new List<String>();
-  List<CountryModel> listCountries = new List<CountryModel>();
+  List<CityModel> listCities = new List<CityModel>();
 
   /*
 for demo hardcode
  */
-  void _populateCountryData() {
-    listCountries.add(new CountryModel("Indonesia", true));
-    listCountries.add(new CountryModel("All Countries", false));
-    listCountries.add(new CountryModel("Albania", false));
-    listCountries.add(new CountryModel("Angola", false));
-    listCountries.add(new CountryModel("Antigua", false));
-    listCountries.add(new CountryModel("Argentina", false));
-    listCountries.add(new CountryModel("Aruba", false));
-    listCountries.add(new CountryModel("Australia", false));
-    listCountries.add(new CountryModel("Austria", false));
-    listCountries.add(new CountryModel("Bahamas", false));
-    listCountries.add(new CountryModel("Bahrain", false));
-    listCountries.add(new CountryModel("Barbados", false));
-    listCountries.add(new CountryModel("Cambodia", false));
-    listCountries.add(new CountryModel("Denmark", false));
-    listCountries.add(new CountryModel("Eqypt", false));
-    listCountries.add(new CountryModel("Fiji", false));
-    listCountries.add(new CountryModel("Germany", false));
+  void _populateCityData() {
+    listCities.add(new CityModel("Jakarta", true));
+    listCities.add(new CityModel("All Cities", false));
+    listCities.add(new CityModel("Aceh", false));
+    listCities.add(new CityModel("Ambon", false));
+    listCities.add(new CityModel("Bali", false));
+    listCities.add(new CityModel("Balikpapan", false));
+    listCities.add(new CityModel("Bandar Lampung", false));
+    listCities.add(new CityModel("Bandung", false));
+    listCities.add(new CityModel("Bangka Belitung", false));
+    listCities.add(new CityModel("Banjarbaru", false));
+    listCities.add(new CityModel("Cimahi", false));
+    listCities.add(new CityModel("Garut", false));
+    listCities.add(new CityModel("Jakarta", false));
+    listCities.add(new CityModel("Jambi", false));
+    listCities.add(new CityModel("Kupang", false));
+    listCities.add(new CityModel("Lombok", false));
+    listCities.add(new CityModel("Medan", false));
   }
 
   void checkAlreadySelected() async {
@@ -46,12 +45,11 @@ for demo hardcode
       Map filterParamMap = decoder.convert(pref);
       var filterParamNew = new FilterParam.fromJson(filterParamMap);
 
-      for (var item in listCountries) {
-        if (item.countryName == filterParamNew.countryName) {
+      for (var item in listCities) {
+        if (item.cityName == filterParamNew.cityName) {
           setState(() {
             clearSelected();
-            listCountries.elementAt(listCountries.indexOf(item)).selected =
-                true;
+            listCities.elementAt(listCities.indexOf(item)).selected = true;
           });
           break;
         }
@@ -61,9 +59,9 @@ for demo hardcode
     }
   }
 
-  // hapus semua category yang dipilih
+  // hapus semua cities yang dipilih
   void clearSelected() {
-    for (var item in listCountries) {
+    for (var item in listCities) {
       item.selected = false;
     }
   }
@@ -72,20 +70,20 @@ for demo hardcode
   void initState() {
     super.initState();
     setState(() {
-      // populate data country
-      _populateCountryData();
-      // cek apakah country sudah pernah dipilih sebelumnya dari shared preference
+      // populate data city
+      _populateCityData();
+      // cek apakah city sudah pernah dipilih sebelumnya dari shared preference
       checkAlreadySelected();
     });
   }
 
-  Widget _buildCountry() {
+  Widget _buildCity() {
     return new ListView.builder(
       padding: const EdgeInsets.all(8.0),
-      itemCount: listCountries.length,
+      itemCount: listCities.length,
       itemBuilder: (BuildContext context, int index) {
-        // // cek apakah kategori dipilih atau tidak karena memiliki view beda
-        if (listCountries.elementAt(index).selected == true) {
+        // cek apakah kategori dipilih atau tidak karena memiliki view beda
+        if (listCities.elementAt(index).selected == true) {
           return new Column(
             children: <Widget>[_buildRowSelected(context, index)],
           );
@@ -99,7 +97,7 @@ for demo hardcode
                     leading: const Icon(Icons.search),
                     title: new TextField(
                       decoration: new InputDecoration(
-                        hintText: "Search Select Country",
+                        hintText: "Search Select City",
                       ),
                     ),
                   ),
@@ -125,10 +123,9 @@ for demo hardcode
             child: GestureDetector(
               child: new ListTile(
                 onTap: () {
-                  _onTap(context, listCountries.elementAt(index).countryName,
-                      index);
+                  _onTap(context, listCities.elementAt(index).cityName, index);
                 },
-                title: new Text(listCountries.elementAt(index).countryName),
+                title: new Text(listCities.elementAt(index).cityName),
               ),
             )),
         new Divider(
@@ -146,10 +143,9 @@ for demo hardcode
             child: GestureDetector(
               child: new ListTile(
                 onTap: () {
-                  _onTap(context, listCountries.elementAt(index).countryName,
-                      index);
+                  _onTap(context, listCities.elementAt(index).cityName, index);
                 },
-                title: new Text(listCountries.elementAt(index).countryName),
+                title: new Text(listCities.elementAt(index).cityName),
                 trailing: Icon(Icons.check),
               ),
             )),
@@ -160,10 +156,10 @@ for demo hardcode
     );
   }
 
-  _onTap(BuildContext context, selectedCountry, int index) async {
+  _onTap(BuildContext context, selectedCity, int index) async {
     setState(() {
       clearSelected();
-      listCountries.elementAt(index).selected = true;
+      listCities.elementAt(index).selected = true;
     });
 
     sharedPreferences = await SharedPreferences.getInstance();
@@ -171,12 +167,12 @@ for demo hardcode
     const JsonDecoder decoder = const JsonDecoder();
     Map filterParamMap = decoder.convert(filterParam);
     var filterParamNew = new FilterParam.fromJson(filterParamMap);
-    filterParamNew.countryName = selectedCountry;
+    filterParamNew.cityName = selectedCity;
     const JsonEncoder encoder = const JsonEncoder();
     String stringJson = encoder.convert(filterParamNew);
     print(stringJson);
     sharedPreferences.setString(keyFilterParam, stringJson);
-    Navigator.pop(context, selectedCountry);
+    Navigator.pop(context, selectedCity);
   }
 
   @override
@@ -184,9 +180,9 @@ for demo hardcode
     return new SafeArea(
       child: new Scaffold(
         appBar: new AppBar(
-          title: new Text("Search Country"),
+          title: new Text("Search City"),
         ),
-        body: _buildCountry(),
+        body: _buildCity(),
       ),
     );
   }

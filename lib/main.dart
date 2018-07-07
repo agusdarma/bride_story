@@ -4,6 +4,7 @@ import 'pages/home_page.dart';
 import 'pages/search_category_page.dart';
 import 'package:fluro/fluro.dart';
 import 'pages/search_country_page.dart';
+import 'pages/search_city_page.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
@@ -26,6 +27,12 @@ void main() {
   router.define('/searchCountry', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new SearchCountryPage();
+  }));
+
+  // Define our search city page.
+  router.define('/searchCity', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new SearchCityPage();
   }));
   
   runApp(new MyApp(router: router));
