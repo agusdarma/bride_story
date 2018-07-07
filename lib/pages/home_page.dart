@@ -258,7 +258,6 @@ class _HomePageState extends State<HomePage>
       width: screenWidth,
       child: new Text("Search Vendor Based On:",
           style: TextStyle(
-            // fontFamily: 'Roboto',
             fontSize: 14.0,
             fontWeight: FontWeight.bold,
           )),
@@ -273,8 +272,8 @@ class _HomePageState extends State<HomePage>
       width: screenWidth,
       child: new Text("Category:",
           style: TextStyle(
-            // fontFamily: 'Roboto',
             fontSize: 14.0,
+            fontWeight: FontWeight.bold,
           )),
     );
 
@@ -287,8 +286,8 @@ class _HomePageState extends State<HomePage>
       width: screenWidth,
       child: new Text("Location:",
           style: TextStyle(
-            // fontFamily: 'Roboto',
             fontSize: 14.0,
+            fontWeight: FontWeight.bold,
           )),
     );
 
@@ -299,7 +298,7 @@ class _HomePageState extends State<HomePage>
         shadowColor: Colors.lightBlueAccent.shade100,
         elevation: 5.0,
         child: MaterialButton(
-          minWidth: screenWidth,
+          minWidth: screenWidth-32,
           height: 35.0,
           onPressed: () {
             Navigator.of(context).pushNamed(HomePage.tag);

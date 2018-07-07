@@ -19,7 +19,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
 for demo hardcode
  */
   void _populateCategoryData() {
-    listCategories.add(new CategoryModel("All Category", true));
+    listCategories.add(new CategoryModel("All Categories", true));
     listCategories.add(new CategoryModel("Bridal", false));
     listCategories.add(new CategoryModel("Catering", false));
     listCategories.add(new CategoryModel("Dance & Choreography", false));

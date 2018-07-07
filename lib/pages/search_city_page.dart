@@ -84,9 +84,31 @@ for demo hardcode
       itemBuilder: (BuildContext context, int index) {
         // cek apakah kategori dipilih atau tidak karena memiliki view beda
         if (listCities.elementAt(index).selected == true) {
-          return new Column(
-            children: <Widget>[_buildRowSelected(context, index)],
-          );
+          // return new Column(
+          //   children: <Widget>[_buildRowSelected(context, index)],
+          // );
+          if (index == 0) {
+            return new Column(
+              children: <Widget>[
+                new Container(
+                  color: Colors.grey[150],
+                  child: new ListTile(
+                    leading: const Icon(Icons.search),
+                    title: new TextField(
+                      decoration: new InputDecoration(
+                        hintText: "Search Select City",
+                      ),
+                    ),
+                  ),
+                ),
+                _buildRowSelected(context, index)
+              ],
+            );
+          } else {
+            return new Column(
+              children: <Widget>[_buildRowSelected(context, index)],
+            );
+          }
         } else {
           if (index == 0) {
             return new Column(
