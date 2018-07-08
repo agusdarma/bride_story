@@ -18,7 +18,13 @@ class HomePageLayout extends StatelessWidget {
               Tab(text: "Category"),
             ],
           ),
-          title: new Text("Bride Story"),
+          // title: new Text("Bride Story"),
+          leading: const Icon(Icons.search),
+          title: new TextField(
+            decoration: new InputDecoration(
+              hintText: "Search Vendors, Articles Here...."
+            ),
+          ),
         ),
         body: TabBarView(
           children: [
@@ -291,6 +297,10 @@ class _HomePageState extends State<HomePage>
           )),
     );
 
+    _navigateSearchButton(BuildContext context){
+    Navigator.pushNamed(context, "/searchResult");
+  }
+
     final searchButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
@@ -301,7 +311,7 @@ class _HomePageState extends State<HomePage>
           minWidth: screenWidth-32,
           height: 35.0,
           onPressed: () {
-            Navigator.of(context).pushNamed(HomePage.tag);
+            _navigateSearchButton(context);
           },
           color: Colors.lightBlueAccent,
           child: Text('Search Vendors',
