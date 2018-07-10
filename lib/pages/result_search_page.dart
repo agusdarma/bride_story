@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
-import '../models/country_model.dart';
 import '../utils/constant.dart';
 import 'dart:convert';
+import '../models/result_search_model.dart';
 
 class ResultSearchPage extends StatefulWidget {
   @override
@@ -15,23 +15,116 @@ class ResultSearchPage extends StatefulWidget {
 class _ResultSearchPageState extends State<ResultSearchPage> {
   SharedPreferences sharedPreferences;
   List<TextSpan> listSubtitle;
+  List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
+  FilterParam filterParamNew;
+
+/*
+for demo hardcode
+ */
+  void _populateResultData() {
+    listResultData.add(new ResultSearchModel(
+        "assets/images/1.jpg",
+        "Jova Musique",
+        "32",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/2.jpg",
+        "Port Love Creative Studio",
+        "16",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/3.jpg",
+        "Port Love Creative Studio 2",
+        "17",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/3.jpg",
+        "Port Love Creative Studio 2",
+        "17",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/3.jpg",
+        "Port Love Creative Studio 2",
+        "17",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/3.jpg",
+        "Port Love Creative Studio 2",
+        "17",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    listResultData.add(new ResultSearchModel(
+        "assets/images/3.jpg",
+        "Port Love Creative Studio 2",
+        "17",
+        filterParamNew.categoryName,
+        filterParamNew.cityName,
+        "assets/images/1.jpg",
+        "assets/images/2.jpg",
+        "assets/images/3.jpg",
+        "assets/images/4.jpg"));
+    print(listResultData.length);
+  }
+
   Future<List<TextSpan>> _getFilterParam() async {
     try {
       sharedPreferences = await SharedPreferences.getInstance();
       String pref = sharedPreferences.getString(keyFilterParam);
       const JsonDecoder decoder = const JsonDecoder();
       Map filterParamMap = decoder.convert(pref);
-      var filterParamNew = new FilterParam.fromJson(filterParamMap);
+      filterParamNew = new FilterParam.fromJson(filterParamMap);
       listSubtitle = new List<TextSpan>();
       listSubtitle.add(new TextSpan(text: "Showing result for "));
-      listSubtitle.add(new TextSpan(text: filterParamNew.categoryName));
+      listSubtitle.add(new TextSpan(
+          text: filterParamNew.categoryName,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )));
       listSubtitle.add(new TextSpan(text: " "));
       listSubtitle.add(new TextSpan(text: "in "));
-      listSubtitle.add(new TextSpan(text: filterParamNew.cityName));
+      listSubtitle.add(new TextSpan(
+          text: filterParamNew.cityName,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )));
       listSubtitle.add(new TextSpan(text: " "));
-      listSubtitle.add(new TextSpan(text: filterParamNew.countryName));
+      listSubtitle.add(new TextSpan(
+          text: filterParamNew.countryName,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )));
       listSubtitle.add(new TextSpan(text: " "));
       // print(listSubtitle);
+      _populateResultData();
       return listSubtitle;
     } catch (e) {
       print(e);
@@ -41,9 +134,7 @@ class _ResultSearchPageState extends State<ResultSearchPage> {
   @override
   void initState() {
     super.initState();
-    // setState(() {
-    //   _getFilterParam();
-    // });
+
     _getFilterParam().then((result) {
       // If we need to rebuild the widget with the resulting data,
       // make sure to use `setState`
@@ -51,12 +142,13 @@ class _ResultSearchPageState extends State<ResultSearchPage> {
         listSubtitle = result;
       });
     });
+    // _populateResultData();
   }
 
   @override
   Widget build(BuildContext context) {
     // _getFilterParam();
-    print(listSubtitle);
+    // print(listSubtitle);
     Widget subtitle = new Container(
         padding: new EdgeInsets.all(12.0),
         color: new Color(0X33000000),
@@ -69,98 +161,107 @@ class _ResultSearchPageState extends State<ResultSearchPage> {
               )),
         ));
 
-    Widget listImagesContent = new Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        new Container(
-            margin: EdgeInsets.only(top: 5.0),
-            child: new Image(
-              fit: BoxFit.fitHeight,
-              width: 90.0,
-              height: 90.0,
-              image: new AssetImage('assets/images/1.jpg'),
-            )),
-        new Container(
-            margin: EdgeInsets.only(top: 5.0),
-            child: new Image(
-              fit: BoxFit.fitHeight,
-              width: 90.0,
-              height: 90.0,
-              image: new AssetImage('assets/images/1.jpg'),
-            )),
-        new Container(
-            margin: EdgeInsets.only(top: 5.0),
-            child: new Image(
-              fit: BoxFit.fitHeight,
-              width: 90.0,
-              height: 90.0,
-              image: new AssetImage('assets/images/1.jpg'),
-            )),
-        new Container(
-            margin: EdgeInsets.only(top: 5.0),
-            child: new Image(
-              fit: BoxFit.fitHeight,
-              width: 90.0,
-              height: 90.0,
-              image: new AssetImage('assets/images/1.jpg'),
-            )),
-      ],
-    );
-
-    Widget content = new Container(
-        padding: EdgeInsets.all(5.0),
-        child: new Row(
-          children: <Widget>[
-            new Container(
-                margin: EdgeInsets.only(right: 5.0),
-                width: 60.0,
-                height: 60.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage('assets/images/1.jpg'),
-                    ))),
-            new Expanded(
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Container(
-                    padding: const EdgeInsets.only(bottom: 3.0),
-                    child: new Text("Jova Musique",
-                        style: TextStyle(
-                          fontSize: 11.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                  new Container(
-                    padding: const EdgeInsets.only(bottom: 3.0),
-                    child: new Text("Entertainment Music,Jakarta",
-                        style: TextStyle(
-                          fontSize: 11.0,
-                        )),
-                  ),
-                  new Row(
+    Widget content(BuildContext context, int index) {
+      print(index);
+      return new Container(
+          padding: EdgeInsets.only(top: 20.0, left: 10.0, bottom: 20.0),
+          child: Column(children: <Widget>[
+            new Row(
+              children: <Widget>[
+                new Container(
+                    margin: EdgeInsets.only(right: 5.0),
+                    width: 60.0,
+                    height: 60.0,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: new DecorationImage(
+                          fit: BoxFit.fill,
+                          image: new AssetImage(
+                              listResultData.elementAt(index).linkProfileImage),
+                        ))),
+                new Expanded(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Icon(Icons.star),
-                      new Icon(Icons.star),
-                      new Icon(Icons.star),
-                      new Icon(Icons.star),
-                      new Text("32 Reviews >",
-                          style: TextStyle(
-                            fontSize: 11.0,
-                          ))
+                      new Container(
+                        padding: const EdgeInsets.only(bottom: 3.0),
+                        child: new Text(
+                            listResultData.elementAt(index).titleVendor,
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                      new Container(
+                        padding: const EdgeInsets.only(bottom: 3.0),
+                        child: new Text(
+                            listResultData.elementAt(index).categoryName,
+                            style: TextStyle(
+                              fontSize: 11.0,
+                            )),
+                      ),
+                      new Row(
+                        children: <Widget>[
+                          new Icon(Icons.star),
+                          new Icon(Icons.star),
+                          new Icon(Icons.star),
+                          new Icon(Icons.star),
+                          new Text(
+                              listResultData.elementAt(index).countReviews +
+                                  " Reviews >",
+                              style: TextStyle(
+                                fontSize: 11.0,
+                              ))
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-            )
-          ],
-        ));
-
-    Widget rowData = new Column(
-      children: <Widget>[content, listImagesContent, new Divider(height: 10.0)],
-    );
+                )
+              ],
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: new Image(
+                      fit: BoxFit.fitHeight,
+                      width: 90.0,
+                      height: 90.0,
+                      image: new AssetImage(
+                          listResultData.elementAt(index).linkImage1),
+                    )),
+                new Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: new Image(
+                      fit: BoxFit.fitHeight,
+                      width: 90.0,
+                      height: 90.0,
+                      image: new AssetImage(
+                          listResultData.elementAt(index).linkImage2),
+                    )),
+                new Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: new Image(
+                      fit: BoxFit.fitHeight,
+                      width: 90.0,
+                      height: 90.0,
+                      image: new AssetImage(
+                          listResultData.elementAt(index).linkImage3),
+                    )),
+                new Container(
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: new Image(
+                      fit: BoxFit.fitHeight,
+                      width: 90.0,
+                      height: 90.0,
+                      image: new AssetImage(
+                          listResultData.elementAt(index).linkImage4),
+                    )),
+              ],
+            ),
+          ]));
+    }
 
     return SafeArea(
         child: new Scaffold(
@@ -170,15 +271,19 @@ class _ResultSearchPageState extends State<ResultSearchPage> {
                     hintText: "Search Vendors, Articles Here"),
               ),
             ),
-            body: new ListView(
+            body: new Column(
               children: <Widget>[
                 subtitle,
-                rowData,
-                rowData,
-                rowData,
-                rowData,
-                rowData,
-                rowData,
+                new Expanded(
+                  child: new Container(
+                    child: new ListView.builder(
+                      itemCount: listResultData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return content(context, index);
+                      },
+                    ),
+                  ),
+                ),
               ],
             )));
   }
