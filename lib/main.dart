@@ -6,6 +6,7 @@ import 'package:fluro/fluro.dart';
 import 'pages/search_country_page.dart';
 import 'pages/search_city_page.dart';
 import 'pages/result_search_page.dart';
+import 'pages/vendor_page.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
@@ -40,6 +41,12 @@ void main() {
   router.define('/searchResult', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new ResultSearchPage();
+  }));
+
+  // Define our vendor page.
+  router.define('/vendorPage', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new VendorPage();
   }));
   
   runApp(new MyApp(router: router));

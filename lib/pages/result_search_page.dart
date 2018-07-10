@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
@@ -161,105 +160,131 @@ for demo hardcode
               )),
         ));
 
+    _navigateVendorPage(BuildContext context) {
+      Navigator.pushNamed(context, "/vendorPage");
+    }
+
     Widget content(BuildContext context, int index) {
-      print(index);
+      // print(index);
       return new Container(
           padding: EdgeInsets.only(top: 20.0, left: 10.0, bottom: 20.0),
           child: Column(children: <Widget>[
             new Row(
               children: <Widget>[
-                new Container(
-                    margin: EdgeInsets.only(right: 5.0),
-                    width: 60.0,
-                    height: 60.0,
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new AssetImage(
-                              listResultData.elementAt(index).linkProfileImage),
-                        ))),
+                new GestureDetector(
+                  onTap: () {
+                    _navigateVendorPage(context);
+                  },
+                  child: new Container(
+                      margin: EdgeInsets.only(right: 5.0),
+                      width: 60.0,
+                      height: 60.0,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new AssetImage(listResultData
+                                .elementAt(index)
+                                .linkProfileImage),
+                          ))),
+                ),
                 new Expanded(
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Container(
-                        padding: const EdgeInsets.only(bottom: 3.0),
-                        child: new Text(
-                            listResultData.elementAt(index).titleVendor,
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      new Container(
-                        padding: const EdgeInsets.only(bottom: 3.0),
-                        child: new Text(
-                            listResultData.elementAt(index).categoryName,
-                            style: TextStyle(
-                              fontSize: 11.0,
-                            )),
-                      ),
-                      new Row(
-                        children: <Widget>[
-                          new Icon(Icons.star),
-                          new Icon(Icons.star),
-                          new Icon(Icons.star),
-                          new Icon(Icons.star),
-                          new Text(
-                              listResultData.elementAt(index).countReviews +
-                                  " Reviews >",
-                              style: TextStyle(
-                                fontSize: 11.0,
-                              ))
-                        ],
-                      ),
+                      new GestureDetector(
+                          onTap: () {
+                            _navigateVendorPage(context);
+                          },
+                          child: new Container(
+                            padding: const EdgeInsets.only(bottom: 3.0),
+                            child: new Text(
+                                listResultData.elementAt(index).titleVendor,
+                                style: TextStyle(
+                                  fontSize: 11.0,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          )),
+                      new GestureDetector(
+                          onTap: () {
+                            _navigateVendorPage(context);
+                          },
+                          child: new Container(
+                            padding: const EdgeInsets.only(bottom: 3.0),
+                            child: new Text(
+                                listResultData.elementAt(index).categoryName,
+                                style: TextStyle(
+                                  fontSize: 11.0,
+                                )),
+                          )),
+                      new GestureDetector(
+                          onTap: () {
+                            _navigateVendorPage(context);
+                          },
+                          child: new Row(
+                            children: <Widget>[
+                              new Icon(Icons.star),
+                              new Icon(Icons.star),
+                              new Icon(Icons.star),
+                              new Icon(Icons.star),
+                              new Text(
+                                  listResultData.elementAt(index).countReviews +
+                                      " Reviews >",
+                                  style: TextStyle(
+                                    fontSize: 11.0,
+                                  ))
+                            ],
+                          )),
                     ],
                   ),
                 )
               ],
             ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: new Image(
-                      fit: BoxFit.fitHeight,
-                      width: 90.0,
-                      height: 90.0,
-                      image: new AssetImage(
-                          listResultData.elementAt(index).linkImage1),
-                    )),
-                new Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: new Image(
-                      fit: BoxFit.fitHeight,
-                      width: 90.0,
-                      height: 90.0,
-                      image: new AssetImage(
-                          listResultData.elementAt(index).linkImage2),
-                    )),
-                new Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: new Image(
-                      fit: BoxFit.fitHeight,
-                      width: 90.0,
-                      height: 90.0,
-                      image: new AssetImage(
-                          listResultData.elementAt(index).linkImage3),
-                    )),
-                new Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: new Image(
-                      fit: BoxFit.fitHeight,
-                      width: 90.0,
-                      height: 90.0,
-                      image: new AssetImage(
-                          listResultData.elementAt(index).linkImage4),
-                    )),
-              ],
-            ),
+            new GestureDetector(
+                onTap: () {
+                  _navigateVendorPage(context);
+                },
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new Container(
+                        margin: EdgeInsets.only(top: 5.0),
+                        child: new Image(
+                          fit: BoxFit.fitHeight,
+                          width: 90.0,
+                          height: 90.0,
+                          image: new AssetImage(
+                              listResultData.elementAt(index).linkImage1),
+                        )),
+                    new Container(
+                        margin: EdgeInsets.only(top: 5.0),
+                        child: new Image(
+                          fit: BoxFit.fitHeight,
+                          width: 90.0,
+                          height: 90.0,
+                          image: new AssetImage(
+                              listResultData.elementAt(index).linkImage2),
+                        )),
+                    new Container(
+                        margin: EdgeInsets.only(top: 5.0),
+                        child: new Image(
+                          fit: BoxFit.fitHeight,
+                          width: 90.0,
+                          height: 90.0,
+                          image: new AssetImage(
+                              listResultData.elementAt(index).linkImage3),
+                        )),
+                    new Container(
+                        margin: EdgeInsets.only(top: 5.0),
+                        child: new Image(
+                          fit: BoxFit.fitHeight,
+                          width: 90.0,
+                          height: 90.0,
+                          image: new AssetImage(
+                              listResultData.elementAt(index).linkImage4),
+                        )),
+                  ],
+                )),
           ]));
     }
 
