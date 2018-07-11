@@ -22,8 +22,7 @@ class HomePageLayout extends StatelessWidget {
           leading: const Icon(Icons.search),
           title: new TextField(
             decoration: new InputDecoration(
-              hintText: "Search Vendors, Articles Here...."
-            ),
+                hintText: "Search Vendors, Articles Here...."),
           ),
         ),
         body: TabBarView(
@@ -70,7 +69,7 @@ class _CityButtonState extends State<CityButton> {
               children: <Widget>[
                 Expanded(
                   child: new Text(displayedString,
-                      style: TextStyle(                      
+                      style: TextStyle(
                         fontSize: 15.0,
                       )),
                 ),
@@ -297,19 +296,19 @@ class _HomePageState extends State<HomePage>
           )),
     );
 
-    _navigateSearchButton(BuildContext context){
-    Navigator.pushNamed(context, "/searchResult");
-  }
+    _navigateSearchButton(BuildContext context) {
+      Navigator.pushNamed(context, "/searchResult");
+    }
 
     final searchButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Material(
         borderRadius: BorderRadius.circular(10.0),
         shadowColor: Colors.lightBlueAccent.shade100,
         elevation: 5.0,
         child: MaterialButton(
-          minWidth: screenWidth-32,
-          height: 35.0,
+          minWidth: screenWidth - 32,
+          height: 50.0,
           onPressed: () {
             _navigateSearchButton(context);
           },
@@ -352,7 +351,7 @@ class _HomePageState extends State<HomePage>
                   CountryButton(),
                   Divider(color: Colors.black, height: 1.0),
                   CityButton(),
-                  Divider(),
+                  Divider(color: Colors.black, height: 1.0),
                   searchButton,
                 ],
               ))

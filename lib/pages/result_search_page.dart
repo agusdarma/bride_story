@@ -148,6 +148,106 @@ for demo hardcode
   Widget build(BuildContext context) {
     // _getFilterParam();
     // print(listSubtitle);
+    Widget highlightImages = new Container(
+      padding: EdgeInsets.all(10.0),
+      height: 100.0,
+      child: new ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/3.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/4.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/1.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/3.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/1.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 100.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/4.jpg"),
+                  ))),
+        ],
+      ),
+    );
+
     Widget subtitle = new Container(
         padding: new EdgeInsets.all(12.0),
         color: new Color(0X33000000),
@@ -241,50 +341,11 @@ for demo hardcode
               ],
             ),
             new GestureDetector(
-                onTap: () {
-                  _navigateVendorPage(context);
-                },
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new Container(
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: new Image(
-                          fit: BoxFit.fitHeight,
-                          width: 90.0,
-                          height: 90.0,
-                          image: new AssetImage(
-                              listResultData.elementAt(index).linkImage1),
-                        )),
-                    new Container(
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: new Image(
-                          fit: BoxFit.fitHeight,
-                          width: 90.0,
-                          height: 90.0,
-                          image: new AssetImage(
-                              listResultData.elementAt(index).linkImage2),
-                        )),
-                    new Container(
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: new Image(
-                          fit: BoxFit.fitHeight,
-                          width: 90.0,
-                          height: 90.0,
-                          image: new AssetImage(
-                              listResultData.elementAt(index).linkImage3),
-                        )),
-                    new Container(
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: new Image(
-                          fit: BoxFit.fitHeight,
-                          width: 90.0,
-                          height: 90.0,
-                          image: new AssetImage(
-                              listResultData.elementAt(index).linkImage4),
-                        )),
-                  ],
-                )),
+              onTap: () {
+                _navigateVendorPage(context);
+              },
+              child: highlightImages,
+            ),
           ]));
     }
 
