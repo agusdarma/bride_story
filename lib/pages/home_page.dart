@@ -315,8 +315,7 @@ class _HomePageState extends State<HomePage>
           color: Colors.lightBlueAccent,
           child: Text('Search Vendors',
               style: TextStyle(
-                // fontFamily: 'Roboto',
-                fontSize: 14.0,
+                fontSize: 20.0,
               )),
         ),
       ),
