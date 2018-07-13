@@ -93,15 +93,22 @@ for demo hardcode
         "assets/images/4.jpg"));
     print(listResultData.length);
   }
+  
 
   Future<List<TextSpan>> _getFilterParam() async {
     try {
+      listSubtitle = new List<TextSpan>();
       sharedPreferences = await SharedPreferences.getInstance();
       String pref = sharedPreferences.getString(keyFilterParam);
+      if(pref == null){
+       listSubtitle.add(new TextSpan(text: "Showing result for All Categories in Indonesia, Jakarta"));
+       return listSubtitle;
+      }
+        
       const JsonDecoder decoder = const JsonDecoder();
       Map filterParamMap = decoder.convert(pref);
       filterParamNew = new FilterParam.fromJson(filterParamMap);
-      listSubtitle = new List<TextSpan>();
+      
       listSubtitle.add(new TextSpan(text: "Showing result for "));
       listSubtitle.add(new TextSpan(
           text: filterParamNew.categoryName,

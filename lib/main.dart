@@ -7,6 +7,7 @@ import 'pages/search_country_page.dart';
 import 'pages/search_city_page.dart';
 import 'pages/result_search_page.dart';
 import 'pages/vendor_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
@@ -18,7 +19,7 @@ void main() {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new HomePageLayout();
   }));
-  
+
   // Define our search category page.
   router.define('/searchCategory', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
@@ -48,8 +49,17 @@ void main() {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new VendorPage();
   }));
-  
+
+  // initSharedPreference();
+
   runApp(new MyApp(router: router));
+}
+
+void initSharedPreference() async {
+  SharedPreferences sharedPreferences;
+  sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.setString(keyFilterParam, "");
+  
 }
 
 class MyApp extends StatelessWidget {

@@ -18,115 +18,251 @@ class _VendorPageState extends State<VendorPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    Widget projectImages = new Expanded(
-      child: new Container(
-        height: 200.0,
-        child: new ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/2.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/3.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/4.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/2.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/1.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/2.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/3.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/1.jpg"),
-                    ))),
-            new Container(
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.only(right: 5.0),
-                width: 200.0,
-                height: 200.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new AssetImage("assets/images/4.jpg"),
-                    ))),
-          ],
-        ),
+    Widget socialMedia = new Container(
+      padding: EdgeInsets.all(5.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Text("Social Media", style: TextStyle(fontSize: 14.0)),
+          new Expanded(
+            child: new Container(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  new Container(
+                    padding: EdgeInsets.only(right: 5.0),
+                    child: new Icon(Icons.polymer),
+                  ),
+                  new Container(
+                      padding: EdgeInsets.only(right: 5.0),
+                      child: new Icon(Icons.card_giftcard)),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
+
+    Widget projectImages = new Container(
+      width: screenWidth,
+      height: 200.0,
+      child: new ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/3.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/4.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/1.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/2.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/3.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/1.jpg"),
+                  ))),
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new AssetImage("assets/images/4.jpg"),
+                  ))),
+        ],
+      ),
+    );
+
+    // Widget projectImages = new Expanded(
+    //   child: new Container(
+    //     width: screenWidth,
+    //     height: 200.0,
+    //     child: new ListView(
+    //       scrollDirection: Axis.horizontal,
+    //       children: <Widget>[
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/2.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/3.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/4.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/2.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/1.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/2.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/3.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/1.jpg"),
+    //                 ))),
+    //         new Container(
+    //             padding: EdgeInsets.all(5.0),
+    //             margin: EdgeInsets.only(right: 5.0),
+    //             width: 200.0,
+    //             height: 200.0,
+    //             decoration: new BoxDecoration(
+    //                 shape: BoxShape.rectangle,
+    //                 image: new DecorationImage(
+    //                   fit: BoxFit.fill,
+    //                   image: new AssetImage("assets/images/4.jpg"),
+    //                 ))),
+    //       ],
+    //     ),
+    //   ),
+    // );
 
     Widget projectRow = new Container(
       padding: EdgeInsets.all(12.0),
@@ -145,6 +281,7 @@ class _VendorPageState extends State<VendorPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               new Icon(Icons.call),
               new Text("Call", style: TextStyle(fontSize: 14.0)),
@@ -157,6 +294,7 @@ class _VendorPageState extends State<VendorPage> {
             margin: const EdgeInsets.only(left: 10.0, right: 10.0),
           ),
           new Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               new Icon(Icons.image),
               new Text("4D", style: TextStyle(fontSize: 14.0)),
@@ -169,6 +307,7 @@ class _VendorPageState extends State<VendorPage> {
             margin: const EdgeInsets.only(left: 10.0, right: 10.0),
           ),
           new Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               new Icon(Icons.attach_money),
               new Text("Price List", style: TextStyle(fontSize: 14.0)),
@@ -204,6 +343,7 @@ class _VendorPageState extends State<VendorPage> {
     );
 
     Widget roundedImage = new Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         new Container(
           height: 50.0,
@@ -323,7 +463,8 @@ class _VendorPageState extends State<VendorPage> {
                   hintText: "Search Vendors, Articles Here"),
             ),
           ),
-          body: new Column(
+          body: new ListView(
+            scrollDirection: Axis.vertical,
             children: <Widget>[
               Stack(
                 children: <Widget>[
@@ -347,10 +488,72 @@ class _VendorPageState extends State<VendorPage> {
                 height: 2.0,
               ),
               projectImages,
-              new Text("data"),
+              socialMedia,
+              new Text("data2"),
+              new Text("data2"),
+              new Text("data2"),
+              new Text("data2"),
+              new Text("data2"),
+              new Text("data2"),
+              new Text("data2"),
               new Text("data2"),
             ],
-          )),
+          )
+          // new Column(
+          //   children: <Widget>[
+          //     Stack(
+          //       children: <Widget>[
+          //         bgImage,
+          //         roundedImage,
+          //       ],
+          //     ),
+          //     txtOnline,
+          //     new Divider(
+          //       color: Colors.black,
+          //       height: 2.0,
+          //     ),
+          //     buttons,
+          //     new Divider(
+          //       color: Colors.black,
+          //       height: 2.0,
+          //     ),
+          //     projectRow,
+          //     new Divider(
+          //       color: Colors.black,
+          //       height: 2.0,
+          //     ),
+          //     projectImages,
+          //     new Container(
+          //       padding: EdgeInsets.all(5.0),
+          //       child: new Row(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         children: <Widget>[
+          //           new Text("Social Media"),
+          //           new Expanded(
+          //             child: new Container(
+          //               child: new Row(
+          //                 mainAxisAlignment: MainAxisAlignment.end,
+          //                 children: <Widget>[
+          //                   new Container(
+          //                     padding: EdgeInsets.only(right: 5.0),
+          //                     child: new Icon(Icons.polymer),
+          //                   ),
+          //                   new Container(
+          //                       padding: EdgeInsets.only(right: 5.0),
+          //                       child: new Icon(Icons.card_giftcard)),
+          //                 ],
+          //               ),
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //     new Text("data2"),
+          //     new Text("data2"),
+          //     new Text("data2"),
+          //   ],
+          // ),
+          ),
     );
   }
 }
