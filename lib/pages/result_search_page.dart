@@ -12,8 +12,8 @@ class ResultSearchPage extends StatefulWidget {
 }
 
 class _ResultSearchPageState extends State<ResultSearchPage> {
-  SharedPreferences sharedPreferences;
-  List<TextSpan> listSubtitle;
+  // List<TextSpan> listSubtitle;
+  String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
   FilterParam filterParamNew;
 
@@ -93,68 +93,69 @@ for demo hardcode
         "assets/images/4.jpg"));
     print(listResultData.length);
   }
-  
 
-  Future<List<TextSpan>> _getFilterParam() async {
-    try {
-      listSubtitle = new List<TextSpan>();
-      sharedPreferences = await SharedPreferences.getInstance();
-      String pref = sharedPreferences.getString(keyFilterParam);
-      if(pref == null){
-       listSubtitle.add(new TextSpan(text: "Showing result for All Categories in Indonesia, Jakarta"));
-       return listSubtitle;
-      }
-        
-      const JsonDecoder decoder = const JsonDecoder();
-      Map filterParamMap = decoder.convert(pref);
-      filterParamNew = new FilterParam.fromJson(filterParamMap);
-      
-      listSubtitle.add(new TextSpan(text: "Showing result for "));
-      listSubtitle.add(new TextSpan(
-          text: filterParamNew.categoryName,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          )));
-      listSubtitle.add(new TextSpan(text: " "));
-      listSubtitle.add(new TextSpan(text: "in "));
-      listSubtitle.add(new TextSpan(
-          text: filterParamNew.cityName,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          )));
-      listSubtitle.add(new TextSpan(text: " "));
-      listSubtitle.add(new TextSpan(
-          text: filterParamNew.countryName,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          )));
-      listSubtitle.add(new TextSpan(text: " "));
-      // print(listSubtitle);
-      _populateResultData();
-      return listSubtitle;
-    } catch (e) {
-      print(e);
-    }
+  Future<String> _getFilterParam(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String json = (prefs.getString(key) ?? "");
+    print("get from shared Preferenced " + json);
+    return json;
+
+    // _populateResultData();
   }
 
   @override
   void initState() {
     super.initState();
-
-    _getFilterParam().then((result) {
-      // If we need to rebuild the widget with the resulting data,
-      // make sure to use `setState`
-      setState(() {
-        listSubtitle = result;
+    setState(() {
+      // listSubtitle = new List<TextSpan>();
+      _getFilterParam(keyFilterParam).then((result) {
+        setState(() {
+          updateSubtitle(result);
+        });
       });
+      // text = "aisssssssssssssssssssssssssssss";
+      // listSubtitle.add(new TextSpan(text: "Loading...."));
     });
-    // _populateResultData();
+  }
+
+  Future updateSubtitle(String json) async {
+    print(json);   
+    await new Future.delayed(const Duration(seconds: 2)); 
+    const JsonDecoder decoder = const JsonDecoder();
+    Map filterParamMap = decoder.convert(json);
+    filterParamNew = new FilterParam.fromJson(filterParamMap);
+    // listSubtitle.clear();
+    // listSubtitle.add(new TextSpan(text: "Showing result for "));
+    // listSubtitle.add(new TextSpan(
+    //     text: filterParamNew.categoryName,
+    //     style: TextStyle(
+    //       fontWeight: FontWeight.bold,
+    //     )));
+    // listSubtitle.add(new TextSpan(text: " "));
+    // listSubtitle.add(new TextSpan(text: "in "));
+    // listSubtitle.add(new TextSpan(
+    //     text: filterParamNew.cityName,
+    //     style: TextStyle(
+    //       fontWeight: FontWeight.bold,
+    //     )));
+    // listSubtitle.add(new TextSpan(text: " "));
+    // listSubtitle.add(new TextSpan(
+    //     text: filterParamNew.countryName,
+    //     style: TextStyle(
+    //       fontWeight: FontWeight.bold,
+    //     )));
+    // listSubtitle.add(new TextSpan(text: " "));
+    setState(() {
+    text = filterParamNew.categoryName;
+    _populateResultData();      
+        });
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    // _getFilterParam();
-    // print(listSubtitle);
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     Widget highlightImages = new Container(
       padding: EdgeInsets.all(10.0),
       height: 100.0,
@@ -256,23 +257,25 @@ for demo hardcode
     );
 
     Widget subtitle = new Container(
-        padding: new EdgeInsets.all(12.0),
-        color: new Color(0X33000000),
-        child: new RichText(
-          text: new TextSpan(
-              children: listSubtitle,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 14.0,
-              )),
-        ));
+      width: screenWidth - 1,
+      // padding: new EdgeInsets.all(3.0),
+      color: new Color(0X33000000),
+      child: new Text(text),
+      // new RichText(
+      //   text: new TextSpan(
+      //       children: listSubtitle,
+      //       style: TextStyle(
+      //         color: Colors.black,
+      //         fontSize: 14.0,
+      //       )),
+      // )
+    );
 
     _navigateVendorPage(BuildContext context) {
       Navigator.pushNamed(context, "/vendorPage");
     }
 
     Widget content(BuildContext context, int index) {
-      // print(index);
       return new Container(
           padding: EdgeInsets.only(top: 20.0, left: 10.0, bottom: 20.0),
           child: Column(children: <Widget>[

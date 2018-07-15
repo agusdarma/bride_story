@@ -50,16 +50,23 @@ void main() {
     return new VendorPage();
   }));
 
-  // initSharedPreference();
+  initSharedPreferences();
 
   runApp(new MyApp(router: router));
 }
 
-void initSharedPreference() async {
-  SharedPreferences sharedPreferences;
-  sharedPreferences = await SharedPreferences.getInstance();
-  sharedPreferences.setString(keyFilterParam, "");
-  
+void initSharedPreferences() {
+  print("init shared preferences running");
+  String filterParamJson =
+      '{"categoryName":"All Categories","countryName":"Indonesia","cityName":"Jakarta"}';
+  saveCategoryNameInSharedPreferences(filterParamJson, keyFilterParam);
+}
+
+void saveCategoryNameInSharedPreferences(
+    String categoryName, String key) async {
+  print("aaaa");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(key, categoryName);
 }
 
 class MyApp extends StatelessWidget {

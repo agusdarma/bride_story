@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
@@ -70,10 +72,12 @@ for demo hardcode
   void initState() {
     super.initState();
     setState(() {
-      // populate data city
       _populateCityData();
-      // cek apakah city sudah pernah dipilih sebelumnya dari shared preference
-      checkAlreadySelected();
+      getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
+        setState(() {
+          updateCityName(json);
+        });
+      });
     });
   }
 
@@ -84,9 +88,6 @@ for demo hardcode
       itemBuilder: (BuildContext context, int index) {
         // cek apakah kategori dipilih atau tidak karena memiliki view beda
         if (listCities.elementAt(index).selected == true) {
-          // return new Column(
-          //   children: <Widget>[_buildRowSelected(context, index)],
-          // );
           if (index == 0) {
             return new Column(
               children: <Widget>[
@@ -184,17 +185,16 @@ for demo hardcode
       listCities.elementAt(index).selected = true;
     });
 
-    sharedPreferences = await SharedPreferences.getInstance();
-    String filterParam = sharedPreferences.getString(keyFilterParam);
-    const JsonDecoder decoder = const JsonDecoder();
-    Map filterParamMap = decoder.convert(filterParam);
-    var filterParamNew = new FilterParam.fromJson(filterParamMap);
-    filterParamNew.cityName = selectedCity;
-    const JsonEncoder encoder = const JsonEncoder();
-    String stringJson = encoder.convert(filterParamNew);
-    print(stringJson);
-    sharedPreferences.setString(keyFilterParam, stringJson);
-    Navigator.pop(context, selectedCity);
+    getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
+      const JsonDecoder decoder = const JsonDecoder();
+      Map filterParamMap = decoder.convert(json);
+      var filterParamNew = new FilterParam.fromJson(filterParamMap);
+      filterParamNew.cityName = selectedCity;
+      const JsonEncoder encoder = const JsonEncoder();
+      String stringJson = encoder.convert(filterParamNew);
+      saveCityNameInSharedPreferences(stringJson, keyFilterParam);
+      Navigator.pop(context, selectedCity);
+    });
   }
 
   @override
@@ -207,5 +207,32 @@ for demo hardcode
         body: _buildCity(),
       ),
     );
+  }
+
+  void saveCityNameInSharedPreferences(String cityName, String key) async {
+    print("save city name " + cityName);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, cityName);
+  }
+
+  Future<String> getCityNameFromSharedPreferences(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cityName = "";
+    cityName = (prefs.getString(key) ?? "");
+    print("get from shared Preferenced " + cityName);
+    return cityName;
+  }
+
+  void updateCityName(String cityName) {
+    const JsonDecoder decoder = const JsonDecoder();
+    Map filterParamMap = decoder.convert(cityName);
+    var filterParamNew = new FilterParam.fromJson(filterParamMap);
+    for (var item in listCities) {
+      if (item.cityName == filterParamNew.cityName) {
+        clearSelected();
+        listCities.elementAt(listCities.indexOf(item)).selected = true;
+        break;
+      }
+    }
   }
 }

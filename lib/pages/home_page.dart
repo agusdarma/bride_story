@@ -198,6 +198,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // Future<String> _stringJsonPrefs;
   Animation<double> animation;
   AnimationController controller;
 
@@ -212,6 +214,9 @@ class _HomePageState extends State<HomePage>
         });
       });
     controller.forward();
+    // _stringJsonPrefs = _prefs.then((SharedPreferences prefs) {
+    //   return (prefs.getString(keyFilterParam) ?? "");
+    // });
   }
 
   @override

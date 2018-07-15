@@ -1,10 +1,4 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../data/filter_param.dart';
-import '../utils/constant.dart';
-import 'dart:convert';
-import '../models/result_search_model.dart';
 import 'dart:ui';
 
 class VendorPage extends StatefulWidget {
