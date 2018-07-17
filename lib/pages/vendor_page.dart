@@ -154,7 +154,12 @@ class _VendorPageState extends State<VendorPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Text("Projects", style: TextStyle(fontSize: 14.0)),
-          new Text("View All (5) >", style: TextStyle(fontSize: 14.0)),
+          new GestureDetector(
+            child: new Text("View All (5) >", style: TextStyle(fontSize: 14.0)),
+            onTap: () {
+              _navigateProjectListPage(context);
+            },
+          )
         ],
       ),
     );
@@ -394,5 +399,9 @@ class _VendorPageState extends State<VendorPage> {
 
   void _navigateCallAction(BuildContext context) {
     UrlLauncher.launch("tel:+6285693938630");
+  }
+
+  void _navigateProjectListPage(BuildContext context) {
+    Navigator.pushNamed(context, "/projectListPage");
   }
 }

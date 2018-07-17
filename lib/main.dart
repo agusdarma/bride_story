@@ -9,6 +9,7 @@ import 'pages/search_city_page.dart';
 import 'pages/result_search_page.dart';
 import 'pages/vendor_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'pages/project_list_page.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
@@ -55,6 +56,12 @@ void main() {
   router.define('/priceListPage', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new PriceListPage();
+  }));
+
+  // Define our project list page.
+  router.define('/projectListPage', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new ProjectListPage();
   }));
 
   initSharedPreferences();
