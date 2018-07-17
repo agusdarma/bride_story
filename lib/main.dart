@@ -1,3 +1,4 @@
+import 'package:bride_story/pages/price_list_page.dart';
 import 'package:flutter/material.dart';
 import 'utils/constant.dart';
 import 'pages/home_page.dart';
@@ -48,6 +49,12 @@ void main() {
   router.define('/vendorPage', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new VendorPage();
+  }));
+
+  // Define our price list page.
+  router.define('/priceListPage', handler: new Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    return new PriceListPage();
   }));
 
   initSharedPreferences();

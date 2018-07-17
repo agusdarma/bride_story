@@ -12,7 +12,6 @@ class ResultSearchPage extends StatefulWidget {
 }
 
 class _ResultSearchPageState extends State<ResultSearchPage> {
-  // List<TextSpan> listSubtitle;
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
   FilterParam filterParamNew;
@@ -99,57 +98,35 @@ for demo hardcode
     String json = (prefs.getString(key) ?? "");
     print("get from shared Preferenced " + json);
     return json;
-
-    // _populateResultData();
   }
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      // listSubtitle = new List<TextSpan>();
       _getFilterParam(keyFilterParam).then((result) {
         setState(() {
           updateSubtitle(result);
         });
       });
-      // text = "aisssssssssssssssssssssssssssss";
-      // listSubtitle.add(new TextSpan(text: "Loading...."));
     });
   }
 
   Future updateSubtitle(String json) async {
-    print(json);   
-    await new Future.delayed(const Duration(seconds: 2)); 
+    print(json);
+    await new Future.delayed(const Duration(seconds: 2));
     const JsonDecoder decoder = const JsonDecoder();
     Map filterParamMap = decoder.convert(json);
     filterParamNew = new FilterParam.fromJson(filterParamMap);
-    // listSubtitle.clear();
-    // listSubtitle.add(new TextSpan(text: "Showing result for "));
-    // listSubtitle.add(new TextSpan(
-    //     text: filterParamNew.categoryName,
-    //     style: TextStyle(
-    //       fontWeight: FontWeight.bold,
-    //     )));
-    // listSubtitle.add(new TextSpan(text: " "));
-    // listSubtitle.add(new TextSpan(text: "in "));
-    // listSubtitle.add(new TextSpan(
-    //     text: filterParamNew.cityName,
-    //     style: TextStyle(
-    //       fontWeight: FontWeight.bold,
-    //     )));
-    // listSubtitle.add(new TextSpan(text: " "));
-    // listSubtitle.add(new TextSpan(
-    //     text: filterParamNew.countryName,
-    //     style: TextStyle(
-    //       fontWeight: FontWeight.bold,
-    //     )));
-    // listSubtitle.add(new TextSpan(text: " "));
     setState(() {
-    text = filterParamNew.categoryName;
-    _populateResultData();      
-        });
-    
+      text = "Search result for " +
+          filterParamNew.categoryName +
+          " in " +
+          filterParamNew.cityName +
+          " ," +
+          filterParamNew.countryName;
+      _populateResultData();
+    });
   }
 
   @override
@@ -258,17 +235,8 @@ for demo hardcode
 
     Widget subtitle = new Container(
       width: screenWidth - 1,
-      // padding: new EdgeInsets.all(3.0),
       color: new Color(0X33000000),
       child: new Text(text),
-      // new RichText(
-      //   text: new TextSpan(
-      //       children: listSubtitle,
-      //       style: TextStyle(
-      //         color: Colors.black,
-      //         fontSize: 14.0,
-      //       )),
-      // )
     );
 
     _navigateVendorPage(BuildContext context) {
