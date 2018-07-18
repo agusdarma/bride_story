@@ -301,6 +301,7 @@ class _VendorPageState extends State<VendorPage> {
     );
 
     Widget txtOnline = new Container(
+      alignment: Alignment.center,
       padding: EdgeInsets.all(8.0),
       child: new Text("Active 11 days ago.", style: TextStyle(fontSize: 14.0)),
     );
