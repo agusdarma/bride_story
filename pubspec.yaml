@@ -28,7 +28,11 @@ dependencies:
   # https://pub.dartlang.org/packages/shared_preferences
   shared_preferences: "^0.4.2"
   
+  # launcher untuk call tlp
   url_launcher: "^3.0.3"
+
+  # html render
+  flutter_html_view: ^0.5.2
 
 
 dev_dependencies:

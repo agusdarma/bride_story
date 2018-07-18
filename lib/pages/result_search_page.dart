@@ -245,6 +245,14 @@ for demo hardcode
 
     Widget content(BuildContext context, int index) {
       return new Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+                begin: Alignment.bottomCenter,
+                colors: [const Color(0xFFCCCCCC), const Color(0xFFFFFFFF)],
+                end: Alignment.topCenter,
+                stops: [0.0, 1.0],
+                tileMode: TileMode.repeated),
+          ),
           padding: EdgeInsets.only(top: 20.0, left: 10.0, bottom: 20.0),
           child: Column(children: <Widget>[
             new Row(

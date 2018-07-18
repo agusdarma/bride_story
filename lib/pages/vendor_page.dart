@@ -39,111 +39,195 @@ class _VendorPageState extends State<VendorPage> {
       ),
     );
 
+    Widget banner = new Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+      child: new Container(
+          width: 200.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                // topLeft: Radius.circular(15.0),
+                // bottomRight: Radius.circular(15.0)
+                ),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.all(6.0),
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Text(
+                'Michael Bubble - Everything',
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
+              ),
+              new Text(
+                'Jova Music',
+                style: TextStyle(
+                  fontSize: 12.0,
+                ),
+              ),
+              new Text(
+                'Venue',
+                style: TextStyle(
+                  fontSize: 12.0,
+                ),
+              ),
+            ],
+          )),
+      // ),
+      //  ),
+    );
+
     Widget projectImages = new Container(
       width: screenWidth,
       height: 200.0,
       child: new ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/2.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/3.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/4.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/2.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/1.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/2.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/3.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/1.jpg"),
-                  ))),
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage("assets/images/4.jpg"),
-                  ))),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/2.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/3.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/4.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/2.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/1.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/2.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/3.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/1.jpg"),
+                      ))),
+              banner,
+            ],
+          ),
+          new Stack(
+            children: <Widget>[
+              new Container(
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.only(right: 5.0),
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new AssetImage("assets/images/4.jpg"),
+                      ))),
+              banner,
+            ],
+          )
         ],
       ),
     );

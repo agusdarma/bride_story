@@ -69,6 +69,12 @@ for demo hardcode
           margin:
               EdgeInsets.only(top: 16.0, bottom: 16.0, left: 16.0, right: 16.0),
           decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  colors: [const Color(0xFFCCCCCC), const Color(0xFFFFFFFF)],
+                  end: Alignment.topCenter,
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.repeated),
               shape: BoxShape.rectangle,
               image: new DecorationImage(
                 fit: BoxFit.none,

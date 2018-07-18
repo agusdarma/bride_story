@@ -343,7 +343,15 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           new Container(
-              color: Colors.grey[300],
+              decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    colors: [const Color(0xFFFFFFFF), const Color(0xFFCCCCCC)],
+                    end: Alignment.topCenter,
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.repeated),
+              ),
+              // color: Colors.grey[300],
               height: screenHeight,
               child: new Column(
                 children: <Widget>[
