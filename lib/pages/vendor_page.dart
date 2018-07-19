@@ -295,6 +295,24 @@ class _VendorPageState extends State<VendorPage> {
             onTap: () {
               _navigateToPriceListPage(context);
             },
+          ),
+          new Container(
+            height: 30.0,
+            width: 1.0,
+            color: Colors.black,
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+          ),
+          new GestureDetector(
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Icon(Icons.calendar_today),
+                new Text("Booking Date", style: TextStyle(fontSize: 14.0)),
+              ],
+            ),
+            onTap: () {
+              _navigateToBookingPage(context);
+            },
           )
         ],
       ),
@@ -488,5 +506,9 @@ class _VendorPageState extends State<VendorPage> {
 
   void _navigateProjectListPage(BuildContext context) {
     Navigator.pushNamed(context, "/projectListPage");
+  }
+
+  void _navigateToBookingPage(BuildContext context) {
+    Navigator.pushNamed(context, "/bookingPage");
   }
 }
