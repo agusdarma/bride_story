@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  date_utils:
+    dependency: "direct main"
+    description:
+      name: date_utils
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   fluro:
     dependency: "direct main"
     description:
@@ -166,7 +173,7 @@ packages:
     source: hosted
     version: "3.1.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -298,13 +305,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.29.0+1"
-  scrolling_calendar:
-    dependency: "direct main"
+  quiver_hashcode:
+    dependency: transitive
     description:
-      name: scrolling_calendar
+      name: quiver_hashcode
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.10"
+    version: "1.0.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -408,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.41"
+  tuple:
+    dependency: "direct main"
+    description:
+      name: tuple
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   typed_data:
     dependency: transitive
     description:
