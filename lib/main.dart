@@ -1,5 +1,6 @@
 import 'package:bride_story/pages/booking_page.dart';
 import 'package:bride_story/pages/price_list_page.dart';
+import 'package:bride_story/pages/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'utils/constant.dart';
 import 'pages/home_page.dart';
@@ -70,6 +71,12 @@ void main() {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     return new BookingPage();
   }));
+
+  // // Define our web view page.
+  // router.define('/webViewPage', handler: new Handler(
+  //     handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  //   return new WebviewPage(url: null,);
+  // }));
 
   initSharedPreferences();
 

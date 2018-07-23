@@ -1,3 +1,4 @@
+import 'package:bride_story/pages/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -271,12 +272,17 @@ class _VendorPageState extends State<VendorPage> {
             color: Colors.black,
             margin: const EdgeInsets.only(left: 10.0, right: 10.0),
           ),
-          new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new Icon(Icons.image),
-              new Text("4D", style: TextStyle(fontSize: 14.0)),
-            ],
+          new GestureDetector(
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Icon(Icons.image),
+                new Text("4D", style: TextStyle(fontSize: 14.0)),
+              ],
+            ),
+            onTap: () {
+              _navigateTo4DPage(context);
+            },
           ),
           new Container(
             height: 30.0,
@@ -498,6 +504,13 @@ class _VendorPageState extends State<VendorPage> {
 
   void _navigateToPriceListPage(BuildContext context) {
     Navigator.pushNamed(context, "/priceListPage");
+  }
+
+  void _navigateTo4DPage(BuildContext context) {
+    // Navigator.pushNamed(context, "/webViewPage");
+    Navigator.push(context,
+              new MaterialPageRoute(builder: (context) => new WebviewPage(url: "https://roundme.com/tour/291549/view/919147/", )),
+            );
   }
 
   void _navigateCallAction(BuildContext context) {
