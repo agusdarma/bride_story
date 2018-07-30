@@ -1,4 +1,4 @@
-package com.example.bridestory;
+package com.agusdarma.bridestory.user;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
