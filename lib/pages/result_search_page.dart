@@ -131,7 +131,7 @@ for demo hardcode
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    // double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     Widget highlightImages = new Container(
       padding: EdgeInsets.all(10.0),

@@ -29,7 +29,7 @@ class WebviewPageState extends State<WebviewPage> {
   } // build
 
   Widget _createHeader(BuildContext context) {
-    double fontSize = 12.0;
+    // double fontSize = 12.0;
     AppBar appBar = new AppBar(
         title: new Center(
           child: new Text("4D Tour",

@@ -7,33 +7,33 @@ class PriceListPage extends StatefulWidget {
 }
 
 class _PriceListPageState extends State<PriceListPage> {
-  String _description = "";
+  // String _description = "";
   @override
   Widget build(BuildContext context) {
-    String composeDesc() {
-      _description = "Price Range \n";
-      _description = _description + "Start From IDR 6.500.000 / 3 hours \n\n";
-      _description = _description + "3 Musicians & Music Instruments: \n";
-      _description = _description + "- One Singer (Female/Male) \n";
-      _description = _description + "- Pianist & Baby Grand Piano \n";
-      _description = _description + "- Contrabassist & Contrabass \n\n";
-      _description = _description + "High Quality Sound System 3.000 watt  \n";
-      _description = _description + "- Mixer  \n";
-      _description = _description + "- FOH Speakers  \n";
-      _description = _description + "- Monitor Speakers  \n";
-      _description = _description + "- Microphones  \n";
-      _description = _description + "- CD Player  \n";
-      _description = _description + "- Professional Sound Operator  \n";
-      _description = _description + "- Sound Crews  \n";
-      _description = _description + "- Transportation & Sound Installation  \n";
-      _description = _description + "- 1 Assistant Manager  \n\n";
-      _description = _description +
-          "Setiap bulannya, Jova Musique ada PROMO DISCOUNT yang berbeda, please contact Mrs.Valentine 087885735546 untuk informasi promo lebih lanjut)  \n";
-      _description = _description +
-          "Sample Video: www.youtube.com/jovamusique (more than 700 videos)\n";
+    // String composeDesc() {
+    //   _description = "Price Range \n";
+    //   _description = _description + "Start From IDR 6.500.000 / 3 hours \n\n";
+    //   _description = _description + "3 Musicians & Music Instruments: \n";
+    //   _description = _description + "- One Singer (Female/Male) \n";
+    //   _description = _description + "- Pianist & Baby Grand Piano \n";
+    //   _description = _description + "- Contrabassist & Contrabass \n\n";
+    //   _description = _description + "High Quality Sound System 3.000 watt  \n";
+    //   _description = _description + "- Mixer  \n";
+    //   _description = _description + "- FOH Speakers  \n";
+    //   _description = _description + "- Monitor Speakers  \n";
+    //   _description = _description + "- Microphones  \n";
+    //   _description = _description + "- CD Player  \n";
+    //   _description = _description + "- Professional Sound Operator  \n";
+    //   _description = _description + "- Sound Crews  \n";
+    //   _description = _description + "- Transportation & Sound Installation  \n";
+    //   _description = _description + "- 1 Assistant Manager  \n\n";
+    //   _description = _description +
+    //       "Setiap bulannya, Jova Musique ada PROMO DISCOUNT yang berbeda, please contact Mrs.Valentine 087885735546 untuk informasi promo lebih lanjut)  \n";
+    //   _description = _description +
+    //       "Sample Video: www.youtube.com/jovamusique (more than 700 videos)\n";
 
-      return _description;
-    }
+    //   return _description;
+    // }
 
     return SafeArea(
       child: new Scaffold(
@@ -87,11 +87,11 @@ class _PriceListPageState extends State<PriceListPage> {
   }
 
   Widget _dataAboutApplication(BuildContext context) {
-    String html = '<h4>Selamat datang di mBanking Telkomsel</h4></br>'
-        '<div style="text-align: justify;margin-bottom:50px;">Aplikasi mBanking Telkomsel adalah sebuah aplikasi Telkomsel yang memiliki fungsi segala transaksi perbankan</div>'
-        '<br /><p align="justify" style="text-align: justify;margin-top:50px;">Fitur mBanking Telkomsel antara lain :</p>'
-        '<p>- Transaksi Perbankan</p>'
-        '<p>- Promo Program</p>';
+    // String html = '<h4>Selamat datang di mBanking Telkomsel</h4></br>'
+    //     '<div style="text-align: justify;margin-bottom:50px;">Aplikasi mBanking Telkomsel adalah sebuah aplikasi Telkomsel yang memiliki fungsi segala transaksi perbankan</div>'
+    //     '<br /><p align="justify" style="text-align: justify;margin-top:50px;">Fitur mBanking Telkomsel antara lain :</p>'
+    //     '<p>- Transaksi Perbankan</p>'
+    //     '<p>- Promo Program</p>';
     String html2 = '<h1 style="text-align: right;">VENUE</h1>'
         '<h4 style="text-align: right;">INTIMATE WEDDING PACKAGE 2018 - SINGOSARI OR TIMOR ROOM</h4>'
 '<p style="text-align: center;"><span class="price"><strong><span style="color: #ff99cc;">IDR&nbsp;238.000.000</span></strong>&nbsp;</span>/&nbsp;300 PAX</p>'
