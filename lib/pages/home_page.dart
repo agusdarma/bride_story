@@ -1,3 +1,5 @@
+import 'package:bride_story/models/post_model.dart';
+import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
@@ -315,7 +317,17 @@ class _HomePageState extends State<HomePage>
           minWidth: screenWidth - 32,
           height: 50.0,
           onPressed: () {
-            _navigateSearchButton(context);
+            // _navigateSearchButton(context);
+            HttpServices http = new HttpServices();
+            // http.fetchDataJson();
+
+            http.fetchDataJson().then((Post post) {
+              setState(() {
+                print(post.body);
+                print(post.title);
+                _navigateSearchButton(context);
+              });
+            });
           },
           color: Colors.lightBlueAccent,
           child: Text('Search Vendors',
