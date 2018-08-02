@@ -319,8 +319,6 @@ class _HomePageState extends State<HomePage>
           onPressed: () {
             // _navigateSearchButton(context);
             HttpServices http = new HttpServices();
-            // http.fetchDataJson();
-
             http.fetchDataJson().then((Post post) {
               setState(() {
                 print(post.body);
