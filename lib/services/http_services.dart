@@ -45,16 +45,22 @@ class HttpServices {
         await _netUtil.get('http://192.168.0.101:6556/bride-trx/cat');
 
     const JsonDecoder decoder = const JsonDecoder();
-    // print(response);
     Map messageVO = decoder.convert(response);
     MessageVo a = new MessageVo.fromJson(messageVO);  
      
-    List<dynamic> listCategory = decoder.convert(a.otherMessage);
-    // print(categoryModel); 
-    // for (var items in listCategory){ //iterate over the list
-    // Map category = items; //store each map 
-    // print(category['categoryName']);
-    //     }
+    List<dynamic> listCategory = decoder.convert(a.otherMessage);    
     return listCategory;
+  }
+
+  Future<List<dynamic>> getCountry() async {
+    final String response =
+        await _netUtil.get('http://192.168.0.101:6556/bride-trx/country');
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);  
+     
+    List<dynamic> listCountry = decoder.convert(a.otherMessage);    
+    return listCountry;
   }
 }

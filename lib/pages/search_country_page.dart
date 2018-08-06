@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
@@ -20,24 +21,33 @@ class _SearchCountryPageState extends State<SearchCountryPage> {
   /*
 for demo hardcode
  */
-  void _populateCountryData() {
-    listCountries.add(new CountryModel("Indonesia", true));
-    listCountries.add(new CountryModel("All Countries", false));
-    listCountries.add(new CountryModel("Albania", false));
-    listCountries.add(new CountryModel("Angola", false));
-    listCountries.add(new CountryModel("Antigua", false));
-    listCountries.add(new CountryModel("Argentina", false));
-    listCountries.add(new CountryModel("Aruba", false));
-    listCountries.add(new CountryModel("Australia", false));
-    listCountries.add(new CountryModel("Austria", false));
-    listCountries.add(new CountryModel("Bahamas", false));
-    listCountries.add(new CountryModel("Bahrain", false));
-    listCountries.add(new CountryModel("Barbados", false));
-    listCountries.add(new CountryModel("Cambodia", false));
-    listCountries.add(new CountryModel("Denmark", false));
-    listCountries.add(new CountryModel("Eqypt", false));
-    listCountries.add(new CountryModel("Fiji", false));
-    listCountries.add(new CountryModel("Germany", false));
+  void _populateCountryData(List<dynamic> listCountry) {
+for (var items in listCountry) {
+      //iterate over the list
+      Map country = items; //store each map
+      // print(category['categoryName']);
+      listCountries.add(
+          new CountryModel(country['countryName'], country['selected']));
+    }
+
+
+    // listCountries.add(new CountryModel("Indonesia", true));
+    // listCountries.add(new CountryModel("All Countries", false));
+    // listCountries.add(new CountryModel("Albania", false));
+    // listCountries.add(new CountryModel("Angola", false));
+    // listCountries.add(new CountryModel("Antigua", false));
+    // listCountries.add(new CountryModel("Argentina", false));
+    // listCountries.add(new CountryModel("Aruba", false));
+    // listCountries.add(new CountryModel("Australia", false));
+    // listCountries.add(new CountryModel("Austria", false));
+    // listCountries.add(new CountryModel("Bahamas", false));
+    // listCountries.add(new CountryModel("Bahrain", false));
+    // listCountries.add(new CountryModel("Barbados", false));
+    // listCountries.add(new CountryModel("Cambodia", false));
+    // listCountries.add(new CountryModel("Denmark", false));
+    // listCountries.add(new CountryModel("Eqypt", false));
+    // listCountries.add(new CountryModel("Fiji", false));
+    // listCountries.add(new CountryModel("Germany", false));
   }
 
   void checkAlreadySelected() async {
@@ -73,17 +83,30 @@ for demo hardcode
   @override
   void initState() {
     super.initState();
-    setState(() {
-      // populate data country
-      _populateCountryData();
-      // cek apakah country sudah pernah dipilih sebelumnya dari shared preference
-      // checkAlreadySelected();
-      getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
+    HttpServices http = new HttpServices();
+    http.getCountry().then((List<dynamic> listCountry) {
+      setState(() {
+        _populateCountryData(listCountry);
+        getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
         setState(() {
           updateCountryName(json);
         });
+      });       
       });
     });
+
+
+    // setState(() {
+    //   // populate data country
+    //   _populateCountryData();
+    //   // cek apakah country sudah pernah dipilih sebelumnya dari shared preference
+    //   // checkAlreadySelected();
+    //   getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
+    //     setState(() {
+    //       updateCountryName(json);
+    //     });
+    //   });
+    // });
   }
 
   Widget _buildCountry() {

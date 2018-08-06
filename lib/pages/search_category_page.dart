@@ -16,14 +16,11 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
   SharedPreferences sharedPreferences;
   List<CategoryModel> listCategories = new List<CategoryModel>();
 
-/*
-for demo hardcode
- */
   void _populateCategoryData(List<dynamic> listCategory) {
     for (var items in listCategory) {
       //iterate over the list
       Map category = items; //store each map
-      print(category['categoryName']);
+      // print(category['categoryName']);
       listCategories.add(
           new CategoryModel(category['categoryName'], category['selected']));
     }
