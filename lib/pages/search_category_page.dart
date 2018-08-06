@@ -1,3 +1,4 @@
+import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
@@ -18,24 +19,31 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
 /*
 for demo hardcode
  */
-  void _populateCategoryData() {
-    listCategories.add(new CategoryModel("All Categories", true));
-    listCategories.add(new CategoryModel("Bridal", false));
-    listCategories.add(new CategoryModel("Catering", false));
-    listCategories.add(new CategoryModel("Dance & Choreography", false));
-    listCategories.add(new CategoryModel("Decoration & Lighting", false));
-    listCategories.add(new CategoryModel("Dress & Attire", false));
-    listCategories.add(new CategoryModel("Entertainment (MC)", false));
-    listCategories.add(new CategoryModel("Entertainment (DJ)", false));
-    listCategories.add(new CategoryModel("Entertainment (Music)", false));
-    listCategories.add(new CategoryModel("Event Rentals", false));
-    listCategories.add(new CategoryModel("Favors & Gifts", false));
-    listCategories.add(new CategoryModel("Flowers", false));
-    listCategories.add(new CategoryModel("Hair & Makeup", false));
-    listCategories.add(new CategoryModel("Health & Beauty", false));
-    listCategories.add(new CategoryModel("Honeymoon", false));
-    listCategories.add(new CategoryModel("Invitation", false));
-    listCategories.add(new CategoryModel("Jewelry", false));
+  void _populateCategoryData(List<dynamic> listCategory) {
+    for (var items in listCategory) {
+      //iterate over the list
+      Map category = items; //store each map
+      print(category['categoryName']);
+      listCategories.add(
+          new CategoryModel(category['categoryName'], category['selected']));
+    }
+    // listCategories.add(new CategoryModel("All Categories", true));
+    // listCategories.add(new CategoryModel("Bridal", false));
+    // listCategories.add(new CategoryModel("Catering", false));
+    // listCategories.add(new CategoryModel("Dance & Choreography", false));
+    // listCategories.add(new CategoryModel("Decoration & Lighting", false));
+    // listCategories.add(new CategoryModel("Dress & Attire", false));
+    // listCategories.add(new CategoryModel("Entertainment (MC)", false));
+    // listCategories.add(new CategoryModel("Entertainment (DJ)", false));
+    // listCategories.add(new CategoryModel("Entertainment (Music)", false));
+    // listCategories.add(new CategoryModel("Event Rentals", false));
+    // listCategories.add(new CategoryModel("Favors & Gifts", false));
+    // listCategories.add(new CategoryModel("Flowers", false));
+    // listCategories.add(new CategoryModel("Hair & Makeup", false));
+    // listCategories.add(new CategoryModel("Health & Beauty", false));
+    // listCategories.add(new CategoryModel("Honeymoon", false));
+    // listCategories.add(new CategoryModel("Invitation", false));
+    // listCategories.add(new CategoryModel("Jewelry", false));
   }
 
   // hapus semua category yang dipilih
@@ -48,10 +56,17 @@ for demo hardcode
   @override
   void initState() {
     super.initState();
-    _populateCategoryData();
-    getCategoryNameFromSharedPreferences(keyFilterParam).then((String json) {
+
+    HttpServices http = new HttpServices();
+    http.getCategories().then((List<dynamic> listCategory) {
       setState(() {
-        updateCategoryName(json);
+        _populateCategoryData(listCategory);
+        getCategoryNameFromSharedPreferences(keyFilterParam)
+            .then((String json) {
+          setState(() {
+            updateCategoryName(json);
+          });
+        });
       });
     });
   }
