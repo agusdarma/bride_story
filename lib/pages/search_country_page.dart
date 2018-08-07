@@ -22,14 +22,13 @@ class _SearchCountryPageState extends State<SearchCountryPage> {
 for demo hardcode
  */
   void _populateCountryData(List<dynamic> listCountry) {
-for (var items in listCountry) {
+    for (var items in listCountry) {
       //iterate over the list
       Map country = items; //store each map
       // print(category['categoryName']);
-      listCountries.add(
-          new CountryModel(country['countryName'], country['selected']));
+      listCountries.add(new CountryModel(
+          country['countryName'], country['selected'], country['countryId']));
     }
-
 
     // listCountries.add(new CountryModel("Indonesia", true));
     // listCountries.add(new CountryModel("All Countries", false));
@@ -48,6 +47,17 @@ for (var items in listCountry) {
     // listCountries.add(new CountryModel("Eqypt", false));
     // listCountries.add(new CountryModel("Fiji", false));
     // listCountries.add(new CountryModel("Germany", false));
+  }
+
+  void _updateCountryData(List<dynamic> listCountry) {
+    if (listCountry.length > 0) {
+      listCountries.clear();
+    }
+    for (var items in listCountry) {
+      Map country = items;
+      listCountries.add(new CountryModel(
+          country['countryName'], country['selected'], country['countryId']));
+    }
   }
 
   void checkAlreadySelected() async {
@@ -83,18 +93,18 @@ for (var items in listCountry) {
   @override
   void initState() {
     super.initState();
+
     HttpServices http = new HttpServices();
     http.getCountry().then((List<dynamic> listCountry) {
       setState(() {
         _populateCountryData(listCountry);
         getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
-        setState(() {
-          updateCountryName(json);
+          setState(() {
+            updateCountryName(json);
+          });
         });
-      });       
       });
     });
-
 
     // setState(() {
     //   // populate data country
@@ -107,6 +117,17 @@ for (var items in listCountry) {
     //     });
     //   });
     // });
+  }
+
+  _searchCountryByParam(String param) {
+    print("Second text field: ${param}");
+    HttpServices http = new HttpServices();
+    http.getCountryWithParam(param).then((List<dynamic> listCountry) {
+      setState(() {
+        print(listCountry);
+        _updateCountryData(listCountry);
+      });
+    });
   }
 
   Widget _buildCountry() {
@@ -127,6 +148,9 @@ for (var items in listCountry) {
                   child: new ListTile(
                     leading: const Icon(Icons.search),
                     title: new TextField(
+                      onChanged: (text) {
+                        _searchCountryByParam(text);
+                      },
                       decoration: new InputDecoration(
                         hintText: "Search Select Country",
                       ),
@@ -150,6 +174,9 @@ for (var items in listCountry) {
                   child: new ListTile(
                     leading: const Icon(Icons.search),
                     title: new TextField(
+                      onChanged: (text) {
+                        _searchCountryByParam(text);
+                      },
                       decoration: new InputDecoration(
                         hintText: "Search Select Country",
                       ),
@@ -178,7 +205,7 @@ for (var items in listCountry) {
               child: new ListTile(
                 onTap: () {
                   _onTap(context, listCountries.elementAt(index).countryName,
-                      index);
+                      listCountries.elementAt(index).countryId, index);
                 },
                 title: new Text(listCountries.elementAt(index).countryName),
               ),
@@ -199,7 +226,7 @@ for (var items in listCountry) {
               child: new ListTile(
                 onTap: () {
                   _onTap(context, listCountries.elementAt(index).countryName,
-                      index);
+                      listCountries.elementAt(index).countryId, index);
                 },
                 title: new Text(listCountries.elementAt(index).countryName),
                 trailing: Icon(Icons.check),
@@ -212,7 +239,7 @@ for (var items in listCountry) {
     );
   }
 
-  _onTap(BuildContext context, selectedCountry, int index) async {
+  _onTap(BuildContext context, selectedCountry, countryId, int index) async {
     setState(() {
       clearSelected();
       listCountries.elementAt(index).selected = true;
@@ -223,6 +250,7 @@ for (var items in listCountry) {
       Map filterParamMap = decoder.convert(json);
       var filterParamNew = new FilterParam.fromJson(filterParamMap);
       filterParamNew.countryName = selectedCountry;
+      filterParamNew.countryId = countryId;      
       const JsonEncoder encoder = const JsonEncoder();
       String stringJson = encoder.convert(filterParamNew);
       savCountryNameInSharedPreferences(stringJson, keyFilterParam);

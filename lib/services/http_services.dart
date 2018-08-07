@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
@@ -46,9 +47,9 @@ class HttpServices {
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
-    MessageVo a = new MessageVo.fromJson(messageVO);  
-     
-    List<dynamic> listCategory = decoder.convert(a.otherMessage);    
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listCategory = decoder.convert(a.otherMessage);
     return listCategory;
   }
 
@@ -58,9 +59,23 @@ class HttpServices {
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
-    MessageVo a = new MessageVo.fromJson(messageVO);  
-     
-    List<dynamic> listCountry = decoder.convert(a.otherMessage);    
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listCountry = decoder.convert(a.otherMessage);
+    return listCountry;
+  }
+
+  Future<List<dynamic>> getCountryWithParam(String param) async {
+    print("getCountryWithParam: ${param}");
+    final String response = await _netUtil.post(
+        'http://192.168.0.101:6556/bride-trx/country',      
+        body: param);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listCountry = decoder.convert(a.otherMessage);
     return listCountry;
   }
 }
