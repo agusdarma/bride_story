@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bride_story/data/global_param.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ class SearchCityPage extends StatefulWidget {
 class _SearchCityPageState extends State<SearchCityPage> {
   SharedPreferences sharedPreferences;
   List<CityModel> listCities = new List<CityModel>();
-  String countryId;
+  var globalParam = new GlobalParam("", "");
 
   /*
 for demo hardcode
@@ -83,16 +84,19 @@ for demo hardcode
         const JsonDecoder decoder = const JsonDecoder();
         Map filterParamMap = decoder.convert(json);
         var filterParamNew = new FilterParam.fromJson(filterParamMap);
-        if(filterParamNew.countryName == "All Countries"){
-          countryId = "0";
-        }else{
-          countryId = filterParamNew.countryId.toString();
+        if (filterParamNew.countryName == "All Countries") {
+          globalParam.countryId = "0";
+        } else {
+          globalParam.countryId = filterParamNew.countryId.toString();
         }
-        
       });
 
       HttpServices http = new HttpServices();
-      http.getCityWithCountryId(countryId).then((List<dynamic> listCities) {
+      const JsonEncoder encoder = const JsonEncoder();
+      String globalParamJson = encoder.convert(globalParam);
+      http
+          .getCityWithCountryId(globalParamJson)
+          .then((List<dynamic> listCities) {
         setState(() {
           _populateCityData(listCities);
           getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
@@ -101,6 +105,20 @@ for demo hardcode
             });
           });
         });
+      });
+    });
+  }
+
+  _searchCityByParam(String param) {
+    globalParam.param = param;
+    const JsonEncoder encoder = const JsonEncoder();
+    String globalParamJson = encoder.convert(globalParam);
+    print("Second text field: ${globalParamJson}");
+    HttpServices http = new HttpServices();
+    http.getCityWithCountryId(globalParamJson).then((List<dynamic> listCity) {
+      setState(() {
+        print(listCity);
+        _updateCityData(listCity);
       });
     });
   }
@@ -120,6 +138,9 @@ for demo hardcode
                   child: new ListTile(
                     leading: const Icon(Icons.search),
                     title: new TextField(
+                      onChanged: (text) {
+                        _searchCityByParam(text);
+                      },
                       decoration: new InputDecoration(
                         hintText: "Search Select City",
                       ),
@@ -143,6 +164,9 @@ for demo hardcode
                   child: new ListTile(
                     leading: const Icon(Icons.search),
                     title: new TextField(
+                      onChanged: (text) {
+                        _searchCityByParam(text);
+                      },
                       decoration: new InputDecoration(
                         hintText: "Search Select City",
                       ),
@@ -257,6 +281,17 @@ for demo hardcode
         listCities.elementAt(listCities.indexOf(item)).selected = true;
         break;
       }
+    }
+  }
+
+  void _updateCityData(List<dynamic> listCity) {
+    if (listCity.length > 0) {
+      listCities.clear();
+    }
+    for (var items in listCity) {
+      Map city = items;
+      listCities.add(
+          new CityModel(city['cityName'], city['countryId'], city['selected']));
     }
   }
 }
