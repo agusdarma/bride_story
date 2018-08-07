@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/filter_param.dart';
@@ -15,28 +16,34 @@ class SearchCityPage extends StatefulWidget {
 class _SearchCityPageState extends State<SearchCityPage> {
   SharedPreferences sharedPreferences;
   List<CityModel> listCities = new List<CityModel>();
+  String countryId;
 
   /*
 for demo hardcode
  */
-  void _populateCityData() {
-    listCities.add(new CityModel("Jakarta", true));
-    listCities.add(new CityModel("All Cities", false));
-    listCities.add(new CityModel("Aceh", false));
-    listCities.add(new CityModel("Ambon", false));
-    listCities.add(new CityModel("Bali", false));
-    listCities.add(new CityModel("Balikpapan", false));
-    listCities.add(new CityModel("Bandar Lampung", false));
-    listCities.add(new CityModel("Bandung", false));
-    listCities.add(new CityModel("Bangka Belitung", false));
-    listCities.add(new CityModel("Banjarbaru", false));
-    listCities.add(new CityModel("Cimahi", false));
-    listCities.add(new CityModel("Garut", false));
-    listCities.add(new CityModel("Jakarta", false));
-    listCities.add(new CityModel("Jambi", false));
-    listCities.add(new CityModel("Kupang", false));
-    listCities.add(new CityModel("Lombok", false));
-    listCities.add(new CityModel("Medan", false));
+  void _populateCityData(List<dynamic> listCity) {
+    for (var items in listCity) {
+      Map city = items;
+      listCities.add(
+          new CityModel(city['cityName'], city['countryId'], city['selected']));
+    }
+    // listCities.add(new CityModel("Jakarta", true));
+    // listCities.add(new CityModel("All Cities", false));
+    // listCities.add(new CityModel("Aceh", false));
+    // listCities.add(new CityModel("Ambon", false));
+    // listCities.add(new CityModel("Bali", false));
+    // listCities.add(new CityModel("Balikpapan", false));
+    // listCities.add(new CityModel("Bandar Lampung", false));
+    // listCities.add(new CityModel("Bandung", false));
+    // listCities.add(new CityModel("Bangka Belitung", false));
+    // listCities.add(new CityModel("Banjarbaru", false));
+    // listCities.add(new CityModel("Cimahi", false));
+    // listCities.add(new CityModel("Garut", false));
+    // listCities.add(new CityModel("Jakarta", false));
+    // listCities.add(new CityModel("Jambi", false));
+    // listCities.add(new CityModel("Kupang", false));
+    // listCities.add(new CityModel("Lombok", false));
+    // listCities.add(new CityModel("Medan", false));
   }
 
   void checkAlreadySelected() async {
@@ -71,11 +78,28 @@ for demo hardcode
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _populateCityData();
-      getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
+    getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
+      setState(() {
+        const JsonDecoder decoder = const JsonDecoder();
+        Map filterParamMap = decoder.convert(json);
+        var filterParamNew = new FilterParam.fromJson(filterParamMap);
+        if(filterParamNew.countryName == "All Countries"){
+          countryId = "0";
+        }else{
+          countryId = filterParamNew.countryId.toString();
+        }
+        
+      });
+
+      HttpServices http = new HttpServices();
+      http.getCityWithCountryId(countryId).then((List<dynamic> listCities) {
         setState(() {
-          updateCityName(json);
+          _populateCityData(listCities);
+          getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
+            setState(() {
+              updateCityName(json);
+            });
+          });
         });
       });
     });

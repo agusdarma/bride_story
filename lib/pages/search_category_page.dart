@@ -21,8 +21,8 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
       //iterate over the list
       Map category = items; //store each map
       // print(category['categoryName']);
-      listCategories.add(
-          new CategoryModel(category['categoryName'], category['selected']));
+      listCategories.add(new CategoryModel(category['categoryName'],
+          category['categoryId'], category['selected']));
     }
     // listCategories.add(new CategoryModel("All Categories", true));
     // listCategories.add(new CategoryModel("Bridal", false));
@@ -82,7 +82,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
     );
   }
 
-  _onTap(BuildContext context, selectedCategory, int index) {
+  _onTap(BuildContext context, selectedCategory, categoryId, int index) {
     setState(() {
       clearSelected();
       listCategories.elementAt(index).selected = true;
@@ -93,6 +93,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
       Map filterParamMap = decoder.convert(json);
       var filterParamNew = new FilterParam.fromJson(filterParamMap);
       filterParamNew.categoryName = selectedCategory;
+      filterParamNew.categoryId = categoryId;
       const JsonEncoder encoder = const JsonEncoder();
       String stringJson = encoder.convert(filterParamNew);
       saveCategoryNameInSharedPreferences(stringJson, keyFilterParam);
@@ -109,7 +110,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
               child: new ListTile(
                 onTap: () {
                   _onTap(context, listCategories.elementAt(index).categoryName,
-                      index);
+                      listCategories.elementAt(index).categoryId, index);
                 },
                 title: new Text(listCategories.elementAt(index).categoryName),
               ),
@@ -130,7 +131,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
               child: new ListTile(
                 onTap: () {
                   _onTap(context, listCategories.elementAt(index).categoryName,
-                      index);
+                      listCategories.elementAt(index).categoryId, index);
                 },
                 title: new Text(listCategories.elementAt(index).categoryName),
                 trailing: Icon(Icons.check),

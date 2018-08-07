@@ -78,4 +78,18 @@ class HttpServices {
     List<dynamic> listCountry = decoder.convert(a.otherMessage);
     return listCountry;
   }
+
+  Future<List<dynamic>> getCityWithCountryId(String countryId) async {
+    print("getCityWithCountryId: ${countryId}");
+    final String response = await _netUtil.post(
+        'http://192.168.0.101:6556/bride-trx/city',      
+        body: countryId);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listCity = decoder.convert(a.otherMessage);
+    return listCity;
+  }
 }
