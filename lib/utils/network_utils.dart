@@ -8,7 +8,7 @@ class NetworkUtil {
   NetworkUtil.internal();
   factory NetworkUtil() => _instance;
 
-  final JsonDecoder _decoder = new JsonDecoder();
+  // final JsonDecoder _decoder = new JsonDecoder();
 
   Future<String> get(String url) {
     // print('object res2' + url);

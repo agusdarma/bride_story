@@ -1,10 +1,10 @@
-class GlobalParam {
-  String countryId;
+class CityParam {
+  int countryId;
   String param;
 
-  GlobalParam(this.countryId, this.param);
+  CityParam(this.countryId, this.param);
 
-  GlobalParam.fromJson(Map<String, dynamic> json)
+  CityParam.fromJson(Map<String, dynamic> json)
       : countryId = json['countryId'],
         param = json['param'];
 

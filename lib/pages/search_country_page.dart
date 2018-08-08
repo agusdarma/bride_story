@@ -17,6 +17,7 @@ class _SearchCountryPageState extends State<SearchCountryPage> {
   SharedPreferences sharedPreferences;
   // List<String> listCountry = new List<String>();
   List<CountryModel> listCountries = new List<CountryModel>();
+  bool _loading = false;
 
   /*
 for demo hardcode
@@ -31,22 +32,6 @@ for demo hardcode
     }
 
     // listCountries.add(new CountryModel("Indonesia", true));
-    // listCountries.add(new CountryModel("All Countries", false));
-    // listCountries.add(new CountryModel("Albania", false));
-    // listCountries.add(new CountryModel("Angola", false));
-    // listCountries.add(new CountryModel("Antigua", false));
-    // listCountries.add(new CountryModel("Argentina", false));
-    // listCountries.add(new CountryModel("Aruba", false));
-    // listCountries.add(new CountryModel("Australia", false));
-    // listCountries.add(new CountryModel("Austria", false));
-    // listCountries.add(new CountryModel("Bahamas", false));
-    // listCountries.add(new CountryModel("Bahrain", false));
-    // listCountries.add(new CountryModel("Barbados", false));
-    // listCountries.add(new CountryModel("Cambodia", false));
-    // listCountries.add(new CountryModel("Denmark", false));
-    // listCountries.add(new CountryModel("Eqypt", false));
-    // listCountries.add(new CountryModel("Fiji", false));
-    // listCountries.add(new CountryModel("Germany", false));
   }
 
   void _updateCountryData(List<dynamic> listCountry) {
@@ -93,10 +78,11 @@ for demo hardcode
   @override
   void initState() {
     super.initState();
-
+    _loading = true;
     HttpServices http = new HttpServices();
     http.getCountry().then((List<dynamic> listCountry) {
       setState(() {
+        _loading = false;
         _populateCountryData(listCountry);
         getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
           setState(() {
@@ -105,95 +91,107 @@ for demo hardcode
         });
       });
     });
-
-    // setState(() {
-    //   // populate data country
-    //   _populateCountryData();
-    //   // cek apakah country sudah pernah dipilih sebelumnya dari shared preference
-    //   // checkAlreadySelected();
-    //   getCountryNameFromSharedPreferences(keyFilterParam).then((String json) {
-    //     setState(() {
-    //       updateCountryName(json);
-    //     });
-    //   });
-    // });
   }
 
   _searchCountryByParam(String param) {
-    print("Second text field: ${param}");
+    // print("Second text field: ${param}");
+    setState(() {
+      _loading = true;
+    });
     HttpServices http = new HttpServices();
     http.getCountryWithParam(param).then((List<dynamic> listCountry) {
       setState(() {
+        _loading = false;
         print(listCountry);
         _updateCountryData(listCountry);
       });
     });
   }
 
-  Widget _buildCountry() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: listCountries.length,
-      itemBuilder: (BuildContext context, int index) {
-        // // cek apakah kategori dipilih atau tidak karena memiliki view beda
-        if (listCountries.elementAt(index).selected == true) {
-          // return new Column(
-          //   children: <Widget>[_buildRowSelected(context, index)],
-          // );
-          if (index == 0) {
-            return new Column(
-              children: <Widget>[
-                new Container(
-                  color: Colors.grey[150],
-                  child: new ListTile(
-                    leading: const Icon(Icons.search),
-                    title: new TextField(
-                      onChanged: (text) {
-                        _searchCountryByParam(text);
-                      },
-                      decoration: new InputDecoration(
-                        hintText: "Search Select Country",
+  List<Widget> _buildCountry() {
+    Form form = new Form(
+      child: new ListView.builder(
+        padding: const EdgeInsets.all(8.0),
+        itemCount: listCountries.length,
+        itemBuilder: (BuildContext context, int index) {
+          // // cek apakah kategori dipilih atau tidak karena memiliki view beda
+          if (listCountries.elementAt(index).selected == true) {
+            // return new Column(
+            //   children: <Widget>[_buildRowSelected(context, index)],
+            // );
+            if (index == 0) {
+              return new Column(
+                children: <Widget>[
+                  new Container(
+                    color: Colors.grey[150],
+                    child: new ListTile(
+                      leading: const Icon(Icons.search),
+                      title: new TextField(
+                        onChanged: (text) {
+                          _searchCountryByParam(text);
+                        },
+                        decoration: new InputDecoration(
+                          hintText: "Search Select Country",
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _buildRowSelected(context, index)
-              ],
-            );
+                  _buildRowSelected(context, index)
+                ],
+              );
+            } else {
+              return new Column(
+                children: <Widget>[_buildRowSelected(context, index)],
+              );
+            }
           } else {
-            return new Column(
-              children: <Widget>[_buildRowSelected(context, index)],
-            );
-          }
-        } else {
-          if (index == 0) {
-            return new Column(
-              children: <Widget>[
-                new Container(
-                  color: Colors.grey[150],
-                  child: new ListTile(
-                    leading: const Icon(Icons.search),
-                    title: new TextField(
-                      onChanged: (text) {
-                        _searchCountryByParam(text);
-                      },
-                      decoration: new InputDecoration(
-                        hintText: "Search Select Country",
+            if (index == 0) {
+              return new Column(
+                children: <Widget>[
+                  new Container(
+                    color: Colors.grey[150],
+                    child: new ListTile(
+                      leading: const Icon(Icons.search),
+                      title: new TextField(
+                        onChanged: (text) {
+                          _searchCountryByParam(text);
+                        },
+                        decoration: new InputDecoration(
+                          hintText: "Search Select Country",
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _buildRow(context, index)
-              ],
-            );
-          } else {
-            return new Column(
-              children: <Widget>[_buildRow(context, index)],
-            );
+                  _buildRow(context, index)
+                ],
+              );
+            } else {
+              return new Column(
+                children: <Widget>[_buildRow(context, index)],
+              );
+            }
           }
-        }
-      },
+        },
+      ),
     );
+    var l = new List<Widget>();
+    l.add(form);
+    if (_loading) {
+      var modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.3,
+            child: const ModalBarrier(dismissible: false, color: Colors.white),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(),
+          ),
+        ],
+      );
+      l.add(modal);
+    }
+
+    return l;
   }
 
   Widget _buildRow(BuildContext context, int index) {
@@ -250,23 +248,12 @@ for demo hardcode
       Map filterParamMap = decoder.convert(json);
       var filterParamNew = new FilterParam.fromJson(filterParamMap);
       filterParamNew.countryName = selectedCountry;
-      filterParamNew.countryId = countryId;      
+      filterParamNew.countryId = countryId;
       const JsonEncoder encoder = const JsonEncoder();
       String stringJson = encoder.convert(filterParamNew);
       savCountryNameInSharedPreferences(stringJson, keyFilterParam);
       Navigator.pop(context, selectedCountry);
     });
-    // sharedPreferences = await SharedPreferences.getInstance();
-    // String filterParam = sharedPreferences.getString(keyFilterParam);
-    // const JsonDecoder decoder = const JsonDecoder();
-    // Map filterParamMap = decoder.convert(filterParam);
-    // var filterParamNew = new FilterParam.fromJson(filterParamMap);
-    // filterParamNew.countryName = selectedCountry;
-    // const JsonEncoder encoder = const JsonEncoder();
-    // String stringJson = encoder.convert(filterParamNew);
-    // print(stringJson);
-    // sharedPreferences.setString(keyFilterParam, stringJson);
-    // Navigator.pop(context, selectedCountry);
   }
 
   @override
@@ -276,7 +263,10 @@ for demo hardcode
         appBar: new AppBar(
           title: new Text("Search Country"),
         ),
-        body: _buildCountry(),
+        // body: _buildCountry(),
+        body: new Stack(
+          children: _buildCountry(),
+        ),
       ),
     );
   }

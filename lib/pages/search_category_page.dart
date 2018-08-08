@@ -15,6 +15,7 @@ class SearchCategoryPage extends StatefulWidget {
 class _SearchCategoryPageState extends State<SearchCategoryPage> {
   SharedPreferences sharedPreferences;
   List<CategoryModel> listCategories = new List<CategoryModel>();
+  bool _loading = false;
 
   void _populateCategoryData(List<dynamic> listCategory) {
     for (var items in listCategory) {
@@ -23,23 +24,7 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
       // print(category['categoryName']);
       listCategories.add(new CategoryModel(category['categoryName'],
           category['categoryId'], category['selected']));
-    }
-    // listCategories.add(new CategoryModel("All Categories", true));
-    // listCategories.add(new CategoryModel("Bridal", false));
-    // listCategories.add(new CategoryModel("Catering", false));
-    // listCategories.add(new CategoryModel("Dance & Choreography", false));
-    // listCategories.add(new CategoryModel("Decoration & Lighting", false));
-    // listCategories.add(new CategoryModel("Dress & Attire", false));
-    // listCategories.add(new CategoryModel("Entertainment (MC)", false));
-    // listCategories.add(new CategoryModel("Entertainment (DJ)", false));
-    // listCategories.add(new CategoryModel("Entertainment (Music)", false));
-    // listCategories.add(new CategoryModel("Event Rentals", false));
-    // listCategories.add(new CategoryModel("Favors & Gifts", false));
-    // listCategories.add(new CategoryModel("Flowers", false));
-    // listCategories.add(new CategoryModel("Hair & Makeup", false));
-    // listCategories.add(new CategoryModel("Health & Beauty", false));
-    // listCategories.add(new CategoryModel("Honeymoon", false));
-    // listCategories.add(new CategoryModel("Invitation", false));
+    }    
     // listCategories.add(new CategoryModel("Jewelry", false));
   }
 
@@ -53,10 +38,11 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
   @override
   void initState() {
     super.initState();
-
+    _loading = true;
     HttpServices http = new HttpServices();
     http.getCategories().then((List<dynamic> listCategory) {
       setState(() {
+        _loading = false;
         _populateCategoryData(listCategory);
         getCategoryNameFromSharedPreferences(keyFilterParam)
             .then((String json) {
@@ -68,18 +54,39 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
     });
   }
 
-  Widget _buildCategory() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: listCategories.length,
-      itemBuilder: (BuildContext context, int index) {
-        if (listCategories.elementAt(index).selected == true) {
-          return _buildRowSelected(context, index);
-        } else {
-          return _buildRow(context, index);
-        }
-      },
+  List<Widget> _buildCategory() {
+    Form form = new Form(
+      child: new ListView.builder(
+        padding: const EdgeInsets.all(8.0),
+        itemCount: listCategories.length,
+        itemBuilder: (BuildContext context, int index) {
+          if (listCategories.elementAt(index).selected == true) {
+            return _buildRowSelected(context, index);
+          } else {
+            return _buildRow(context, index);
+          }
+        },
+      ),
     );
+
+    var l = new List<Widget>();
+    l.add(form);
+    if (_loading) {
+      var modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.3,
+            child: const ModalBarrier(dismissible: false, color: Colors.white),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(),
+          ),
+        ],
+      );
+      l.add(modal);
+    }
+
+    return l;
   }
 
   _onTap(BuildContext context, selectedCategory, categoryId, int index) {
@@ -151,7 +158,10 @@ class _SearchCategoryPageState extends State<SearchCategoryPage> {
         appBar: new AppBar(
           title: new Text("Search Category"),
         ),
-        body: _buildCategory(),
+        // body: _buildCategory(),
+        body: new Stack(
+          children: _buildCategory(),
+        ),
       ),
     );
   }

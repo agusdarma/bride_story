@@ -1,6 +1,3 @@
-import 'package:bride_story/models/category_model.dart';
-import 'package:bride_story/models/post_model.dart';
-import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 

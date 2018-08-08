@@ -1,29 +1,16 @@
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:bride_story/data/message_vo.dart';
-import 'package:bride_story/models/category_model.dart';
 import 'package:bride_story/models/post_model.dart';
 import 'package:bride_story/utils/network_utils.dart';
 
 class HttpServices {
   NetworkUtil _netUtil = new NetworkUtil();
-  static final BASE_URL = "https://jsonplaceholder.typicode.com/posts/1";
-  static final LOGIN_URL = BASE_URL + "/login.php";
-  static final _API_KEY = "somerandomkey";
-
-  // Future<Post> login(String username, String password) {
-  //   return _netUtil.post(BASE_URL, body: {
-  //     "token": _API_KEY,
-  //     "username": username,
-  //     "password": password
-  //   }).then((dynamic res) {
-  //     print(res.toString());
-  //     if (res["error"]) throw new Exception(res["error_msg"]);
-  //     return new Post.map(res["post"]);
-  //   });
-  // }
+  static final baseUrl = "http://192.168.0.101:6556/bride-trx";
+  static final categoryUrl = baseUrl + "/cat";
+  static final countryUrl = baseUrl + "/country";
+  static final cityUrl = baseUrl + "/city";
 
   Future<Post> fetchDataPost() async {
     // final response =
@@ -42,8 +29,7 @@ class HttpServices {
   }
 
   Future<List<dynamic>> getCategories() async {
-    final String response =
-        await _netUtil.get('http://192.168.0.101:6556/bride-trx/cat');
+    final String response = await _netUtil.get(categoryUrl);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
@@ -54,8 +40,7 @@ class HttpServices {
   }
 
   Future<List<dynamic>> getCountry() async {
-    final String response =
-        await _netUtil.get('http://192.168.0.101:6556/bride-trx/country');
+    final String response = await _netUtil.get(countryUrl);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
@@ -66,10 +51,8 @@ class HttpServices {
   }
 
   Future<List<dynamic>> getCountryWithParam(String param) async {
-    print("getCountryWithParam: ${param}");
-    final String response = await _netUtil.post(
-        'http://192.168.0.101:6556/bride-trx/country',      
-        body: param);
+    // print("getCountryWithParam: ${param}");
+    final String response = await _netUtil.post(countryUrl, body: param);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
@@ -80,10 +63,9 @@ class HttpServices {
   }
 
   Future<List<dynamic>> getCityWithCountryId(String globalParam) async {
-    print("getCityWithCountryId: ${globalParam}");
-    final String response = await _netUtil.post(
-        'http://192.168.0.101:6556/bride-trx/city',      
-        body: globalParam);
+    // print("getCityWithCountryId: ${globalParam}");
+    final String response = await _netUtil
+        .post(cityUrl, body: globalParam);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
@@ -92,5 +74,4 @@ class HttpServices {
     List<dynamic> listCity = decoder.convert(a.otherMessage);
     return listCity;
   }
-
 }

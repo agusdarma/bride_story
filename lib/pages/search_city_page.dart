@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bride_story/data/global_param.dart';
+import 'package:bride_story/data/city_param.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +17,8 @@ class SearchCityPage extends StatefulWidget {
 class _SearchCityPageState extends State<SearchCityPage> {
   SharedPreferences sharedPreferences;
   List<CityModel> listCities = new List<CityModel>();
-  var globalParam = new GlobalParam("", "");
+  var cityParam = new CityParam(0, "");
+  bool _loading = false;
 
   /*
 for demo hardcode
@@ -29,22 +30,6 @@ for demo hardcode
           new CityModel(city['cityName'], city['countryId'], city['selected']));
     }
     // listCities.add(new CityModel("Jakarta", true));
-    // listCities.add(new CityModel("All Cities", false));
-    // listCities.add(new CityModel("Aceh", false));
-    // listCities.add(new CityModel("Ambon", false));
-    // listCities.add(new CityModel("Bali", false));
-    // listCities.add(new CityModel("Balikpapan", false));
-    // listCities.add(new CityModel("Bandar Lampung", false));
-    // listCities.add(new CityModel("Bandung", false));
-    // listCities.add(new CityModel("Bangka Belitung", false));
-    // listCities.add(new CityModel("Banjarbaru", false));
-    // listCities.add(new CityModel("Cimahi", false));
-    // listCities.add(new CityModel("Garut", false));
-    // listCities.add(new CityModel("Jakarta", false));
-    // listCities.add(new CityModel("Jambi", false));
-    // listCities.add(new CityModel("Kupang", false));
-    // listCities.add(new CityModel("Lombok", false));
-    // listCities.add(new CityModel("Medan", false));
   }
 
   void checkAlreadySelected() async {
@@ -84,20 +69,21 @@ for demo hardcode
         const JsonDecoder decoder = const JsonDecoder();
         Map filterParamMap = decoder.convert(json);
         var filterParamNew = new FilterParam.fromJson(filterParamMap);
-        if (filterParamNew.countryName == "All Countries") {
-          globalParam.countryId = "0";
+        if (filterParamNew.countryName == "All Countries") {          
+          cityParam.countryId = 0;
         } else {
-          globalParam.countryId = filterParamNew.countryId.toString();
+          cityParam.countryId = filterParamNew.countryId;
         }
       });
-
+      _loading = true;
       HttpServices http = new HttpServices();
       const JsonEncoder encoder = const JsonEncoder();
-      String globalParamJson = encoder.convert(globalParam);
+      String globalParamJson = encoder.convert(cityParam);
       http
           .getCityWithCountryId(globalParamJson)
           .then((List<dynamic> listCities) {
         setState(() {
+          _loading = false;
           _populateCityData(listCities);
           getCityNameFromSharedPreferences(keyFilterParam).then((String json) {
             setState(() {
@@ -110,80 +96,104 @@ for demo hardcode
   }
 
   _searchCityByParam(String param) {
-    globalParam.param = param;
+    cityParam.param = param;
     const JsonEncoder encoder = const JsonEncoder();
-    String globalParamJson = encoder.convert(globalParam);
-    print("Second text field: ${globalParamJson}");
+    String globalParamJson = encoder.convert(cityParam);
+    // print("Second text field: ${globalParamJson}");
+    setState(() {
+      _loading = true;
+    });
     HttpServices http = new HttpServices();
     http.getCityWithCountryId(globalParamJson).then((List<dynamic> listCity) {
       setState(() {
+        _loading = false;
         print(listCity);
         _updateCityData(listCity);
       });
     });
   }
 
-  Widget _buildCity() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: listCities.length,
-      itemBuilder: (BuildContext context, int index) {
-        // cek apakah kategori dipilih atau tidak karena memiliki view beda
-        if (listCities.elementAt(index).selected == true) {
-          if (index == 0) {
-            return new Column(
-              children: <Widget>[
-                new Container(
-                  color: Colors.grey[150],
-                  child: new ListTile(
-                    leading: const Icon(Icons.search),
-                    title: new TextField(
-                      onChanged: (text) {
-                        _searchCityByParam(text);
-                      },
-                      decoration: new InputDecoration(
-                        hintText: "Search Select City",
+  List<Widget> _buildCity() {
+    Form form = new Form(
+      child: new ListView.builder(
+        padding: const EdgeInsets.all(8.0),
+        itemCount: listCities.length,
+        itemBuilder: (BuildContext context, int index) {
+          // cek apakah kategori dipilih atau tidak karena memiliki view beda
+          if (listCities.elementAt(index).selected == true) {
+            if (index == 0) {
+              return new Column(
+                children: <Widget>[
+                  new Container(
+                    color: Colors.grey[150],
+                    child: new ListTile(
+                      leading: const Icon(Icons.search),
+                      title: new TextField(
+                        onChanged: (text) {
+                          _searchCityByParam(text);
+                        },
+                        decoration: new InputDecoration(
+                          hintText: "Search Select City",
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _buildRowSelected(context, index)
-              ],
-            );
+                  _buildRowSelected(context, index)
+                ],
+              );
+            } else {
+              return new Column(
+                children: <Widget>[_buildRowSelected(context, index)],
+              );
+            }
           } else {
-            return new Column(
-              children: <Widget>[_buildRowSelected(context, index)],
-            );
-          }
-        } else {
-          if (index == 0) {
-            return new Column(
-              children: <Widget>[
-                new Container(
-                  color: Colors.grey[150],
-                  child: new ListTile(
-                    leading: const Icon(Icons.search),
-                    title: new TextField(
-                      onChanged: (text) {
-                        _searchCityByParam(text);
-                      },
-                      decoration: new InputDecoration(
-                        hintText: "Search Select City",
+            if (index == 0) {
+              return new Column(
+                children: <Widget>[
+                  new Container(
+                    color: Colors.grey[150],
+                    child: new ListTile(
+                      leading: const Icon(Icons.search),
+                      title: new TextField(
+                        onChanged: (text) {
+                          _searchCityByParam(text);
+                        },
+                        decoration: new InputDecoration(
+                          hintText: "Search Select City",
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _buildRow(context, index)
-              ],
-            );
-          } else {
-            return new Column(
-              children: <Widget>[_buildRow(context, index)],
-            );
+                  _buildRow(context, index)
+                ],
+              );
+            } else {
+              return new Column(
+                children: <Widget>[_buildRow(context, index)],
+              );
+            }
           }
-        }
-      },
+        },
+      ),
     );
+    var l = new List<Widget>();
+    l.add(form);
+    if (_loading) {
+      var modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.3,
+            child: const ModalBarrier(dismissible: false, color: Colors.white),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(),
+          ),
+        ],
+      );
+      l.add(modal);
+    }
+
+    return l;
   }
 
   Widget _buildRow(BuildContext context, int index) {
@@ -252,7 +262,10 @@ for demo hardcode
         appBar: new AppBar(
           title: new Text("Search City"),
         ),
-        body: _buildCity(),
+        // body: _buildCity(),
+        body: new Stack(
+          children: _buildCity(),
+        ),
       ),
     );
   }
