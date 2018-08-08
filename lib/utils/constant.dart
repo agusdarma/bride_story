@@ -7,3 +7,4 @@
 
 const String lblTitleApplication = 'Bride Story';
 const String keyFilterParam = 'keyFilterParam';
+const String kParamImageName = '?n=<img>';

@@ -1,3 +1,6 @@
+import 'package:bride_story/models/carousel_model.dart';
+import 'package:bride_story/services/http_services.dart';
+import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
@@ -202,9 +205,55 @@ class _HomePageState extends State<HomePage>
   // Future<String> _stringJsonPrefs;
   Animation<double> animation;
   AnimationController controller;
+  List<CarouselModel> listCarousel = new List<CarouselModel>();
+  List<dynamic> listImages = [];
+  // List<dynamic> listCarosel;
+
+  // Image createImageAdsDisplay({double width = 200.0, double height = 200.0}) {
+  //   return Image.network("http://192.168.0.101:6556/bride-trx/images",
+  //       width: width, height: height, fit: BoxFit.contain);
+  // }
+
+  // List<dynamic> addImages(){
+  //     createImageAdsDisplay();
+  //     // listCarosel.add(createImageAdsDisplay());
+  //     // print(listCarosel);
+  //   }
+
+  void _generateCarouselImg(List<dynamic> listCarousel) {
+    for (var items in listCarousel) {
+      Map carousel = items; //store each map
+      listCarousel.add(new CarouselModel(
+          carousel['imageName'], carousel['status'], carousel['id']));
+    }
+    print(listCarousel.length);
+  }
+
+  Widget _generateCarouselWidget(List<dynamic> listCarousel) {
+    for (var items in listCarousel) {
+      Map carousel = items; //store each map
+      String fileName = carousel['imageName'];
+      String url = 'http://192.168.0.101:6556/bride-trx/images' +
+          kParamImageName.replaceAll('<img>', '$fileName');
+      print(url);    
+      listImages.add(new NetworkImage(url));
+      // listCarousel.add(new CarouselModel(carousel['imageName'],
+      //     carousel['status'], carousel['id']));
+    }
+    print(listImages.length);
+  }
 
   initState() {
     super.initState();
+    HttpServices http = new HttpServices();
+    http.getAllCarouselImg().then((List<dynamic> listCarousel) {
+      setState(() {
+        print(listCarousel);
+        _generateCarouselWidget(listCarousel);
+      });
+    });
+
+    // addImages();
     controller = new AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     animation = new Tween(begin: 0.0, end: 18.0).animate(controller)
@@ -226,12 +275,17 @@ class _HomePageState extends State<HomePage>
 
     Widget carousel = new Carousel(
       boxFit: BoxFit.cover,
-      images: [
-        new AssetImage('assets/images/1.jpg'),
-        new AssetImage('assets/images/2.jpg'),
-        new AssetImage('assets/images/3.jpg'),
-        new AssetImage('assets/images/4.jpg'),
-      ],
+      images: listImages,
+      // [
+      //   // listCarosel,
+      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
+      //   new AssetImage('assets/images/1.jpg'),
+      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
+      //   new AssetImage('assets/images/2.jpg'),
+      //   new AssetImage('assets/images/3.jpg'),
+      //   new AssetImage('assets/images/4.jpg'),
+      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
+      // ],
       animationCurve: Curves.fastOutSlowIn,
       animationDuration: Duration(seconds: 1),
     );
@@ -315,7 +369,7 @@ class _HomePageState extends State<HomePage>
           minWidth: screenWidth - 32,
           height: 50.0,
           onPressed: () {
-            _navigateSearchButton(context);            
+            _navigateSearchButton(context);
           },
           color: Colors.lightBlueAccent,
           child: Text('Search Vendors',
@@ -338,6 +392,7 @@ class _HomePageState extends State<HomePage>
                 children: [
                   carousel,
                   banner,
+                  // createImageAdsDisplay(),
                 ],
               ),
             ),

@@ -11,6 +11,7 @@ class HttpServices {
   static final categoryUrl = baseUrl + "/cat";
   static final countryUrl = baseUrl + "/country";
   static final cityUrl = baseUrl + "/city";
+  static final getAllCarouselImgUrl = baseUrl + "/allCarousel";
 
   Future<Post> fetchDataPost() async {
     // final response =
@@ -66,6 +67,17 @@ class HttpServices {
     // print("getCityWithCountryId: ${globalParam}");
     final String response = await _netUtil
         .post(cityUrl, body: globalParam);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listCity = decoder.convert(a.otherMessage);
+    return listCity;
+  }
+
+  Future<List<dynamic>> getAllCarouselImg() async {
+    final String response = await _netUtil.get(getAllCarouselImgUrl);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);
