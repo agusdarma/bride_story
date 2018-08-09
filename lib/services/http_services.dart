@@ -11,6 +11,7 @@ class HttpServices {
   static final categoryUrl = baseUrl + "/cat";
   static final countryUrl = baseUrl + "/country";
   static final cityUrl = baseUrl + "/city";
+  static final getImageByName = baseUrl + "/getImageByName";
   static final getAllCarouselImgUrl = baseUrl + "/allCarousel";
 
   Future<Post> fetchDataPost() async {

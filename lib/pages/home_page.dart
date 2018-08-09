@@ -233,9 +233,9 @@ class _HomePageState extends State<HomePage>
     for (var items in listCarousel) {
       Map carousel = items; //store each map
       String fileName = carousel['imageName'];
-      String url = 'http://192.168.0.101:6556/bride-trx/images' +
+      String url = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
-      print(url);    
+      // print(url);    
       listImages.add(new NetworkImage(url));
       // listCarousel.add(new CarouselModel(carousel['imageName'],
       //     carousel['status'], carousel['id']));
