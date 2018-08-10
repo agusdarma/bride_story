@@ -1,4 +1,5 @@
 import 'package:bride_story/pages/booking_page.dart';
+import 'package:bride_story/pages/home_page_new.dart';
 import 'package:bride_story/pages/price_list_page.dart';
 import 'package:flutter/material.dart';
 import 'utils/constant.dart';
@@ -17,10 +18,16 @@ void main() {
 // Create the router.
   Router router = new Router();
 
+  // // Define our home page.
+  // router.define('/', handler: new Handler(
+  //     handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  //   return new HomePageLayout();
+  // }));
+
   // Define our home page.
   router.define('/', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new HomePageLayout();
+    return new HomePageNew();
   }));
 
   // Define our search category page.
@@ -106,10 +113,10 @@ class MyApp extends StatelessWidget {
       title: lblTitleApplication,
       theme: new ThemeData(
         // primarySwatch: Colors.red,
-        // primaryColor: kTelkomselRed,
+        // primaryColor: kTelkomselRed,        
         fontFamily: 'Roboto',
       ),
-      home: HomePageLayout(),
+      home: HomePageNew(),
       onGenerateRoute: router.generator,
     );
   }

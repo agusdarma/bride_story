@@ -206,41 +206,17 @@ class _HomePageState extends State<HomePage>
   Animation<double> animation;
   AnimationController controller;
   List<CarouselModel> listCarousel = new List<CarouselModel>();
-  List<dynamic> listImages = [];
-  // List<dynamic> listCarosel;
+  List<dynamic> listImages = [];  
 
-  // Image createImageAdsDisplay({double width = 200.0, double height = 200.0}) {
-  //   return Image.network("http://192.168.0.101:6556/bride-trx/images",
-  //       width: width, height: height, fit: BoxFit.contain);
-  // }
-
-  // List<dynamic> addImages(){
-  //     createImageAdsDisplay();
-  //     // listCarosel.add(createImageAdsDisplay());
-  //     // print(listCarosel);
-  //   }
-
-  void _generateCarouselImg(List<dynamic> listCarousel) {
-    for (var items in listCarousel) {
-      Map carousel = items; //store each map
-      listCarousel.add(new CarouselModel(
-          carousel['imageName'], carousel['status'], carousel['id']));
-    }
-    print(listCarousel.length);
-  }
 
   Widget _generateCarouselWidget(List<dynamic> listCarousel) {
     for (var items in listCarousel) {
       Map carousel = items; //store each map
       String fileName = carousel['imageName'];
       String url = HttpServices.getImageByName +
-          kParamImageName.replaceAll('<img>', '$fileName');
-      // print(url);    
-      listImages.add(new NetworkImage(url));
-      // listCarousel.add(new CarouselModel(carousel['imageName'],
-      //     carousel['status'], carousel['id']));
+          kParamImageName.replaceAll('<img>', '$fileName');      
+      listImages.add(new NetworkImage(url));      
     }
-    print(listImages.length);
   }
 
   initState() {
@@ -248,12 +224,11 @@ class _HomePageState extends State<HomePage>
     HttpServices http = new HttpServices();
     http.getAllCarouselImg().then((List<dynamic> listCarousel) {
       setState(() {
-        print(listCarousel);
         _generateCarouselWidget(listCarousel);
       });
     });
 
-    // addImages();
+
     controller = new AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     animation = new Tween(begin: 0.0, end: 18.0).animate(controller)
@@ -262,10 +237,7 @@ class _HomePageState extends State<HomePage>
           // the state that has changed here is the animation object’s value
         });
       });
-    controller.forward();
-    // _stringJsonPrefs = _prefs.then((SharedPreferences prefs) {
-    //   return (prefs.getString(keyFilterParam) ?? "");
-    // });
+    controller.forward();    
   }
 
   @override
@@ -275,17 +247,7 @@ class _HomePageState extends State<HomePage>
 
     Widget carousel = new Carousel(
       boxFit: BoxFit.cover,
-      images: listImages,
-      // [
-      //   // listCarosel,
-      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
-      //   new AssetImage('assets/images/1.jpg'),
-      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
-      //   new AssetImage('assets/images/2.jpg'),
-      //   new AssetImage('assets/images/3.jpg'),
-      //   new AssetImage('assets/images/4.jpg'),
-      //   new NetworkImage('http://192.168.0.101:6556/bride-trx/images'),
-      // ],
+      images: listImages,      
       animationCurve: Curves.fastOutSlowIn,
       animationDuration: Duration(seconds: 1),
     );
@@ -391,8 +353,7 @@ class _HomePageState extends State<HomePage>
               child: new Stack(
                 children: [
                   carousel,
-                  banner,
-                  // createImageAdsDisplay(),
+                  banner,                  
                 ],
               ),
             ),
