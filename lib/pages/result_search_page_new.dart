@@ -251,7 +251,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               shape: BoxShape.rectangle,
               image: new DecorationImage(
                 fit: BoxFit.fill,
-                image: new AssetImage(listResultData.elementAt(index).linkProfileImage),
+                image: new AssetImage(
+                    listResultData.elementAt(index).linkProfileImage),
               )));
     }
 
@@ -273,7 +274,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                 Icon(Icons.store),
                 Container(
                   padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Jln Jendral Sudirman',
+                  child: Text('Jln Jendral Sudirmanffffffffddddddddddddddf',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
