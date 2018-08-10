@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class HomePageNew extends StatefulWidget {
@@ -7,14 +10,73 @@ class HomePageNew extends StatefulWidget {
 
 class _HomePageNewState extends State<HomePageNew> {
   String displayedString = "";
+  String displayedDate = "";
+  int selectedDate = new DateTime.now().millisecondsSinceEpoch;
 
   void initState() {
     super.initState();
     displayedString = "Jakarta";
+    displayedDate = "Please Select Date Here";
   }
 
   @override
   Widget build(BuildContext context) {
+    _navigateSearchButton(BuildContext context) {
+      Navigator.pushNamed(context, "/searchResult");
+    }
+
+    String _convertBulan(int month) {
+      String bulan = "";
+      if (1 == month) {
+        bulan = januari;
+      } else if (2 == month) {
+        bulan = februari;
+      } else if (3 == month) {
+        bulan = maret;
+      } else if (4 == month) {
+        bulan = april;
+      } else if (5 == month) {
+        bulan = mei;
+      } else if (6 == month) {
+        bulan = juni;
+      } else if (7 == month) {
+        bulan = juli;
+      } else if (8 == month) {
+        bulan = agustus;
+      } else if (9 == month) {
+        bulan = september;
+      } else if (10 == month) {
+        bulan = oktober;
+      } else if (11 == month) {
+        bulan = november;
+      } else if (12 == month) {
+        bulan = desember;
+      }
+      return bulan;
+    }
+
+    Future<Null> _selectDate(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: new DateTime.now(),
+          firstDate: new DateTime(2015, 8),
+          lastDate: new DateTime(2101));
+      if (picked != null) {
+        setState(() {
+          selectedDate = picked.millisecondsSinceEpoch;
+          int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
+          int month =
+              new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
+          int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
+          displayedDate = day.toString() +
+              ' ' +
+              _convertBulan(month) +
+              ' ' +
+              year.toString();
+        });
+      }
+    }
+
     _navigateAndDisplaySelection(BuildContext context) async {
       final result = await Navigator.pushNamed(context, '/searchCity');
       if (result != null) {
@@ -98,7 +160,9 @@ class _HomePageNewState extends State<HomePageNew> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              _selectDate(context);
+            },
             child: Padding(
               padding: EdgeInsets.all(12.0),
               child: Row(
@@ -109,7 +173,7 @@ class _HomePageNewState extends State<HomePageNew> {
                   Icon(Icons.date_range),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
-                    child: new Text('Please Select Date Here',
+                    child: new Text(displayedDate,
                         style: TextStyle(
                           fontSize: 15.0,
                         )),
@@ -129,7 +193,9 @@ class _HomePageNewState extends State<HomePageNew> {
           color: Colors.blue,
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              _navigateSearchButton(context);
+            },
             child: Padding(
               padding: EdgeInsets.all(12.0),
               child: Row(
