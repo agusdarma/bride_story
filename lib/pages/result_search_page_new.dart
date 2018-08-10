@@ -185,138 +185,139 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           )),
     );
 
-    var imageVenue = new Container(
-        margin: EdgeInsets.only(right: 5.0),
-        width: 140.0,
-        height: 200.0,
-        decoration: new BoxDecoration(
-            shape: BoxShape.rectangle,
-            image: new DecorationImage(
-              fit: BoxFit.fill,
-              image: new AssetImage("assets/images/1.jpg"),
-            )));
-    var descVenue = Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 4.0, bottom: 5.0),
-            child: Text('Oasis Amir Hotel',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                )),
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.store),
-              Container(
-                padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                child: Text('Jln Jendral Sudirman',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                    )),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.view_module),
-              Container(
-                padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                child: Text('Kapasitas ruangan : 1500 tamu',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                    )),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.local_parking),
-              Container(
-                padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                child: Text('Kapasitas parkir : 1500 mobil',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                    )),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.terrain),
-              Container(
-                padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                child: Text('Luas bangunan 500 m2',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                    )),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.terrain),
-              Container(
-                padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                child: Text('Luas lahan 800 m2',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                    )),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 4.0, top: 30.0,right: 4.0),
-                child: Text('Rp. 30.000.000',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.0,
-                    )),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+    Widget imageVenue(BuildContext context, int index) {
+      return new Container(
+          margin: EdgeInsets.only(right: 5.0),
+          width: 140.0,
+          height: 200.0,
+          decoration: new BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: new DecorationImage(
+                fit: BoxFit.fill,
+                image: new AssetImage("assets/images/1.jpg"),
+              )));
+    }
 
-    var detailVenueView = Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 9.0, right: 9.0),
-      margin: EdgeInsets.only(top: 5.0, bottom: 6.0),
-      child: Material(
-          elevation: 4.0,
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4.0),
-          child: InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  imageVenue,
-                  descVenue,
-                ],
-              ),
+    Widget descVenue(BuildContext context, int index) {
+      return Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 4.0, bottom: 5.0),
+              child: Text('Oasis Amir Hotel',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                  )),
             ),
-          )),
-    );
+            Row(
+              children: <Widget>[
+                Icon(Icons.store),
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                  child: Text('Jln Jendral Sudirman',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.view_module),
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                  child: Text('Kapasitas ruangan : 1500 tamu',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.local_parking),
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                  child: Text('Kapasitas parkir : 1500 mobil',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.terrain),
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                  child: Text('Luas bangunan 500 m2',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.terrain),
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                  child: Text('Luas lahan 800 m2',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 4.0, top: 30.0, right: 4.0),
+                  child: Text('Rp. 30.000.000',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                      )),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
 
     Widget content(BuildContext context, int index) {
-      return new Container(
-        child: detailVenueView,
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 9.0, right: 9.0),
+        margin: EdgeInsets.only(top: 5.0, bottom: 6.0),
+        child: Material(
+            elevation: 4.0,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(4.0),
+            child: InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    imageVenue(context, index),
+                    descVenue(context, index),
+                  ],
+                ),
+              ),
+            )),
       );
     }
 
