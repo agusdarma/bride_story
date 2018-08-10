@@ -16,6 +16,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
   FilterParam filterParamNew;
+  int selectedDate = new DateTime.now().millisecondsSinceEpoch;
+  String displayedDate = "";
 
   void _populateResultData() {
     listResultData.add(new ResultSearchModel(
@@ -102,6 +104,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   void initState() {
     super.initState();
     setState(() {
+      displayedDate = '28 Agustus 2018';
       _getFilterParam(keyFilterParam).then((result) {
         setState(() {
           updateSubtitle(result);
@@ -111,8 +114,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   }
 
   Future updateSubtitle(String json) async {
-    print(json);
-    await new Future.delayed(const Duration(seconds: 2));
+    // print(json);
+    // await new Future.delayed(const Duration(seconds: 2));
     const JsonDecoder decoder = const JsonDecoder();
     Map filterParamMap = decoder.convert(json);
     filterParamNew = new FilterParam.fromJson(filterParamMap);
@@ -149,6 +152,59 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
         )
       ],
     );
+
+    String _convertBulan(int month) {
+      String bulan = "";
+      if (1 == month) {
+        bulan = januari;
+      } else if (2 == month) {
+        bulan = februari;
+      } else if (3 == month) {
+        bulan = maret;
+      } else if (4 == month) {
+        bulan = april;
+      } else if (5 == month) {
+        bulan = mei;
+      } else if (6 == month) {
+        bulan = juni;
+      } else if (7 == month) {
+        bulan = juli;
+      } else if (8 == month) {
+        bulan = agustus;
+      } else if (9 == month) {
+        bulan = september;
+      } else if (10 == month) {
+        bulan = oktober;
+      } else if (11 == month) {
+        bulan = november;
+      } else if (12 == month) {
+        bulan = desember;
+      }
+      return bulan;
+    }
+
+    Future<Null> _selectDate(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: new DateTime.now(),
+          firstDate: new DateTime(2015, 8),
+          lastDate: new DateTime(2101));
+      if (picked != null) {
+        setState(() {
+          selectedDate = picked.millisecondsSinceEpoch;
+          int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
+          int month =
+              new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
+          int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
+          displayedDate = day.toString() +
+              ' ' +
+              _convertBulan(month) +
+              ' ' +
+              year.toString();
+        });
+      }
+    }
+
     var selectedDateView = Container(
       width: MediaQuery.of(context).size.width,
       child: Material(
@@ -158,6 +214,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           child: InkWell(
             onTap: () {
               // _navigateAndDisplaySelection(context);
+              _selectDate(context);
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),
@@ -169,7 +226,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   Icon(Icons.date_range),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
-                    child: new Text('28 Agustus 2018',
+                    child: new Text(displayedDate,
                         style: TextStyle(
                           fontSize: 15.0,
                         )),
@@ -194,7 +251,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               shape: BoxShape.rectangle,
               image: new DecorationImage(
                 fit: BoxFit.fill,
-                image: new AssetImage("assets/images/1.jpg"),
+                image: new AssetImage(listResultData.elementAt(index).linkProfileImage),
               )));
     }
 
@@ -205,7 +262,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 4.0, bottom: 5.0),
-              child: Text('Oasis Amir Hotel',
+              child: Text(listResultData.elementAt(index).titleVendor,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
