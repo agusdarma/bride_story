@@ -1,6 +1,7 @@
 import 'package:bride_story/pages/booking_page.dart';
 import 'package:bride_story/pages/home_page_new.dart';
 import 'package:bride_story/pages/price_list_page.dart';
+import 'package:bride_story/pages/result_search_page_new.dart';
 import 'package:flutter/material.dart';
 import 'utils/constant.dart';
 import 'pages/home_page.dart';
@@ -48,10 +49,16 @@ void main() {
     return new SearchCityPage();
   }));
 
-  // Define our result search page.
+  // // Define our result search page.
+  // router.define('/searchResult', handler: new Handler(
+  //     handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+  //   return new ResultSearchPage();
+  // }));
+
+  // Define our result search page new.
   router.define('/searchResult', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new ResultSearchPage();
+    return new ResultSearchPageNew();
   }));
 
   // Define our vendor page.
