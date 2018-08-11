@@ -272,65 +272,85 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             Row(
               children: <Widget>[
                 Icon(Icons.store),
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Jln Jendral Sudirmanffffffffddddddddddddddf',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      )),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                    child: Text('Jln Jendral Sudirman',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        )),
+                  ),
                 ),
               ],
             ),
             Row(
               children: <Widget>[
                 Icon(Icons.view_module),
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Kapasitas ruangan : 1500 tamu',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      )),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                    child: Text('Kapasitas ruangan : 1500 tamu',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        )),
+                  ),
                 ),
               ],
             ),
             Row(
               children: <Widget>[
                 Icon(Icons.local_parking),
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Kapasitas parkir : 1500 mobil',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      )),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                    child: Text('Kapasitas parkir : 1500 mobil',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        )),
+                  ),
                 ),
               ],
             ),
             Row(
               children: <Widget>[
                 Icon(Icons.terrain),
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Luas bangunan 500 m2',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      )),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                    child: Text('Luas bangunan 500 m2',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        )),
+                  ),
                 ),
               ],
             ),
             Row(
               children: <Widget>[
                 Icon(Icons.terrain),
-                Container(
-                  padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                  child: Text('Luas lahan 800 m2',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      )),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+                    child: Text('Luas lahan 800 m2',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                        )),
+                  ),
+                  flex: 1,
                 ),
               ],
             ),
@@ -338,7 +358,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(left: 4.0, top: 30.0, right: 4.0),
+                  padding: EdgeInsets.only(left: 4.0, top: 30.0, right: 10.0),
                   child: Text('Rp. 30.000.000',
                       style: TextStyle(
                         color: Colors.black,
