@@ -3,16 +3,29 @@ import 'dart:convert';
 
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/result_search_model.dart';
+import 'package:bride_story/pages/vendor_page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultSearchPageNew extends StatefulWidget {
+  final Widget mapWidget;
+  final GoogleMapController mapController;
+
+  ResultSearchPageNew({Key key, this.mapWidget, this.mapController})
+      : super(key: key);
+
   @override
-  _ResultSearchPageNewState createState() => _ResultSearchPageNewState();
+  _ResultSearchPageNewState createState() =>
+      _ResultSearchPageNewState(mapController, mapWidget);
 }
 
 class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
+  _ResultSearchPageNewState(this.mapController, this.mapWidget);
+  GoogleMapController mapController;
+  Widget mapWidget;
+
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
   FilterParam filterParamNew;
@@ -183,6 +196,18 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       return bulan;
     }
 
+    _navigateVendorPage(BuildContext context) {
+      // Navigator.pushNamed(context, "/vendorPage");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new VendorPageNew(
+                  mapController: mapController,
+                  mapWidget: mapWidget,
+                )),
+      );
+    }
+
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
           context: context,
@@ -277,7 +302,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
                     child: Text('Jln Jendral Sudirman',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -294,7 +319,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
                     child: Text('Kapasitas ruangan : 1500 tamu',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -311,7 +336,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
                     child: Text('Kapasitas parkir : 1500 mobil',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -328,7 +353,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
                     child: Text('Luas bangunan 500 m2',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -344,7 +369,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
                     child: Text('Luas lahan 800 m2',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -382,7 +407,9 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(4.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                _navigateVendorPage(context);
+              },
               child: Padding(
                 padding: EdgeInsets.all(12.0),
                 child: Row(

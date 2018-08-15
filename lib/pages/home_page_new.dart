@@ -1,14 +1,26 @@
 import 'dart:async';
 
+import 'package:bride_story/pages/result_search_page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePageNew extends StatefulWidget {
+  final Widget mapWidget;
+  final GoogleMapController mapController;
+
+  HomePageNew({Key key, this.mapWidget, this.mapController}) : super(key: key);
+
   @override
-  _HomePageNewState createState() => _HomePageNewState();
+  _HomePageNewState createState() =>
+      _HomePageNewState(mapController, mapWidget);
 }
 
 class _HomePageNewState extends State<HomePageNew> {
+  _HomePageNewState(this.mapController, this.mapWidget);
+  GoogleMapController mapController;
+  Widget mapWidget;
+
   String displayedString = "";
   String displayedDate = "";
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
@@ -22,7 +34,15 @@ class _HomePageNewState extends State<HomePageNew> {
   @override
   Widget build(BuildContext context) {
     _navigateSearchButton(BuildContext context) {
-      Navigator.pushNamed(context, "/searchResult");
+      // Navigator.pushNamed(context, "/searchResult");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new ResultSearchPageNew(
+                  mapController: mapController,
+                  mapWidget: mapWidget,
+                )),
+      );
     }
 
     String _convertBulan(int month) {
@@ -225,6 +245,7 @@ class _HomePageNewState extends State<HomePageNew> {
                   searchCitiesView,
                   searchDateView,
                   buttonSearchView,
+                  // mapWidget,
                 ],
               ),
             )));
