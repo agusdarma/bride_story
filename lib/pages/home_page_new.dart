@@ -1,25 +1,31 @@
 import 'dart:async';
 
 import 'package:bride_story/pages/result_search_page_new.dart';
+import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePageNew extends StatefulWidget {
-  final Widget mapWidget;
   final GoogleMapController mapController;
+  final GoogleMapOverlayController overlayController;
+  final List<PageNew> allPages;
 
-  HomePageNew({Key key, this.mapWidget, this.mapController}) : super(key: key);
+  HomePageNew(
+      {Key key, this.mapController, this.overlayController, this.allPages})
+      : super(key: key);
 
   @override
   _HomePageNewState createState() =>
-      _HomePageNewState(mapController, mapWidget);
+      _HomePageNewState(mapController, overlayController, allPages);
 }
 
 class _HomePageNewState extends State<HomePageNew> {
-  _HomePageNewState(this.mapController, this.mapWidget);
+  _HomePageNewState(this.mapController, this.overlayController, this.allPages);
   GoogleMapController mapController;
-  Widget mapWidget;
+
+  GoogleMapOverlayController overlayController;
+  List<PageNew> allPages;
 
   String displayedString = "";
   String displayedDate = "";
@@ -27,6 +33,7 @@ class _HomePageNewState extends State<HomePageNew> {
 
   void initState() {
     super.initState();
+    print(overlayController.hashCode);
     displayedString = "Jakarta";
     displayedDate = "Please Select Date Here";
   }
@@ -40,7 +47,8 @@ class _HomePageNewState extends State<HomePageNew> {
         new MaterialPageRoute(
             builder: (context) => new ResultSearchPageNew(
                   mapController: mapController,
-                  mapWidget: mapWidget,
+                  overlayController: overlayController,
+                  allPages: allPages,
                 )),
       );
     }

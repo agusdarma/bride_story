@@ -6,25 +6,28 @@ class GoogleMapsDetail extends StatefulWidget {
   final GoogleMapController mapController;
   final double lat;
   final double lng;
+  final GoogleMapOverlayController overlayController;
 
   GoogleMapsDetail(
       {Key key,
       @required this.mapWidget,
       @required this.mapController,
+      @required this.overlayController,
       @required this.lat,
       @required this.lng})
       : super(key: key);
 
   @override
-  _GoogleMapsDetailState createState() =>
-      _GoogleMapsDetailState(mapController, mapWidget, lat, lng);
+  _GoogleMapsDetailState createState() => _GoogleMapsDetailState(
+      mapController, mapWidget, lat, lng, overlayController);
 }
 
 class _GoogleMapsDetailState extends State<GoogleMapsDetail> {
-  _GoogleMapsDetailState(
-      this.mapController, this.mapWidget, this.lat, this.lng);
+  _GoogleMapsDetailState(this.mapController, this.mapWidget, this.lat, this.lng,
+      this.overlayController);
   Widget mapWidget;
   GoogleMapController mapController;
+  GoogleMapOverlayController overlayController;
   double lat;
   double lng;
   int _markerCount = 0;
@@ -35,6 +38,23 @@ class _GoogleMapsDetailState extends State<GoogleMapsDetail> {
 
   initState() {
     super.initState();
+    print(overlayController.hashCode);
+    overlayController = GoogleMapOverlayController.fromSize(
+      width: 500.0,
+      height: 500.0,
+      options: GoogleMapOptions(
+          cameraPosition: const CameraPosition(
+            bearing: 270.0,
+            target: LatLng(-6.1541491, 106.8893441),
+            tilt: 10.0,
+            zoom: 16.0,
+          ),
+          trackCameraPosition: true,
+          scrollGesturesEnabled: true),
+    );    
+    print(overlayController.hashCode);
+    mapWidget = GoogleMapOverlay(controller: overlayController,);
+    mapController = overlayController.mapController;
     mapController.addListener(_onMapChanged);
     _extractMapInfo();
     // mapController.onMarkerTapped.add(_onMarkerTapped);
@@ -133,6 +153,7 @@ class _GoogleMapsDetailState extends State<GoogleMapsDetail> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             mapWidget,
+            // GoogleMapOverlay(controller: overlayController,),
           ],
         ),
       ),

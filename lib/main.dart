@@ -101,35 +101,9 @@ void main() {
   // }));
 
   initSharedPreferences();
-  // GoogleMapController.init();
-  // final List<NavigatorObserver> observers = <NavigatorObserver>[];
-  // for (Page p in _allPages) {
-  //   observers.add(p.controller.overlayController);
-  // }
   GoogleMapController.init();
-  // final GoogleMapOverlayController controller =
-  //     GoogleMapOverlayController.fromSize(width: 300.0, height: 200.0);
-  // final GoogleMapOverlayController controller =
-  //     GoogleMapOverlayController.fromSize(
-  //   width: 400.0,
-  //   height: 500.0,
-  //   options: GoogleMapOptions(
-  //     cameraPosition: const CameraPosition(
-  //       bearing: 270.0,
-  //       target: LatLng(-6.1541491, 106.8893441),
-  //       tilt: 10.0,
-  //       zoom: 16.0,
-  //     ),
-  //     trackCameraPosition: true,
-  //     scrollGesturesEnabled: true
-  //   ),
-  // );
-  // final Widget mapWidget = GoogleMapOverlay(controller: controller);
   runApp(new MyApp(
     router: router,
-    // mapWidget: mapWidget,
-    // mapController: controller.mapController,
-    // navigatorObserver: controller.overlayController,
   ));
 }
 
@@ -147,29 +121,17 @@ void saveCategoryNameInSharedPreferences(
   prefs.setString(key, categoryName);
 }
 
-// final List<PageNew> _allPages = <PageNew>[
-//   GoogleMapsDetailNew(),
-//   // MoveCameraPage(),
-//   // PlaceMarkerPage(),
-// ];
-
 class MyApp extends StatelessWidget {
   final Router router;
-  // final Widget mapWidget;
-  // final GoogleMapController mapController;
-  // final NavigatorObserver navigatorObserver;
 
   MyApp({
     Key key,
     @required this.router,
-    // this.mapWidget,
-    // this.mapController,
-    // this.navigatorObserver
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final List<PageNew> _allPages = <PageNew>[
-      GoogleMapsDetailNew(),     
+      GoogleMapsDetailNew(),
     ];
     final List<NavigatorObserver> observers = <NavigatorObserver>[];
     for (PageNew p in _allPages) {
@@ -177,8 +139,8 @@ class MyApp extends StatelessWidget {
     }
     final GoogleMapOverlayController controller =
         GoogleMapOverlayController.fromSize(
-      width: 300.0,
-      height: 200.0,
+      width: 100.0,
+      height: 100.0,
       options: GoogleMapOptions(
           cameraPosition: const CameraPosition(
             bearing: 270.0,
@@ -189,7 +151,7 @@ class MyApp extends StatelessWidget {
           trackCameraPosition: true,
           scrollGesturesEnabled: true),
     );
-    final Widget mapWidget = GoogleMapOverlay(controller: controller);
+    // final Widget mapWidget = GoogleMapOverlay(controller: controller);
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       title: lblTitleApplication,
@@ -199,8 +161,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
       ),
       home: HomePageNew(
-        mapWidget: mapWidget,
         mapController: controller.mapController,
+        overlayController: controller,
+        allPages: _allPages,
       ),
       onGenerateRoute: router.generator,
       // navigatorObservers: <NavigatorObserver>[controller.overlayController],

@@ -3,47 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapsDetailNew extends PageNew {
-  final Widget mapWidget;
   final GoogleMapController mapController;
   final double lat;
   final double lng;
   final String title;
+  final String subTitle;
+  final GoogleMapOverlayController overlayController;
 
   GoogleMapsDetailNew(
-      {this.mapWidget,
+      {this.overlayController,      
       this.mapController,
       this.lat,
       this.lng,
-      this.title})
-      : super(mapWidget, mapController, lat, lng,title);
-
-  // GoogleMapsDetailNew(Widget mapWidget, GoogleMapController mapController,
-  //     double lat, double lng)
-  //     : super(mapWidget, mapController, lat, lng);
-
-  // GoogleMapsDetailNew(
-  //     {Key key,
-  //     @required this.mapWidget,
-  //     @required this.mapController,
-  //     @required this.lat,
-  //     @required this.lng})
-  //     : super(key: key);
+      this.title,
+      this.subTitle})
+      : super(mapController, lat, lng, title, overlayController);
 
   @override
-  _GoogleMapsDetailNewState createState() =>
-      _GoogleMapsDetailNewState(controller.mapController, GoogleMapOverlay(controller: controller), lat, lng,title);
+  _GoogleMapsDetailNewState createState() => _GoogleMapsDetailNewState(
+      mapController, lat, lng, title, subTitle, overlayController);
 
-  // TODO: implement controller
   @override
   final GoogleMapOverlayController controller =
-      GoogleMapOverlayController.fromSize(width: 100.0, height: 100.0);
+      GoogleMapOverlayController.fromSize(
+    width: 500.0,
+    height: 500.0,
+    options: GoogleMapOptions(
+      cameraPosition: const CameraPosition(
+        bearing: 270.0,
+        target: LatLng(-6.1541491, 106.8893441),
+        tilt: 10.0,
+        zoom: 16.0,
+      ),
+      trackCameraPosition: true,
+    ),
+  );
 }
 
 class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
-  _GoogleMapsDetailNewState(
-      this.mapController, this.mapWidget, this.lat, this.lng,this.title);
-  Widget mapWidget;
+  _GoogleMapsDetailNewState(this.mapController,this.lat,
+      this.lng, this.title,this.subTitle, this.overlayController);
   GoogleMapController mapController;
+  GoogleMapOverlayController overlayController;  
   double lat;
   double lng;
   int _markerCount = 0;
@@ -52,6 +53,7 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
   GoogleMapOptions _options;
   bool _isMoving;
   String title;
+  String subTitle;
 
   initState() {
     super.initState();
@@ -64,6 +66,7 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
         LatLng(lat, lng),
       ),
     );
+    
   }
 
   dispose() {
@@ -102,7 +105,7 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
   }
 
   void _add() {
-    mapController.addMarker(MarkerOptions(
+    overlayController.mapController.addMarker(MarkerOptions(
       position: LatLng(
         // center.latitude + sin(_markerCount * pi / 6.0) / 20.0,
         // center.longitude + cos(_markerCount * pi / 6.0) / 20.0,
@@ -135,7 +138,7 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
         ),
         Container(
           padding: EdgeInsets.only(top: 5.0),
-          child: Text('Jakarta,Indonesia',
+          child: Text(subTitle,
               style: TextStyle(
                 fontSize: 14.0,
               )),
@@ -151,11 +154,23 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            mapWidget,
+          children: <Widget>[    
+            GoogleMapOverlay(
+              controller: overlayController,
+            )
           ],
         ),
       ),
     );
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   children: <Widget>[
+    //     // mapWidget,
+    //     GoogleMapOverlay(
+    //       controller: overlayController,
+    //     )
+    //   ],
+    // );
   }
 }

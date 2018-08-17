@@ -1,27 +1,33 @@
 import 'package:bride_story/pages/google_maps_detail.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/webview_page.dart';
+import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class VendorPageNew extends StatefulWidget {
-  final Widget mapWidget;
   final GoogleMapController mapController;
+  final GoogleMapOverlayController overlayController;
+  final List<PageNew> allPages;
 
-  VendorPageNew({Key key, this.mapWidget, this.mapController})
+  VendorPageNew(
+      {Key key, this.mapController, this.overlayController, this.allPages})
       : super(key: key);
 
   @override
   _VendorPageNewState createState() =>
-      _VendorPageNewState(mapController, mapWidget);
+      _VendorPageNewState(mapController, overlayController, allPages);
 }
 
 class _VendorPageNewState extends State<VendorPageNew>
     with SingleTickerProviderStateMixin {
-  _VendorPageNewState(this.mapController, this.mapWidget);
+  _VendorPageNewState(
+      this.mapController, this.overlayController, this.allPages);
   GoogleMapController mapController;
+  GoogleMapOverlayController overlayController;
+  List<PageNew> allPages;
 
   final GoogleMapOverlayController previewMap =
       GoogleMapOverlayController.fromSize(
@@ -38,7 +44,6 @@ class _VendorPageNewState extends State<VendorPageNew>
         scrollGesturesEnabled: true),
   );
 
-  Widget mapWidget;
   CameraPosition _position;
   GoogleMapOptions _options;
   bool _isMoving;
@@ -275,13 +280,13 @@ class _VendorPageNewState extends State<VendorPageNew>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               new Text(
-                'Michael Bubble - Everything',
+                'Hotel Hilton',
                 style: TextStyle(
                   fontSize: 14.0,
                 ),
               ),
               new Text(
-                'Jova Music',
+                'Jakarta, Indonesia',
                 style: TextStyle(
                   fontSize: 12.0,
                 ),
@@ -298,7 +303,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       //  ),
     );
 
-    Widget projectImages = new Container(
+    Widget otherVenueImages = new Container(
       width: screenWidth,
       height: 200.0,
       child: new ListView(
@@ -464,6 +469,45 @@ class _VendorPageNewState extends State<VendorPageNew>
               _navigateProjectListPage(context);
             },
           )
+        ],
+      ),
+    );
+
+    Widget otherVenueRow = new Container(
+      padding: EdgeInsets.all(12.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Text("Similar Venue", style: TextStyle(fontSize: 14.0)),
+          new GestureDetector(
+            child: new Text("View All (5) >", style: TextStyle(fontSize: 14.0)),
+            onTap: () {
+              // _navigateProjectListPage(context);
+            },
+          )
+        ],
+      ),
+    );
+
+    Widget addressRow = new Container(
+      padding: EdgeInsets.all(12.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Icon(Icons.add_location),
+          Expanded(
+            flex: 1,
+            child: new Text(
+                "Jalan Boulevard Barat No. 1, Kelapa Gading Barat, RT.2/RW.9, Kelapa Gading Barat, RT.2/RW.9, Klp. Gading Bar., Klp. Gading, Kota Jkt Utara, Daerah Khusus Ibukota Jakarta 14240",
+                style: TextStyle(fontSize: 14.0)),
+          )
+
+          // new GestureDetector(
+          //   child: new Text("View All (5) >", style: TextStyle(fontSize: 14.0)),
+          //   onTap: () {
+          //     _navigateProjectListPage(context);
+          //   },
+          // )
         ],
       ),
     );
@@ -675,21 +719,22 @@ class _VendorPageNewState extends State<VendorPageNew>
                   ],
                 ),
                 onTap: () {
-                  _navigateMapsDetailPage(context);
+                  _navigateMapsDetailPage(context, allPages[0]);
                 },
               ),
-              buttons,
+              addressRow,
+              // buttons,
               new Divider(
                 color: Colors.black,
                 height: 2.0,
               ),
-              projectRow,
+              otherVenueRow,
               new Divider(
                 color: Colors.black,
                 height: 2.0,
               ),
-              projectImages,
-              socialMedia,
+              otherVenueImages,
+              // socialMedia,
             ],
           )),
     );
@@ -699,16 +744,36 @@ class _VendorPageNewState extends State<VendorPageNew>
     Navigator.pushNamed(context, "/priceListPage");
   }
 
-  _navigateMapsDetailPage(BuildContext context) {
+  // _navigateMapsDetailPage(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     new MaterialPageRoute(
+  //         builder: (context) => new GoogleMapsDetailNew(
+  //               mapController: mapController,
+  //               mapWidget: mapWidget,
+  //               overlayController: overlayController,
+  //               lat: -6.1541491,
+  //               lng: 106.8893441,
+  //               title: 'agus darma kusuma',
+  //             )),
+  //   );
+  // }
+
+  void _navigateMapsDetailPage(BuildContext context, PageNew page) {
+    print('overlaycontroller hashcode ' +
+        page.controller.overlayController.hashCode.toString());
+    print('mapController hashcode ' +
+        page.controller.mapController.hashCode.toString());
     Navigator.push(
       context,
       new MaterialPageRoute(
           builder: (context) => new GoogleMapsDetailNew(
-                mapController: mapController,
-                mapWidget: mapWidget,
+                mapController: page.controller.mapController,
+                overlayController: page.controller,
                 lat: -6.1541491,
                 lng: 106.8893441,
-                title: 'agus darma kusuma',
+                title: 'Balai Sudirman',
+                subTitle: 'Jakarta,Indonesia',
               )),
     );
   }

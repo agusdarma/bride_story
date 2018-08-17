@@ -4,27 +4,33 @@ import 'dart:convert';
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/result_search_model.dart';
 import 'package:bride_story/pages/vendor_page_new.dart';
+import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultSearchPageNew extends StatefulWidget {
-  final Widget mapWidget;
   final GoogleMapController mapController;
+  final GoogleMapOverlayController overlayController;
+  final List<PageNew> allPages;
 
-  ResultSearchPageNew({Key key, this.mapWidget, this.mapController})
+  ResultSearchPageNew(
+      {Key key, this.mapController, this.overlayController, this.allPages})
       : super(key: key);
 
   @override
   _ResultSearchPageNewState createState() =>
-      _ResultSearchPageNewState(mapController, mapWidget);
+      _ResultSearchPageNewState(mapController, overlayController, allPages);
 }
 
 class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
-  _ResultSearchPageNewState(this.mapController, this.mapWidget);
+  _ResultSearchPageNewState(
+      this.mapController, this.overlayController, this.allPages);
   GoogleMapController mapController;
-  Widget mapWidget;
+
+  GoogleMapOverlayController overlayController;
+  List<PageNew> allPages;
 
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
@@ -203,7 +209,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
         new MaterialPageRoute(
             builder: (context) => new VendorPageNew(
                   mapController: mapController,
-                  mapWidget: mapWidget,
+                  overlayController: overlayController,
+                  allPages: allPages,
                 )),
       );
     }

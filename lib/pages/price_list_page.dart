@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html_view/flutter_html_view.dart';
+// import 'package:flutter_html_view/flutter_html_view.dart';
 
 class PriceListPage extends StatefulWidget {
   @override
@@ -129,7 +129,8 @@ class _PriceListPageState extends State<PriceListPage> {
     // final file = new File('html_file/about.html');
 
     return new SingleChildScrollView(
-      child: new HtmlView(data: html2),
+      // child: new HtmlView(data: html2),
+      child: new Text('data'),
     );
   }
 }
