@@ -11,7 +11,7 @@ class GoogleMapsDetailNew extends PageNew {
   final GoogleMapOverlayController overlayController;
 
   GoogleMapsDetailNew(
-      {this.overlayController,      
+      {this.overlayController,
       this.mapController,
       this.lat,
       this.lng,
@@ -21,13 +21,13 @@ class GoogleMapsDetailNew extends PageNew {
 
   @override
   _GoogleMapsDetailNewState createState() => _GoogleMapsDetailNewState(
-      mapController, lat, lng, title, subTitle, overlayController);
+      mapController, lat, lng, title, subTitle, overlayController, controller);
 
   @override
   final GoogleMapOverlayController controller =
       GoogleMapOverlayController.fromSize(
     width: 500.0,
-    height: 500.0,
+    height: 300.0,
     options: GoogleMapOptions(
       cameraPosition: const CameraPosition(
         bearing: 270.0,
@@ -41,74 +41,40 @@ class GoogleMapsDetailNew extends PageNew {
 }
 
 class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
-  _GoogleMapsDetailNewState(this.mapController,this.lat,
-      this.lng, this.title,this.subTitle, this.overlayController);
+  _GoogleMapsDetailNewState(this.mapController, this.lat, this.lng, this.title,
+      this.subTitle, this.overlayController, this.overlayAwal);
   GoogleMapController mapController;
-  GoogleMapOverlayController overlayController;  
+  GoogleMapOverlayController overlayController;
+  GoogleMapOverlayController overlayAwal;
   double lat;
   double lng;
   int _markerCount = 0;
-  Marker _selectedMarker;
-  CameraPosition _position;
-  GoogleMapOptions _options;
-  bool _isMoving;
   String title;
   String subTitle;
 
   initState() {
     super.initState();
-    mapController.addListener(_onMapChanged);
-    _extractMapInfo();
-    // mapController.onMarkerTapped.add(_onMarkerTapped);
-    _add();
+    _addMarker();
+    print('ini overlay awal ' +
+        overlayAwal.overlayController.hashCode.toString());
+
+    print('ini overlay controller ' +
+        overlayController.overlayController.hashCode.toString());
+
     mapController.animateCamera(
       CameraUpdate.newLatLng(
         LatLng(lat, lng),
       ),
     );
-    
   }
 
   dispose() {
-    mapController.removeListener(_onMapChanged);
     super.dispose();
   }
 
-  void _onMapChanged() {
-    setState(() {
-      _extractMapInfo();
-    });
-  }
-
-  void _extractMapInfo() {
-    _options = mapController.options;
-    _position = mapController.cameraPosition;
-    _isMoving = mapController.isCameraMoving;
-  }
-
-  void _onMarkerTapped(Marker marker) {
-    if (_selectedMarker != null) {
-      _updateSelectedMarker(
-        const MarkerOptions(icon: BitmapDescriptor.defaultMarker),
-      );
-    }
-    setState(() {
-      _selectedMarker = marker;
-    });
-    _updateSelectedMarker(
-      MarkerOptions(
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-          BitmapDescriptor.hueGreen,
-        ),
-      ),
-    );
-  }
-
-  void _add() {
+  void _addMarker() {
     overlayController.mapController.addMarker(MarkerOptions(
       position: LatLng(
-        // center.latitude + sin(_markerCount * pi / 6.0) / 20.0,
-        // center.longitude + cos(_markerCount * pi / 6.0) / 20.0,
         lat,
         lng,
       ),
@@ -119,12 +85,11 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
     });
   }
 
-  void _updateSelectedMarker(MarkerOptions changes) {
-    mapController.updateMarker(_selectedMarker, changes);
-  }
-
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     var header = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -154,10 +119,10 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[    
+          children: <Widget>[
             GoogleMapOverlay(
               controller: overlayController,
-            )
+            ),
           ],
         ),
       ),
