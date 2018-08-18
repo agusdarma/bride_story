@@ -3,11 +3,14 @@ import 'dart:convert';
 
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/result_search_model.dart';
+import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/vendor_page_new.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
+import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultSearchPageNew extends StatefulWidget {
@@ -28,88 +31,116 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   _ResultSearchPageNewState(
       this.mapController, this.overlayController, this.allPages);
   GoogleMapController mapController;
-
+  final formatter = new NumberFormat("#,###");   
   GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
 
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
+  List<VenueModel> listVenueData = new List<VenueModel>();
   FilterParam filterParamNew;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
 
-  void _populateResultData() {
-    listResultData.add(new ResultSearchModel(
-        "assets/images/1.jpg",
-        "Jova Musique",
-        "32",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/2.jpg",
-        "Port Love Creative Studio",
-        "16",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/3.jpg",
-        "Port Love Creative Studio 2",
-        "17",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/3.jpg",
-        "Port Love Creative Studio 2",
-        "17",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/3.jpg",
-        "Port Love Creative Studio 2",
-        "17",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/3.jpg",
-        "Port Love Creative Studio 2",
-        "17",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    listResultData.add(new ResultSearchModel(
-        "assets/images/3.jpg",
-        "Port Love Creative Studio 2",
-        "17",
-        filterParamNew.categoryName,
-        filterParamNew.cityName,
-        "assets/images/1.jpg",
-        "assets/images/2.jpg",
-        "assets/images/3.jpg",
-        "assets/images/4.jpg"));
-    print(listResultData.length);
+  void _populateResultData(List<dynamic> listVenue) {
+    for (var items in listVenue) {
+      Map venue = items; //store each map
+      String linkImageVenue = venue['linkImageVenue'];
+      String titleVenue = venue['titleVenue'];
+      String addressVenue = venue['addressVenue'];
+      String capacityVisitor = venue['capacityVisitor'];
+      String capacityParkir = venue['capacityParkir'];
+      String luasBangunan = venue['luasBangunan'];
+      String luasTanah = venue['luasTanah'];
+      String hargaVenue = formatter.format(int.parse(venue['hargaVenue']));         
+      int idCity = venue['idCity'];
+      String locationVenue = venue['locationVenue'];
+      listVenueData.add(
+        new VenueModel(
+          linkImageVenue,
+          titleVenue,
+          addressVenue,
+          capacityVisitor,
+          capacityParkir,
+          luasBangunan,
+          luasTanah,
+          hargaVenue,
+          idCity,
+          locationVenue)
+          );
+    }
+
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/1.jpg",
+    //     "Jova Musique",
+    //     "32",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/2.jpg",
+    //     "Port Love Creative Studio",
+    //     "16",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/3.jpg",
+    //     "Port Love Creative Studio 2",
+    //     "17",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/3.jpg",
+    //     "Port Love Creative Studio 2",
+    //     "17",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/3.jpg",
+    //     "Port Love Creative Studio 2",
+    //     "17",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/3.jpg",
+    //     "Port Love Creative Studio 2",
+    //     "17",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    // listResultData.add(new ResultSearchModel(
+    //     "assets/images/3.jpg",
+    //     "Port Love Creative Studio 2",
+    //     "17",
+    //     filterParamNew.categoryName,
+    //     filterParamNew.cityName,
+    //     "assets/images/1.jpg",
+    //     "assets/images/2.jpg",
+    //     "assets/images/3.jpg",
+    //     "assets/images/4.jpg"));
+    print(listVenueData.length);
   }
 
   Future<String> _getFilterParam(String key) async {
@@ -122,6 +153,14 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   @override
   void initState() {
     super.initState();
+    HttpServices http = new HttpServices();
+    http.getAllVenue().then((List<dynamic> listVenue) {
+      setState(() {
+        // _generateCarouselWidget(listVenue);
+        _populateResultData(listVenue);
+      });
+    });
+
     setState(() {
       displayedDate = '28 Agustus 2018';
       _getFilterParam(keyFilterParam).then((result) {
@@ -145,7 +184,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           filterParamNew.cityName +
           " ," +
           filterParamNew.countryName;
-      _populateResultData();
+      // _populateResultData();
     });
   }
 
@@ -284,7 +323,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               image: new DecorationImage(
                 fit: BoxFit.fill,
                 image: new AssetImage(
-                    listResultData.elementAt(index).linkProfileImage),
+                    'assets/images/'+listVenueData.elementAt(index).linkImageVenue),
               )));
     }
 
@@ -295,7 +334,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 4.0, bottom: 5.0),
-              child: Text(listResultData.elementAt(index).titleVendor,
+              child: Text(listVenueData.elementAt(index).titleVenue,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
@@ -308,7 +347,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text('Jln Jendral Sudirman',
+                    child: Text(listVenueData.elementAt(index).addressVenue,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
@@ -325,7 +364,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text('Kapasitas ruangan : 1500 tamu',
+                    child: Text(listVenueData.elementAt(index).capacityVisitor,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
@@ -342,7 +381,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text('Kapasitas parkir : 1500 mobil',
+                    child: Text(listVenueData.elementAt(index).capacityParkir,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
@@ -359,7 +398,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text('Luas bangunan 500 m2',
+                    child: Text(listVenueData.elementAt(index).luasBangunan,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
@@ -375,7 +414,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text('Luas lahan 800 m2',
+                    child: Text(listVenueData.elementAt(index).luasTanah,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
@@ -391,7 +430,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(left: 4.0, top: 30.0, right: 10.0),
-                  child: Text('Rp. 30.000.000',
+                  child: Text('Rp.' +listVenueData.elementAt(index).hargaVenue,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
@@ -444,7 +483,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             new Expanded(
               child: new Container(
                 child: new ListView.builder(
-                  itemCount: listResultData.length,
+                  itemCount: listVenueData.length,
                   itemBuilder: (BuildContext context, int index) {
                     return content(context, index);
                   },
