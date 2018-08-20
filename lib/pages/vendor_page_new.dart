@@ -91,6 +91,36 @@ class _VendorPageNewState extends State<VendorPageNew>
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    var buttonBooking = Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 18.0, right: 18.0,top: 9.0, bottom: 9.0),
+      child: Material(
+          elevation: 4.0,
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(4.0),
+          child: InkWell(
+            onTap: () {
+              // _navigateSearchButton(context);
+            },
+            child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.only(right: 16.0)),
+                  new Text('Booking',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+            ),
+          )),
+    );
+
     Widget banner = new Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
       child: new Container(
@@ -318,7 +348,7 @@ class _VendorPageNewState extends State<VendorPageNew>
 
     Widget namaVendor = new Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 7.0, top: 7.0),
+      padding: EdgeInsets.only(left: 7.0, top: 7.0, bottom: 7.0),
       child: new Text("Balai Sudirman", style: TextStyle(fontSize: 18.0)),
     );
 
@@ -546,7 +576,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                 ],
               ),
               namaVendor,
-              ratingVendor,
+              // ratingVendor,
               new Divider(
                 color: Colors.black,
                 height: 2.0,
@@ -568,6 +598,11 @@ class _VendorPageNewState extends State<VendorPageNew>
                 height: 2.0,
               ),
               selectedDateView,
+              new Divider(
+                color: Colors.black,
+                height: 2.0,
+              ),
+              buttonBooking,
               new Divider(
                 color: Colors.black,
                 height: 2.0,

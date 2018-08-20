@@ -9,6 +9,11 @@ class VenueModel {
   String hargaVenue;
   int idCity;
   String locationVenue;
+  int isDay;
+  int isNight;
+  int isDayFlag;
+  int isNightFlag;
+  int bookingDate;
 
   VenueModel(
       this.linkImageVenue,
@@ -20,5 +25,10 @@ class VenueModel {
       this.luasTanah,
       this.hargaVenue,
       this.idCity,
-      this.locationVenue);
+      this.locationVenue,
+      this.isDay,
+      this.isNight,
+      this.isDayFlag,
+      this.isNightFlag,
+      this.bookingDate);
 }

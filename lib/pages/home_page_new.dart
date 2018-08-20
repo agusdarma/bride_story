@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
@@ -30,30 +32,10 @@ class _HomePageNewState extends State<HomePageNew> {
   String displayedString = "";
   String displayedDate = "";
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
+  FilterParam parameter = new FilterParam(
+      '', 0, '', 0, 'Jakarta', 1, new DateTime.now().millisecondsSinceEpoch);
 
-  void initState() {
-    super.initState();
-    print(overlayController.hashCode);
-    displayedString = "Jakarta";
-    displayedDate = "Please Select Date Here";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _navigateSearchButton(BuildContext context) {
-      // Navigator.pushNamed(context, "/searchResult");
-      Navigator.push(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => new ResultSearchPageNew(
-                  mapController: mapController,
-                  overlayController: overlayController,
-                  allPages: allPages,
-                )),
-      );
-    }
-
-    String _convertBulan(int month) {
+  String _convertBulan(int month) {
       String bulan = "";
       if (1 == month) {
         bulan = januari;
@@ -83,6 +65,41 @@ class _HomePageNewState extends State<HomePageNew> {
       return bulan;
     }
 
+  void initState() {
+    super.initState();
+    print(overlayController.hashCode);
+    displayedString = "Jakarta";
+    displayedDate = "Please Select Date Here";
+    // int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
+    //       int month =
+    //           new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
+    //       int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
+    //       displayedDate = day.toString() +
+    //           ' ' +
+    //           _convertBulan(month) +
+    //           ' ' +
+    //           year.toString();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _navigateSearchButton(BuildContext context) {
+      // print(parameter.bookingDate);
+      // Navigator.pushNamed(context, "/searchResult");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new ResultSearchPageNew(
+                  mapController: mapController,
+                  overlayController: overlayController,
+                  allPages: allPages,
+                  parameter: parameter,
+                )),
+      );
+    }
+
+    
+
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
           context: context,
@@ -92,6 +109,8 @@ class _HomePageNewState extends State<HomePageNew> {
       if (picked != null) {
         setState(() {
           selectedDate = picked.millisecondsSinceEpoch;
+          parameter.bookingDate = selectedDate;
+          // print(parameter);
           int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
           int month =
               new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
@@ -109,8 +128,12 @@ class _HomePageNewState extends State<HomePageNew> {
       final result = await Navigator.pushNamed(context, '/searchCity');
       if (result != null) {
         setState(() {
-          displayedString = result;
-          // print(result);
+          const JsonDecoder decoder = const JsonDecoder();
+          Map filterParamMap = decoder.convert(result);
+          var filterParamNew = new FilterParam.fromJson(filterParamMap);
+          displayedString = filterParamNew.cityName;
+          parameter = filterParamNew;
+          // print(parameter);
         });
       }
     }

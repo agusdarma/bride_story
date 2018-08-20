@@ -26,8 +26,8 @@ for demo hardcode
   void _populateCityData(List<dynamic> listCity) {
     for (var items in listCity) {
       Map city = items;
-      listCities.add(
-          new CityModel(city['cityName'], city['countryId'], city['selected']));
+      listCities.add(new CityModel(city['cityId'], city['cityName'],
+          city['countryId'], city['selected']));
     }
     // listCities.add(new CityModel("Jakarta", true));
   }
@@ -69,7 +69,7 @@ for demo hardcode
         const JsonDecoder decoder = const JsonDecoder();
         Map filterParamMap = decoder.convert(json);
         var filterParamNew = new FilterParam.fromJson(filterParamMap);
-        if (filterParamNew.countryName == "All Countries") {          
+        if (filterParamNew.countryName == "All Countries") {
           cityParam.countryId = 0;
         } else {
           cityParam.countryId = filterParamNew.countryId;
@@ -204,7 +204,8 @@ for demo hardcode
             child: GestureDetector(
               child: new ListTile(
                 onTap: () {
-                  _onTap(context, listCities.elementAt(index).cityName, index);
+                  _onTap(context, listCities.elementAt(index).cityName,
+                      listCities.elementAt(index).cityId, index);
                 },
                 title: new Text(listCities.elementAt(index).cityName),
               ),
@@ -224,7 +225,8 @@ for demo hardcode
             child: GestureDetector(
               child: new ListTile(
                 onTap: () {
-                  _onTap(context, listCities.elementAt(index).cityName, index);
+                  _onTap(context, listCities.elementAt(index).cityName,
+                      listCities.elementAt(index).cityId, index);
                 },
                 title: new Text(listCities.elementAt(index).cityName),
                 trailing: Icon(Icons.check),
@@ -237,7 +239,7 @@ for demo hardcode
     );
   }
 
-  _onTap(BuildContext context, selectedCity, int index) async {
+  _onTap(BuildContext context, selectedCity, cityId, int index) async {
     setState(() {
       clearSelected();
       listCities.elementAt(index).selected = true;
@@ -248,10 +250,11 @@ for demo hardcode
       Map filterParamMap = decoder.convert(json);
       var filterParamNew = new FilterParam.fromJson(filterParamMap);
       filterParamNew.cityName = selectedCity;
+      filterParamNew.cityId = cityId;      
       const JsonEncoder encoder = const JsonEncoder();
       String stringJson = encoder.convert(filterParamNew);
       saveCityNameInSharedPreferences(stringJson, keyFilterParam);
-      Navigator.pop(context, selectedCity);
+      Navigator.pop(context, stringJson);
     });
   }
 
@@ -271,7 +274,7 @@ for demo hardcode
   }
 
   void saveCityNameInSharedPreferences(String cityName, String key) async {
-    print("save city name " + cityName);
+    // print("save city name " + cityName);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, cityName);
   }
@@ -280,7 +283,7 @@ for demo hardcode
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cityName = "";
     cityName = (prefs.getString(key) ?? "");
-    print("get from shared Preferenced " + cityName);
+    // print("get from shared Preferenced " + cityName);
     return cityName;
   }
 
@@ -303,8 +306,8 @@ for demo hardcode
     }
     for (var items in listCity) {
       Map city = items;
-      listCities.add(
-          new CityModel(city['cityName'], city['countryId'], city['selected']));
+      listCities.add(new CityModel(city['cityId'], city['cityName'],
+          city['countryId'], city['selected']));
     }
   }
 }

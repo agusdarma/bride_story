@@ -1,7 +1,8 @@
 class CityModel {
   String cityName;
   int countryId;
+  int cityId;
   bool selected;
 
-  CityModel(this.cityName,this.countryId, this.selected);
+  CityModel(this.cityId, this.cityName,this.countryId, this.selected);
 }

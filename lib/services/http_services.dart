@@ -7,8 +7,8 @@ import 'package:bride_story/utils/network_utils.dart';
 
 class HttpServices {
   NetworkUtil _netUtil = new NetworkUtil();
-  static final baseUrl = "http://192.168.100.7:6556/bride-trx";
-  // static final baseUrl = "http://192.168.0.101:6556/bride-trx";
+  // static final baseUrl = "http://192.168.100.7:6556/bride-trx";
+  static final baseUrl = "http://192.168.0.101:6556/bride-trx";
   // static final baseUrl = "http://api.sablonbalon.com:8888/bride-trx";
   static final categoryUrl = baseUrl + "/cat";
   static final countryUrl = baseUrl + "/country";
@@ -93,6 +93,19 @@ class HttpServices {
 
   Future<List<dynamic>> getAllVenue() async {
     final String response = await _netUtil.get(getAllVenueUrl);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listVenue = decoder.convert(a.otherMessage);
+    return listVenue;
+  }
+
+  Future<List<dynamic>> getAllVenueWithParam(String parameter) async {
+    // final String response = await _netUtil.get(getAllVenueUrl);
+    final String response = await _netUtil
+        .post(getAllVenueUrl, body: parameter);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);

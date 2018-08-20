@@ -17,23 +17,29 @@ class ResultSearchPageNew extends StatefulWidget {
   final GoogleMapController mapController;
   final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
+  final FilterParam parameter;
 
   ResultSearchPageNew(
-      {Key key, this.mapController, this.overlayController, this.allPages})
+      {Key key,
+      this.mapController,
+      this.overlayController,
+      this.allPages,
+      this.parameter})
       : super(key: key);
 
   @override
-  _ResultSearchPageNewState createState() =>
-      _ResultSearchPageNewState(mapController, overlayController, allPages);
+  _ResultSearchPageNewState createState() => _ResultSearchPageNewState(
+      mapController, overlayController, allPages, parameter);
 }
 
 class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
-  _ResultSearchPageNewState(
-      this.mapController, this.overlayController, this.allPages);
+  _ResultSearchPageNewState(this.mapController, this.overlayController,
+      this.allPages, this.parameter);
   GoogleMapController mapController;
-  final formatter = new NumberFormat("#,###");   
+  final formatter = new NumberFormat("#,###");
   GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
+  FilterParam parameter;
 
   String text = "Loading";
   List<ResultSearchModel> listResultData = new List<ResultSearchModel>();
@@ -41,22 +47,38 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   FilterParam filterParamNew;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
+  String countSearch = "0";
 
   void _populateResultData(List<dynamic> listVenue) {
     for (var items in listVenue) {
       Map venue = items; //store each map
-      String linkImageVenue = venue['linkImageVenue'];
-      String titleVenue = venue['titleVenue'];
-      String addressVenue = venue['addressVenue'];
-      String capacityVisitor = venue['capacityVisitor'];
-      String capacityParkir = venue['capacityParkir'];
-      String luasBangunan = venue['luasBangunan'];
-      String luasTanah = venue['luasTanah'];
-      String hargaVenue = formatter.format(int.parse(venue['hargaVenue']));         
-      int idCity = venue['idCity'];
-      String locationVenue = venue['locationVenue'];
-      listVenueData.add(
-        new VenueModel(
+      Map venue2 = venue['venue'];
+      List<dynamic> listBookingDate = venue['listBookingDates'];
+      int isDay;
+      int isNight;
+      int isDayFlag;
+      int isNightFlag;
+      int bookingDateVal;
+      for (var bookingDate in listBookingDate) {
+        if (bookingDate['bookingDate'] == parameter.bookingDate) {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          isDayFlag = bookingDate['isDay'];
+          isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
+        }
+      }
+      String linkImageVenue = venue2['linkImageVenue'];
+      String titleVenue = venue2['titleVenue'];
+      String addressVenue = venue2['addressVenue'];
+      String capacityVisitor = venue2['capacityVisitor'];
+      String capacityParkir = venue2['capacityParkir'];
+      String luasBangunan = venue2['luasBangunan'];
+      String luasTanah = venue2['luasTanah'];
+      String hargaVenue = formatter.format(int.parse(venue2['hargaVenue']));
+      int idCity = venue2['idCity'];
+      String locationVenue = venue2['locationVenue'];
+      listVenueData.add(new VenueModel(
           linkImageVenue,
           titleVenue,
           addressVenue,
@@ -66,103 +88,91 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           luasTanah,
           hargaVenue,
           idCity,
-          locationVenue)
-          );
+          locationVenue,
+          isDay,
+          isNight,
+          isDayFlag,
+          isNightFlag,
+          bookingDateVal));
     }
-
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/1.jpg",
-    //     "Jova Musique",
-    //     "32",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/2.jpg",
-    //     "Port Love Creative Studio",
-    //     "16",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/3.jpg",
-    //     "Port Love Creative Studio 2",
-    //     "17",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/3.jpg",
-    //     "Port Love Creative Studio 2",
-    //     "17",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/3.jpg",
-    //     "Port Love Creative Studio 2",
-    //     "17",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/3.jpg",
-    //     "Port Love Creative Studio 2",
-    //     "17",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
-    // listResultData.add(new ResultSearchModel(
-    //     "assets/images/3.jpg",
-    //     "Port Love Creative Studio 2",
-    //     "17",
-    //     filterParamNew.categoryName,
-    //     filterParamNew.cityName,
-    //     "assets/images/1.jpg",
-    //     "assets/images/2.jpg",
-    //     "assets/images/3.jpg",
-    //     "assets/images/4.jpg"));
     print(listVenueData.length);
+  }
+
+  void _updateBookingDate(List<VenueModel> listVenue) {
+    for (var items in listVenue) {      
+      if (items.bookingDate == parameter.bookingDate) {
+        items.isDayFlag = items.isDay;
+        items.isNightFlag = items.isNight;                
+      }else{
+        items.isDayFlag = 0;
+        items.isNightFlag = 0;
+      }
+      
+    }
   }
 
   Future<String> _getFilterParam(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String json = (prefs.getString(key) ?? "");
-    print("get from shared Preferenced " + json);
+    // print("get from shared Preferenced " + json);
     return json;
+  }
+
+  String _convertBulan(int month) {
+    String bulan = "";
+    if (1 == month) {
+      bulan = januari;
+    } else if (2 == month) {
+      bulan = februari;
+    } else if (3 == month) {
+      bulan = maret;
+    } else if (4 == month) {
+      bulan = april;
+    } else if (5 == month) {
+      bulan = mei;
+    } else if (6 == month) {
+      bulan = juni;
+    } else if (7 == month) {
+      bulan = juli;
+    } else if (8 == month) {
+      bulan = agustus;
+    } else if (9 == month) {
+      bulan = september;
+    } else if (10 == month) {
+      bulan = oktober;
+    } else if (11 == month) {
+      bulan = november;
+    } else if (12 == month) {
+      bulan = desember;
+    }
+    return bulan;
   }
 
   @override
   void initState() {
     super.initState();
     HttpServices http = new HttpServices();
-    http.getAllVenue().then((List<dynamic> listVenue) {
+    const JsonEncoder encoder = const JsonEncoder();
+    String parameterJson = encoder.convert(parameter);
+    http.getAllVenueWithParam(parameterJson).then((List<dynamic> listVenue) {
       setState(() {
         // _generateCarouselWidget(listVenue);
         _populateResultData(listVenue);
+        countSearch = listVenue.length.toString();
       });
     });
 
     setState(() {
       displayedDate = '28 Agustus 2018';
+      if (parameter.bookingDate != null) {
+        int bookingDate = parameter.bookingDate;
+        int year = new DateTime.fromMillisecondsSinceEpoch(bookingDate).year;
+        int month = new DateTime.fromMillisecondsSinceEpoch(bookingDate).month;
+        int day = new DateTime.fromMillisecondsSinceEpoch(bookingDate).day;
+        displayedDate =
+            day.toString() + ' ' + _convertBulan(month) + ' ' + year.toString();
+      }
+
       _getFilterParam(keyFilterParam).then((result) {
         setState(() {
           updateSubtitle(result);
@@ -195,7 +205,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 5.0),
-          child: Text('Jakarta',
+          child: Text(parameter.cityName,
               style: TextStyle(
                 fontSize: 17.0,
                 fontWeight: FontWeight.bold,
@@ -203,43 +213,13 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
         ),
         Container(
           padding: EdgeInsets.only(top: 5.0),
-          child: Text('428 available venue',
+          child: Text(countSearch + ' available venue',
               style: TextStyle(
                 fontSize: 14.0,
               )),
         )
       ],
     );
-
-    String _convertBulan(int month) {
-      String bulan = "";
-      if (1 == month) {
-        bulan = januari;
-      } else if (2 == month) {
-        bulan = februari;
-      } else if (3 == month) {
-        bulan = maret;
-      } else if (4 == month) {
-        bulan = april;
-      } else if (5 == month) {
-        bulan = mei;
-      } else if (6 == month) {
-        bulan = juni;
-      } else if (7 == month) {
-        bulan = juli;
-      } else if (8 == month) {
-        bulan = agustus;
-      } else if (9 == month) {
-        bulan = september;
-      } else if (10 == month) {
-        bulan = oktober;
-      } else if (11 == month) {
-        bulan = november;
-      } else if (12 == month) {
-        bulan = desember;
-      }
-      return bulan;
-    }
 
     _navigateVendorPage(BuildContext context) {
       // Navigator.pushNamed(context, "/vendorPage");
@@ -254,7 +234,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       );
     }
 
-    Future<Null> _selectDate(BuildContext context) async {
+    Future<Null> _selectDate(
+        BuildContext context, List<VenueModel> listVenueData) async {
       final DateTime picked = await showDatePicker(
           context: context,
           initialDate: new DateTime.now(),
@@ -272,6 +253,9 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               _convertBulan(month) +
               ' ' +
               year.toString();
+          parameter.bookingDate = selectedDate;
+          _updateBookingDate(listVenueData);
+          // print(listVenueData);
         });
       }
     }
@@ -285,7 +269,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           child: InkWell(
             onTap: () {
               // _navigateAndDisplaySelection(context);
-              _selectDate(context);
+              _selectDate(context, listVenueData);
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),
@@ -322,8 +306,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               shape: BoxShape.rectangle,
               image: new DecorationImage(
                 fit: BoxFit.fill,
-                image: new AssetImage(
-                    'assets/images/'+listVenueData.elementAt(index).linkImageVenue),
+                image: new AssetImage('assets/images/' +
+                    listVenueData.elementAt(index).linkImageVenue),
               )));
     }
 
@@ -391,46 +375,46 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                 ),
               ],
             ),
-            Row(
-              children: <Widget>[
-                Icon(Icons.terrain),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text(listVenueData.elementAt(index).luasBangunan,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Icon(Icons.terrain),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
-                    child: Text(listVenueData.elementAt(index).luasTanah,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                        )),
-                  ),
-                  flex: 1,
-                ),
-              ],
-            ),
+            // Row(
+            //   children: <Widget>[
+            //     Icon(Icons.terrain),
+            //     Expanded(
+            //       flex: 1,
+            //       child: Container(
+            //         padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+            //         child: Text(listVenueData.elementAt(index).luasBangunan,
+            //             overflow: TextOverflow.fade,
+            //             style: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: 14.0,
+            //             )),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // Row(
+            //   children: <Widget>[
+            //     Icon(Icons.terrain),
+            //     Expanded(
+            //       child: Container(
+            //         padding: EdgeInsets.only(left: 4.0, bottom: 2.0),
+            //         child: Text(listVenueData.elementAt(index).luasTanah,
+            //             overflow: TextOverflow.fade,
+            //             style: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: 14.0,
+            //             )),
+            //       ),
+            //       flex: 1,
+            //     ),
+            //   ],
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(left: 4.0, top: 30.0, right: 10.0),
-                  child: Text('Rp.' +listVenueData.elementAt(index).hargaVenue,
+                  child: Text('Rp.' + listVenueData.elementAt(index).hargaVenue,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
@@ -450,7 +434,11 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
         margin: EdgeInsets.only(top: 5.0, bottom: 6.0),
         child: Material(
             elevation: 4.0,
-            color: Colors.white,
+            // color: Colors.grey[300],
+            color: listVenueData.elementAt(index).isDayFlag == 1 &&
+                    listVenueData.elementAt(index).isNightFlag == 1
+                ? Colors.grey[300]
+                : Colors.white,
             borderRadius: BorderRadius.circular(4.0),
             child: InkWell(
               onTap: () {
