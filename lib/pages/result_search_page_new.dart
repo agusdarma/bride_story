@@ -66,6 +66,12 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           isDayFlag = bookingDate['isDay'];
           isNightFlag = bookingDate['isNight'];
           bookingDateVal = bookingDate['bookingDate'];
+        } else {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          // isDayFlag = bookingDate['isDay'];
+          // isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
         }
       }
       String linkImageVenue = venue2['linkImageVenue'];
@@ -93,21 +99,31 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           isNight,
           isDayFlag,
           isNightFlag,
-          bookingDateVal));
+          bookingDateVal,
+          listBookingDate));
     }
     print(listVenueData.length);
   }
 
   void _updateBookingDate(List<VenueModel> listVenue) {
-    for (var items in listVenue) {      
-      if (items.bookingDate == parameter.bookingDate) {
-        items.isDayFlag = items.isDay;
-        items.isNightFlag = items.isNight;                
-      }else{
-        items.isDayFlag = 0;
-        items.isNightFlag = 0;
+    for (var items in listVenue) {
+      for (var bookingDate in items.listBookingDate) {
+        if (bookingDate['bookingDate'] == parameter.bookingDate) {
+          items.isDayFlag = items.isDay;
+          items.isNightFlag = items.isNight;
+          break;
+        } else {
+          items.isDayFlag = 0;
+          items.isNightFlag = 0;
+        }
+        // if (items.bookingDate == parameter.bookingDate) {
+        //   items.isDayFlag = items.isDay;
+        //   items.isNightFlag = items.isNight;
+        // } else {
+        //   items.isDayFlag = 0;
+        //   items.isNightFlag = 0;
+        // }
       }
-      
     }
   }
 
@@ -221,7 +237,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       ],
     );
 
-    _navigateVendorPage(BuildContext context) {
+    _navigateVendorPage(BuildContext context,VenueModel venueModel) {
       // Navigator.pushNamed(context, "/vendorPage");
       Navigator.push(
         context,
@@ -230,6 +246,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   mapController: mapController,
                   overlayController: overlayController,
                   allPages: allPages,
+                  venueModel: venueModel,
+                  parameter: parameter,
                 )),
       );
     }
@@ -298,6 +316,9 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
     );
 
     Widget imageVenue(BuildContext context, int index) {
+      String fileName = listVenueData.elementAt(index).linkImageVenue;
+      String url = HttpServices.getImageByName +
+          kParamImageName.replaceAll('<img>', '$fileName');
       return new Container(
           margin: EdgeInsets.only(right: 5.0),
           width: 140.0,
@@ -306,8 +327,9 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               shape: BoxShape.rectangle,
               image: new DecorationImage(
                 fit: BoxFit.fill,
-                image: new AssetImage('assets/images/' +
-                    listVenueData.elementAt(index).linkImageVenue),
+                // image: new AssetImage('assets/images/' +
+                //     listVenueData.elementAt(index).linkImageVenue),
+                image: new NetworkImage(url),
               )));
     }
 
@@ -442,7 +464,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             borderRadius: BorderRadius.circular(4.0),
             child: InkWell(
               onTap: () {
-                _navigateVendorPage(context);
+                _navigateVendorPage(context,listVenueData.elementAt(index));
               },
               child: Padding(
                 padding: EdgeInsets.all(12.0),

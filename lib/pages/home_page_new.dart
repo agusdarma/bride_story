@@ -32,8 +32,7 @@ class _HomePageNewState extends State<HomePageNew> {
   String displayedString = "";
   String displayedDate = "";
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
-  FilterParam parameter = new FilterParam(
-      '', 0, '', 0, 'Jakarta', 1, new DateTime.now().millisecondsSinceEpoch);
+  FilterParam parameter;
 
   String _convertBulan(int month) {
       String bulan = "";
@@ -70,15 +69,17 @@ class _HomePageNewState extends State<HomePageNew> {
     print(overlayController.hashCode);
     displayedString = "Jakarta";
     displayedDate = "Please Select Date Here";
-    // int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
-    //       int month =
-    //           new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
-    //       int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
-    //       displayedDate = day.toString() +
-    //           ' ' +
-    //           _convertBulan(month) +
-    //           ' ' +
-    //           year.toString();
+    int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
+          int month =
+              new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
+          int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
+          displayedDate = day.toString() +
+              ' ' +
+              _convertBulan(month) +
+              ' ' +
+              year.toString();
+    parameter = new  FilterParam(
+      '', 0, '', 0, 'Jakarta', 1, new DateTime.now().millisecondsSinceEpoch);
   }
 
   @override
@@ -132,7 +133,9 @@ class _HomePageNewState extends State<HomePageNew> {
           Map filterParamMap = decoder.convert(result);
           var filterParamNew = new FilterParam.fromJson(filterParamMap);
           displayedString = filterParamNew.cityName;
-          parameter = filterParamNew;
+          parameter.cityId = filterParamNew.cityId;
+          parameter.cityName = filterParamNew.cityName;
+          // parameter = filterParamNew;
           // print(parameter);
         });
       }

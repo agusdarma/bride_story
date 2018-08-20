@@ -1,6 +1,9 @@
+import 'package:bride_story/data/filter_param.dart';
+import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
+import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,23 +13,33 @@ class VendorPageNew extends StatefulWidget {
   final GoogleMapController mapController;
   final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
+  final VenueModel venueModel;
+  final FilterParam parameter;
 
   VendorPageNew(
-      {Key key, this.mapController, this.overlayController, this.allPages})
+      {Key key,
+      this.mapController,
+      this.overlayController,
+      this.allPages,
+      this.venueModel,
+      this.parameter})
       : super(key: key);
 
   @override
-  _VendorPageNewState createState() =>
-      _VendorPageNewState(mapController, overlayController, allPages);
+  _VendorPageNewState createState() => _VendorPageNewState(
+      mapController, overlayController, allPages, venueModel, parameter);
 }
 
 class _VendorPageNewState extends State<VendorPageNew>
     with SingleTickerProviderStateMixin {
-  _VendorPageNewState(
-      this.mapController, this.overlayController, this.allPages);
+  _VendorPageNewState(this.mapController, this.overlayController, this.allPages,
+      this.venueModel, this.parameter);
   GoogleMapController mapController;
   GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
+  VenueModel venueModel;
+  FilterParam parameter;
+  String urlVenueImage;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
 
@@ -51,10 +64,48 @@ class _VendorPageNewState extends State<VendorPageNew>
   Animation<double> animation;
   AnimationController controller;
 
+  String _convertBulan(int month) {
+    String bulan = "";
+    if (1 == month) {
+      bulan = januari;
+    } else if (2 == month) {
+      bulan = februari;
+    } else if (3 == month) {
+      bulan = maret;
+    } else if (4 == month) {
+      bulan = april;
+    } else if (5 == month) {
+      bulan = mei;
+    } else if (6 == month) {
+      bulan = juni;
+    } else if (7 == month) {
+      bulan = juli;
+    } else if (8 == month) {
+      bulan = agustus;
+    } else if (9 == month) {
+      bulan = september;
+    } else if (10 == month) {
+      bulan = oktober;
+    } else if (11 == month) {
+      bulan = november;
+    } else if (12 == month) {
+      bulan = desember;
+    }
+    return bulan;
+  }
+
   initState() {
     super.initState();
     _add();
     displayedDate = '28 Agustus 2018';
+    int year =
+        new DateTime.fromMillisecondsSinceEpoch(parameter.bookingDate).year;
+    int month =
+        new DateTime.fromMillisecondsSinceEpoch(parameter.bookingDate).month;
+    int day =
+        new DateTime.fromMillisecondsSinceEpoch(parameter.bookingDate).day;
+    displayedDate =
+        day.toString() + ' ' + _convertBulan(month) + ' ' + year.toString();
     controller = new AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     animation = new Tween(begin: 0.0, end: 18.0).animate(controller)
@@ -64,6 +115,9 @@ class _VendorPageNewState extends State<VendorPageNew>
         });
       });
     controller.forward();
+    String fileName = venueModel.linkImageVenue;
+    urlVenueImage = HttpServices.getImageByName +
+        kParamImageName.replaceAll('<img>', '$fileName');
   }
 
   void _add() {
@@ -93,7 +147,7 @@ class _VendorPageNewState extends State<VendorPageNew>
 
     var buttonBooking = Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 18.0, right: 18.0,top: 9.0, bottom: 9.0),
+      padding: EdgeInsets.only(left: 18.0, right: 18.0, top: 9.0, bottom: 9.0),
       child: Material(
           elevation: 4.0,
           color: Colors.blue,
@@ -338,8 +392,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           new Icon(Icons.add_location),
           Expanded(
             flex: 1,
-            child: new Text(
-                "Jalan Boulevard Barat No. 1, Kelapa Gading Barat, RT.2/RW.9, Kelapa Gading Barat, RT.2/RW.9, Klp. Gading Bar., Klp. Gading, Kota Jkt Utara, Daerah Khusus Ibukota Jakarta 14240",
+            child: new Text(venueModel.addressVenue,
                 style: TextStyle(fontSize: 14.0)),
           )
         ],
@@ -349,21 +402,22 @@ class _VendorPageNewState extends State<VendorPageNew>
     Widget namaVendor = new Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 7.0, top: 7.0, bottom: 7.0),
-      child: new Text("Balai Sudirman", style: TextStyle(fontSize: 18.0)),
+      child: new Text(venueModel.titleVenue, style: TextStyle(fontSize: 18.0)),
     );
 
-    Widget ratingVendor = new Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 8.0, bottom: 5.0),
-      child: new Text("Rating 8.5 from 1000 customer",
-          style: TextStyle(fontSize: 14.0)),
-    );
+    // Widget ratingVendor = new Container(
+    //   alignment: Alignment.centerLeft,
+    //   padding: EdgeInsets.only(left: 8.0, bottom: 5.0),
+    //   child: new Text("Rating 8.5 from 1000 customer",
+    //       style: TextStyle(fontSize: 14.0)),
+    // );
 
     Widget bgImage = new Container(
       height: screenHeight / 3,
       decoration: new BoxDecoration(
         image: new DecorationImage(
-          image: new AssetImage('assets/images/1.jpg'),
+          // image: new AssetImage('assets/images/1.jpg'),
+          image: new NetworkImage(urlVenueImage),
           fit: BoxFit.cover,
         ),
       ),
@@ -439,7 +493,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 5.0),
-          child: Text('Balai Sudirman',
+          child: Text(venueModel.titleVenue,
               style: TextStyle(
                 fontSize: 17.0,
                 fontWeight: FontWeight.bold,
@@ -447,7 +501,7 @@ class _VendorPageNewState extends State<VendorPageNew>
         ),
         Container(
           padding: EdgeInsets.only(top: 5.0),
-          child: Text('Jakarta,Indonesia',
+          child: Text(parameter.cityName + ',Indonesia',
               style: TextStyle(
                 fontSize: 14.0,
               )),

@@ -14,6 +14,7 @@ class VenueModel {
   int isDayFlag;
   int isNightFlag;
   int bookingDate;
+  List<dynamic> listBookingDate;
 
   VenueModel(
       this.linkImageVenue,
@@ -30,5 +31,6 @@ class VenueModel {
       this.isNight,
       this.isDayFlag,
       this.isNightFlag,
-      this.bookingDate);
+      this.bookingDate,
+      this.listBookingDate);
 }
