@@ -83,6 +83,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       String luasTanah = venue2['luasTanah'];
       String hargaVenue = formatter.format(int.parse(venue2['hargaVenue']));
       int idCity = venue2['idCity'];
+      double latitude = venue2['latitude'];
+      double longitude = venue2['longitude'];
       String locationVenue = venue2['locationVenue'];
       listVenueData.add(new VenueModel(
           linkImageVenue,
@@ -100,7 +102,9 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           isDayFlag,
           isNightFlag,
           bookingDateVal,
-          listBookingDate));
+          listBookingDate,
+          latitude,
+          longitude));
     }
     print(listVenueData.length);
   }
@@ -237,7 +241,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       ],
     );
 
-    _navigateVendorPage(BuildContext context,VenueModel venueModel) {
+    _navigateVendorPage(BuildContext context, VenueModel venueModel) {
       // Navigator.pushNamed(context, "/vendorPage");
       Navigator.push(
         context,
@@ -464,7 +468,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             borderRadius: BorderRadius.circular(4.0),
             child: InkWell(
               onTap: () {
-                _navigateVendorPage(context,listVenueData.elementAt(index));
+                _navigateVendorPage(context, listVenueData.elementAt(index));
               },
               child: Padding(
                 padding: EdgeInsets.all(12.0),

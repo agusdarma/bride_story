@@ -42,21 +42,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   String urlVenueImage;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
-
-  final GoogleMapOverlayController previewMap =
-      GoogleMapOverlayController.fromSize(
-    width: 450.0,
-    height: 200.0,
-    options: GoogleMapOptions(
-        cameraPosition: const CameraPosition(
-          bearing: 270.0,
-          target: LatLng(-6.1541491, 106.8893441),
-          tilt: 10.0,
-          zoom: 16.0,
-        ),
-        trackCameraPosition: true,
-        scrollGesturesEnabled: true),
-  );
+  GoogleMapOverlayController previewMap;
 
   int _markerCount = 0;
   static final LatLng center = const LatLng(-6.1541491, 106.8893441);
@@ -118,6 +104,19 @@ class _VendorPageNewState extends State<VendorPageNew>
     String fileName = venueModel.linkImageVenue;
     urlVenueImage = HttpServices.getImageByName +
         kParamImageName.replaceAll('<img>', '$fileName');
+    previewMap = GoogleMapOverlayController.fromSize(
+      width: 450.0,
+      height: 200.0,
+      options: GoogleMapOptions(
+          cameraPosition: CameraPosition(
+            bearing: 270.0,
+            target: LatLng(venueModel.latitude, venueModel.longitude),
+            tilt: 10.0,
+            zoom: 16.0,
+          ),
+          trackCameraPosition: true,
+          scrollGesturesEnabled: true),
+    );
   }
 
   void _add() {
@@ -539,6 +538,21 @@ class _VendorPageNewState extends State<VendorPageNew>
       return bulan;
     }
 
+    void _updateBookingDate(VenueModel venueModel) {
+    // for (var items in listVenue) {
+      for (var bookingDate in venueModel.listBookingDate) {
+        if (bookingDate['bookingDate'] == parameter.bookingDate) {
+          venueModel.isDayFlag = venueModel.isDay;
+          venueModel.isNightFlag = venueModel.isNight;
+          break;
+        } else {
+          venueModel.isDayFlag = 0;
+          venueModel.isNightFlag = 0;
+        }        
+      }
+    // }
+  }
+
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
           context: context,
@@ -548,6 +562,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       if (picked != null) {
         setState(() {
           selectedDate = picked.millisecondsSinceEpoch;
+          parameter.bookingDate = selectedDate;
           int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
           int month =
               new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
@@ -557,6 +572,7 @@ class _VendorPageNewState extends State<VendorPageNew>
               _convertBulan(month) +
               ' ' +
               year.toString();
+          _updateBookingDate(venueModel);
         });
       }
     }
@@ -591,7 +607,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Column(
                     children: <Widget>[
                       Icon(Icons.wb_sunny),
-                      Text('Booked',
+                      Text(venueModel.isDayFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 14.0,
@@ -602,7 +618,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Column(
                     children: <Widget>[
                       Icon(Icons.wb_cloudy),
-                      Text('Booked',
+                      Text(venueModel.isNightFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 14.0,
@@ -643,7 +659,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   ],
                 ),
                 onTap: () {
-                  _navigateMapsDetailPage(context, allPages[0]);
+                  _navigateMapsDetailPage(context, allPages[0], venueModel);
                 },
               ),
               addressRow,
@@ -673,17 +689,18 @@ class _VendorPageNewState extends State<VendorPageNew>
     );
   }
 
-  void _navigateMapsDetailPage(BuildContext context, PageNew page) {
+  void _navigateMapsDetailPage(
+      BuildContext context, PageNew page, VenueModel venueModel) {
     Navigator.push(
       context,
       new MaterialPageRoute(
           builder: (context) => new GoogleMapsDetailNew(
                 mapController: page.controller.mapController,
                 overlayController: page.controller,
-                lat: -6.1541491,
-                lng: 106.8893441,
-                title: 'Balai Sudirman',
-                subTitle: 'Jakarta,Indonesia',
+                lat: venueModel.latitude,
+                lng: venueModel.longitude,
+                title: venueModel.titleVenue,
+                subTitle: parameter.cityName + ',Indonesia',
               )),
     );
   }

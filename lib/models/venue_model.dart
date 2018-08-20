@@ -14,6 +14,8 @@ class VenueModel {
   int isDayFlag;
   int isNightFlag;
   int bookingDate;
+  double latitude;
+	double longitude;
   List<dynamic> listBookingDate;
 
   VenueModel(
@@ -32,5 +34,7 @@ class VenueModel {
       this.isDayFlag,
       this.isNightFlag,
       this.bookingDate,
-      this.listBookingDate);
+      this.listBookingDate,
+      this.latitude,
+      this.longitude);
 }
