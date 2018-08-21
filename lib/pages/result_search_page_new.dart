@@ -74,6 +74,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           bookingDateVal = bookingDate['bookingDate'];
         }
       }
+      int id = venue2['id'];
       String linkImageVenue = venue2['linkImageVenue'];
       String titleVenue = venue2['titleVenue'];
       String addressVenue = venue2['addressVenue'];
@@ -87,6 +88,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
       double longitude = venue2['longitude'];
       String locationVenue = venue2['locationVenue'];
       listVenueData.add(new VenueModel(
+          id,
           linkImageVenue,
           titleVenue,
           addressVenue,

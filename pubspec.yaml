@@ -40,7 +40,8 @@ dependencies:
   #plugins calendar
   # date_utils: ^0.0.2
   tuple: ^1.0.1
-  intl: ^0.15.0
+  intl: "^0.15.6"
+  numberpicker: "^0.1.0"
 
   #webview
   # flutter_webview_plugin: "^0.1.6"
@@ -90,6 +91,8 @@ flutter:
     - assets/images/2.jpg
     - assets/images/3.jpg
     - assets/images/4.jpg
+    - assets/images/calendar-clock.png
+    - assets/images/scale-bathroom.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

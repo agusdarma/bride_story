@@ -8,14 +8,16 @@ import 'package:bride_story/utils/network_utils.dart';
 class HttpServices {
   NetworkUtil _netUtil = new NetworkUtil();
   // static final baseUrl = "http://192.168.100.7:6556/bride-trx";
-  // static final baseUrl = "http://192.168.0.101:6556/bride-trx";
-  static final baseUrl = "http://api.sablonbalon.com:8888/bride-trx";
+  static final baseUrl = "http://192.168.0.101:6556/bride-trx";
+  // static final baseUrl = "http://api.sablonbalon.com:8888/bride-trx";
   static final categoryUrl = baseUrl + "/cat";
   static final countryUrl = baseUrl + "/country";
   static final cityUrl = baseUrl + "/city";
   static final getImageByName = baseUrl + "/getImageByName";
   static final getAllCarouselImgUrl = baseUrl + "/allCarousel";
   static final getAllVenueUrl = baseUrl + "/getListVenue";
+  static final createUpdateBookingUrl = baseUrl + "/createUpdateBooking";
+  
 
   Future<Post> fetchDataPost() async {
     // final response =
@@ -31,6 +33,19 @@ class HttpServices {
     Post a = new Post.fromJson(post);
     print(a.title);
     return null;
+  }
+
+  Future<dynamic> createUpdateBooking(String globalParam) async {
+    final String response = await _netUtil
+        .post(createUpdateBookingUrl, body: globalParam);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    // MessageVo a = new MessageVo.fromJson(messageVO);
+
+    // String responseMessage = decoder.convert(a.otherMessage);
+    // String responseMessage = messageVO['otherMessage'];
+    return messageVO;
   }
 
   Future<List<dynamic>> getCategories() async {

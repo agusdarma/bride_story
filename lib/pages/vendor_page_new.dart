@@ -1,5 +1,7 @@
 import 'package:bride_story/data/filter_param.dart';
+import 'package:bride_story/models/booking_model.dart';
 import 'package:bride_story/models/venue_model.dart';
+import 'package:bride_story/pages/booking_entry_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
@@ -43,7 +45,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
   GoogleMapOverlayController previewMap;
-
+  List<BookingData> weightSaves = new List();
   int _markerCount = 0;
   static final LatLng center = const LatLng(-6.1541491, 106.8893441);
 
@@ -134,6 +136,19 @@ class _VendorPageNewState extends State<VendorPageNew>
     });
   }
 
+  Future _openAddEntryDialog() async {
+    BookingData save =
+        await Navigator.of(context).push(new MaterialPageRoute<BookingData>(
+            builder: (BuildContext context) {
+              return new BookingEntryDialog.add(venueModel.id,parameter.bookingDate);
+            },
+            fullscreenDialog: true));
+            print(save);
+    if (save != null) {
+      // _addWeightSave(save);
+    }
+  }
+
   dispose() {
     controller.dispose();
     super.dispose();
@@ -154,6 +169,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           child: InkWell(
             onTap: () {
               // _navigateSearchButton(context);
+              _openAddEntryDialog();
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),
@@ -539,7 +555,7 @@ class _VendorPageNewState extends State<VendorPageNew>
     }
 
     void _updateBookingDate(VenueModel venueModel) {
-    // for (var items in listVenue) {
+      // for (var items in listVenue) {
       for (var bookingDate in venueModel.listBookingDate) {
         if (bookingDate['bookingDate'] == parameter.bookingDate) {
           venueModel.isDayFlag = venueModel.isDay;
@@ -548,10 +564,10 @@ class _VendorPageNewState extends State<VendorPageNew>
         } else {
           venueModel.isDayFlag = 0;
           venueModel.isNightFlag = 0;
-        }        
+        }
       }
-    // }
-  }
+      // }
+    }
 
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(

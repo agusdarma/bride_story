@@ -1,4 +1,5 @@
 class VenueModel {
+  int id;
   String linkImageVenue;
   String titleVenue;
   String addressVenue;
@@ -19,6 +20,7 @@ class VenueModel {
   List<dynamic> listBookingDate;
 
   VenueModel(
+      this.id,
       this.linkImageVenue,
       this.titleVenue,
       this.addressVenue,
