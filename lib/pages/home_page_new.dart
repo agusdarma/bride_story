@@ -79,7 +79,7 @@ class _HomePageNewState extends State<HomePageNew> {
               ' ' +
               year.toString();
     parameter = new  FilterParam(
-      '', 0, '', 0, 'Jakarta', 1, new DateTime.now().millisecondsSinceEpoch);
+      '', 0, '', 0, 'Jakarta', 1, selectedDate);
   }
 
   @override

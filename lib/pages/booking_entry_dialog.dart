@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/booking_model.dart';
+import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,9 +11,10 @@ import 'package:meta/meta.dart';
 class BookingEntryDialog extends StatefulWidget {
   final int idVenue;
   final BookingData bookingDataToEdit;
-  final int dateTimeMilisecond;
+  int dateTimeMilisecond;
 
-  BookingEntryDialog.add(this.idVenue,this.dateTimeMilisecond) : bookingDataToEdit = null;
+  BookingEntryDialog.add(this.idVenue, this.dateTimeMilisecond)
+      : bookingDataToEdit = null;
 
   BookingEntryDialog.edit(this.bookingDataToEdit)
       : idVenue = bookingDataToEdit.idVenue;
@@ -40,30 +41,91 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
   BookingEntryDialogState(this.dateTimeMilisecond, this._time, this._idVenue);
 
   dynamic myEncode(dynamic item) {
-  if(item is DateTime) {
-    return item.toIso8601String();
+    if (item is DateTime) {
+      return item.toIso8601String();
+    }
+    return item;
   }
-  return item;
-}
+
+  // user defined function
+  void _showDialog(dynamic response) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Info",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(response['otherMessage']),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDialogCustom(dynamic response) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Info"),
+          content: new Text(response['otherMessage']),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(response);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   _sendToEngine(BuildContext context, BookingData bookingData) {
     // bookingData.dateTime = null;
-    print(bookingData.dateTimeMilisecond);    
+    print(bookingData.dateTimeMilisecond);
     print(bookingData.time);
     print(bookingData.toString());
     HttpServices http = new HttpServices();
     const JsonEncoder encoder = const JsonEncoder();
     // FilterParam a = new FilterParam('', 0, '', 0, '', 0, 0);
     // BookingData a = new BookingData( 0, 0, 0);
+    // dynamic response;
     String parameterJson = encoder.convert(bookingData);
     print(parameterJson);
     http.createUpdateBooking(parameterJson).then((dynamic response) {
       setState(() {
         print(response['otherMessage']);
+        // Scaffold.of(context).showSnackBar(snackBar);
+        // _alertSnackBar(context);
+        // _showDialogCustom(response);
+        // response = response;
+        Navigator.of(context).pop(response);
       });
     });
-    Navigator.of(context).pop(bookingData);
+    
   }
+
+  // _alertSnackBar(BuildContext context) {
+  //   Scaffold.of(context).showSnackBar(snackBar);
+  // }
 
   Widget _createAppBar(BuildContext context) {
     return new AppBar(
@@ -75,8 +137,8 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
           onPressed: () {
             _sendToEngine(
                 context,
-                new BookingData(_time, _idVenue,
-                    _dateTime.millisecondsSinceEpoch));
+                new BookingData(
+                    _time, _idVenue, _dateTime.millisecondsSinceEpoch));
           },
           child: new Text('SAVE',
               style: Theme.of(context)
@@ -224,13 +286,13 @@ class DateTimeItem extends StatelessWidget {
     }
   }
 
-  Future _showTimePicker(BuildContext context) async {
-    TimeOfDay timeOfDay =
-        await showTimePicker(context: context, initialTime: time);
+  // Future _showTimePicker(BuildContext context) async {
+  //   TimeOfDay timeOfDay =
+  //       await showTimePicker(context: context, initialTime: time);
 
-    if (timeOfDay != null) {
-      onChanged(new DateTime(
-          date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
-    }
-  }
+  //   if (timeOfDay != null) {
+  //     onChanged(new DateTime(
+  //         date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
+  //   }
+  // }
 }

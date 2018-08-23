@@ -6,6 +6,7 @@ class FilterParam {
   String cityName;
   int cityId;
   int bookingDate;
+  int idVenue;
 
   FilterParam(this.categoryName, this.categoryId, this.countryName,
       this.countryId, this.cityName, this.cityId, this.bookingDate);
@@ -17,6 +18,7 @@ class FilterParam {
         countryId = json['countryId'],
         cityName = json['cityName'],
         cityId = json['cityId'],
+        idVenue = json['idVenue'],
         bookingDate = json['bookingDate'];
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +28,7 @@ class FilterParam {
         'countryId': countryId,
         'cityName': cityName,
         'cityId': cityId,
+        'idVenue': idVenue,
         'bookingDate': bookingDate,
       };
 

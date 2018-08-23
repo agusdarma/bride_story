@@ -244,6 +244,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
     );
 
     _navigateVendorPage(BuildContext context, VenueModel venueModel) {
+      parameter.idVenue = venueModel.id;
       // Navigator.pushNamed(context, "/vendorPage");
       Navigator.push(
         context,

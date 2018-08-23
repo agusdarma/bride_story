@@ -87,8 +87,8 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+    // double screenWidth = MediaQuery.of(context).size.width;
 
     var header = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

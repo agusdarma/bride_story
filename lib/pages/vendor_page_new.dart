@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/booking_model.dart';
 import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/booking_entry_dialog.dart';
+import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
@@ -10,6 +13,8 @@ import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:ui';
+
+import 'package:intl/intl.dart';
 
 class VendorPageNew extends StatefulWidget {
   final GoogleMapController mapController;
@@ -48,6 +53,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   List<BookingData> weightSaves = new List();
   int _markerCount = 0;
   static final LatLng center = const LatLng(-6.1541491, 106.8893441);
+  final formatter = new NumberFormat("#,###");
 
   Animation<double> animation;
   AnimationController controller;
@@ -121,6 +127,21 @@ class _VendorPageNewState extends State<VendorPageNew>
     );
   }
 
+  void _updateBookingDate(VenueModel venueModel) {
+    // for (var items in listVenue) {
+    for (var bookingDate in venueModel.listBookingDate) {
+      if (bookingDate['bookingDate'] == parameter.bookingDate) {
+        venueModel.isDayFlag = venueModel.isDay;
+        venueModel.isNightFlag = venueModel.isNight;
+        break;
+      } else {
+        venueModel.isDayFlag = 0;
+        venueModel.isNightFlag = 0;
+      }
+    }
+    // }
+  }
+
   void _add() {
     mapController.addMarker(MarkerOptions(
       position: LatLng(
@@ -136,16 +157,138 @@ class _VendorPageNewState extends State<VendorPageNew>
     });
   }
 
+  void _showDialogCustom(dynamic response) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Info"),
+          content: new Text(response['otherMessage']),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _updateVenueData(List<dynamic> listVenue) {
+    // print('existing');
+    // print(venueModel.isDay);
+    // print(venueModel.isNight);
+    // print(venueModel.isDayFlag);
+    // print(venueModel.isNightFlag);
+    // print('db');
+    for (var items in listVenue) {
+      Map venue = items; //store each map
+      Map venue2 = venue['venue'];
+      List<dynamic> listBookingDate = venue['listBookingDates'];
+      int isDay;
+      int isNight;
+      int isDayFlag;
+      int isNightFlag;
+      int bookingDateVal;
+      for (var bookingDate in listBookingDate) {
+        if (bookingDate['bookingDate'] == parameter.bookingDate) {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          isDayFlag = bookingDate['isDay'];
+          isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
+        } else {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          // isDayFlag = bookingDate['isDay'];
+          // isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
+        }
+      }
+      int id = venue2['id'];
+      String linkImageVenue = venue2['linkImageVenue'];
+      String titleVenue = venue2['titleVenue'];
+      String addressVenue = venue2['addressVenue'];
+      String capacityVisitor = venue2['capacityVisitor'];
+      String capacityParkir = venue2['capacityParkir'];
+      String luasBangunan = venue2['luasBangunan'];
+      String luasTanah = venue2['luasTanah'];
+      String hargaVenue = formatter.format(int.parse(venue2['hargaVenue']));
+      int idCity = venue2['idCity'];
+      double latitude = venue2['latitude'];
+      double longitude = venue2['longitude'];
+      String locationVenue = venue2['locationVenue'];
+      setState(() {
+        venueModel.id = id;
+        venueModel.linkImageVenue = linkImageVenue;
+        venueModel.titleVenue = titleVenue;
+        venueModel.addressVenue = addressVenue;
+        venueModel.capacityVisitor = capacityVisitor;
+        venueModel.capacityParkir = capacityParkir;
+        venueModel.isDay = isDay;
+        venueModel.isNight = isNight;
+        venueModel.isDayFlag = isDayFlag;
+        venueModel.isNightFlag = isNightFlag;
+        venueModel.listBookingDate = listBookingDate;
+      });
+
+      // listVenueData.add(new VenueModel(
+      //     id,
+      //     linkImageVenue,
+      //     titleVenue,
+      //     addressVenue,
+      //     capacityVisitor,
+      //     capacityParkir,
+      //     luasBangunan,
+      //     luasTanah,
+      //     hargaVenue,
+      //     idCity,
+      //     locationVenue,
+      //     isDay,
+      //     isNight,
+      //     isDayFlag,
+      //     isNightFlag,
+      //     bookingDateVal,
+      //     listBookingDate,
+      //     latitude,
+      //     longitude));
+      print(venueModel.listBookingDate);
+    }
+  }
+
+  void refreshVenue() {
+    HttpServices http = new HttpServices();
+    const JsonEncoder encoder = const JsonEncoder();
+    String parameterJson = encoder.convert(parameter);
+    print(parameter.idVenue);
+    http.getVenueWithIdVenue(parameterJson).then((List<dynamic> listVenue) {
+      setState(() {
+        if (listVenue.length > 0) {
+          _updateVenueData(listVenue);
+          _updateBookingDate(venueModel);
+        }
+      });
+    });
+  }
+
   Future _openAddEntryDialog() async {
-    BookingData save =
-        await Navigator.of(context).push(new MaterialPageRoute<BookingData>(
+    dynamic save =
+        await Navigator.of(context).push(new MaterialPageRoute<dynamic>(
             builder: (BuildContext context) {
-              return new BookingEntryDialog.add(venueModel.id,parameter.bookingDate);
+              return new BookingEntryDialog.add(
+                  venueModel.id, parameter.bookingDate);
             },
             fullscreenDialog: true));
-            print(save);
+    print(save);
     if (save != null) {
-      // _addWeightSave(save);
+      _showDialogCustom(save);
+      refreshVenue();
     }
   }
 
@@ -552,21 +695,6 @@ class _VendorPageNewState extends State<VendorPageNew>
         bulan = desember;
       }
       return bulan;
-    }
-
-    void _updateBookingDate(VenueModel venueModel) {
-      // for (var items in listVenue) {
-      for (var bookingDate in venueModel.listBookingDate) {
-        if (bookingDate['bookingDate'] == parameter.bookingDate) {
-          venueModel.isDayFlag = venueModel.isDay;
-          venueModel.isNightFlag = venueModel.isNight;
-          break;
-        } else {
-          venueModel.isDayFlag = 0;
-          venueModel.isNightFlag = 0;
-        }
-      }
-      // }
     }
 
     Future<Null> _selectDate(BuildContext context) async {
