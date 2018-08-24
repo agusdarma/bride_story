@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bride_story/models/booking_model.dart';
-import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,12 +10,12 @@ import 'package:meta/meta.dart';
 class BookingEntryDialog extends StatefulWidget {
   final int idVenue;
   final BookingData bookingDataToEdit;
-  int dateTimeMilisecond;
+  final int dateTimeMilisecond;
 
   BookingEntryDialog.add(this.idVenue, this.dateTimeMilisecond)
       : bookingDataToEdit = null;
 
-  BookingEntryDialog.edit(this.bookingDataToEdit)
+  BookingEntryDialog.edit(this.bookingDataToEdit, this.dateTimeMilisecond)
       : idVenue = bookingDataToEdit.idVenue;
 
   @override
@@ -47,85 +46,17 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
     return item;
   }
 
-  // user defined function
-  void _showDialog(dynamic response) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Info",
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              )),
-          content: new Text(response['otherMessage']),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showDialogCustom(dynamic response) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return CustomAlertDialog(
-          title: new Text("Info"),
-          content: new Text(response['otherMessage']),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop(response);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   _sendToEngine(BuildContext context, BookingData bookingData) {
-    // bookingData.dateTime = null;
-    print(bookingData.dateTimeMilisecond);
-    print(bookingData.time);
-    print(bookingData.toString());
     HttpServices http = new HttpServices();
     const JsonEncoder encoder = const JsonEncoder();
-    // FilterParam a = new FilterParam('', 0, '', 0, '', 0, 0);
-    // BookingData a = new BookingData( 0, 0, 0);
-    // dynamic response;
     String parameterJson = encoder.convert(bookingData);
     print(parameterJson);
     http.createUpdateBooking(parameterJson).then((dynamic response) {
       setState(() {
-        print(response['otherMessage']);
-        // Scaffold.of(context).showSnackBar(snackBar);
-        // _alertSnackBar(context);
-        // _showDialogCustom(response);
-        // response = response;
         Navigator.of(context).pop(response);
       });
     });
-    
   }
-
-  // _alertSnackBar(BuildContext context) {
-  //   Scaffold.of(context).showSnackBar(snackBar);
-  // }
 
   Widget _createAppBar(BuildContext context) {
     return new AppBar(
@@ -190,48 +121,10 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
               });
             },
           ),
-          // new ListTile(
-          //   leading: new Image.asset(
-          //     "assets/images/scale-bathroom.png",
-          //     color: Colors.grey[500],
-          //     height: 24.0,
-          //     width: 24.0,
-          //   ),
-          //   title: new Text(
-          //     "$_weight kg",
-          //   ),
-          //   onTap: () => _showWeightPicker(context),
-          // ),
-          // new ListTile(
-          //   leading: new Icon(Icons.speaker_notes, color: Colors.grey[500]),
-          //   title: new TextField(
-          //     decoration: new InputDecoration(
-          //       hintText: 'Optional note',
-          //     ),
-          //     controller: _textController,
-          //     onChanged: (value) => _note = value,
-          //   ),
-          // ),
         ],
       ),
     );
   }
-
-  // _showWeightPicker(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     child: new NumberPickerDialog.decimal(
-  //       minValue: 1,
-  //       maxValue: 150,
-  //       initialDoubleValue: _weight,
-  //       title: new Text("Enter your weight"),
-  //     ),
-  //   ).then((value) {
-  //     if (value != null) {
-  //       setState(() => _weight = value);
-  //     }
-  //   });
-  // }
 }
 
 class DateTimeItem extends StatelessWidget {
@@ -285,14 +178,4 @@ class DateTimeItem extends StatelessWidget {
           dateTimePicked.day, time.hour, time.minute));
     }
   }
-
-  // Future _showTimePicker(BuildContext context) async {
-  //   TimeOfDay timeOfDay =
-  //       await showTimePicker(context: context, initialTime: time);
-
-  //   if (timeOfDay != null) {
-  //     onChanged(new DateTime(
-  //         date.year, date.month, date.day, timeOfDay.hour, timeOfDay.minute));
-  //   }
-  // }
 }

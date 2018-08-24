@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bride_story/data/filter_param.dart';
+import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
@@ -31,61 +32,99 @@ class _HomePageNewState extends State<HomePageNew> {
 
   String displayedString = "";
   String displayedDate = "";
-  int selectedDate = new DateTime.now().millisecondsSinceEpoch;
+  // int selectedDate = new DateTime.now().millisecondsSinceEpoch;
+  int selectedDate;
   FilterParam parameter;
 
   String _convertBulan(int month) {
-      String bulan = "";
-      if (1 == month) {
-        bulan = januari;
-      } else if (2 == month) {
-        bulan = februari;
-      } else if (3 == month) {
-        bulan = maret;
-      } else if (4 == month) {
-        bulan = april;
-      } else if (5 == month) {
-        bulan = mei;
-      } else if (6 == month) {
-        bulan = juni;
-      } else if (7 == month) {
-        bulan = juli;
-      } else if (8 == month) {
-        bulan = agustus;
-      } else if (9 == month) {
-        bulan = september;
-      } else if (10 == month) {
-        bulan = oktober;
-      } else if (11 == month) {
-        bulan = november;
-      } else if (12 == month) {
-        bulan = desember;
-      }
-      return bulan;
+    String bulan = "";
+    if (1 == month) {
+      bulan = januari;
+    } else if (2 == month) {
+      bulan = februari;
+    } else if (3 == month) {
+      bulan = maret;
+    } else if (4 == month) {
+      bulan = april;
+    } else if (5 == month) {
+      bulan = mei;
+    } else if (6 == month) {
+      bulan = juni;
+    } else if (7 == month) {
+      bulan = juli;
+    } else if (8 == month) {
+      bulan = agustus;
+    } else if (9 == month) {
+      bulan = september;
+    } else if (10 == month) {
+      bulan = oktober;
+    } else if (11 == month) {
+      bulan = november;
+    } else if (12 == month) {
+      bulan = desember;
     }
+    return bulan;
+  }
 
   void initState() {
     super.initState();
     print(overlayController.hashCode);
     displayedString = "Jakarta";
     displayedDate = "Please Select Date Here";
-    int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
-          int month =
-              new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
-          int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
-          displayedDate = day.toString() +
-              ' ' +
-              _convertBulan(month) +
-              ' ' +
-              year.toString();
-    parameter = new  FilterParam(
-      '', 0, '', 0, 'Jakarta', 1, selectedDate);
+    // int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
+    //       int month =
+    //           new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
+    //       int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
+    //       displayedDate = day.toString() +
+    //           ' ' +
+    //           _convertBulan(month) +
+    //           ' ' +
+    //           year.toString();
+    parameter = new FilterParam('', 0, '', 0, 'Jakarta', 1, 0);
   }
 
   @override
   Widget build(BuildContext context) {
+    void _showDialogError(String message) {
+      // flutter defined function
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return CustomAlertDialog(
+            title: new Text("Warning",
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                )),
+            content: new Text(message,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  // color: Colors.red,
+                  // fontWeight: FontWeight.bold,
+                )),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Close",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      // color: Colors.red,
+                      // fontWeight: FontWeight.bold,
+                    )),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     _navigateSearchButton(BuildContext context) {
-      // print(parameter.bookingDate);
+      print(parameter.bookingDate);
       // Navigator.pushNamed(context, "/searchResult");
       Navigator.push(
         context,
@@ -98,8 +137,6 @@ class _HomePageNewState extends State<HomePageNew> {
                 )),
       );
     }
-
-    
 
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
@@ -248,7 +285,11 @@ class _HomePageNewState extends State<HomePageNew> {
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
             onTap: () {
-              _navigateSearchButton(context);
+              if (parameter.bookingDate == 0) {
+                _showDialogError("Silahkan pilih tanggal booking.");
+              } else {
+                _navigateSearchButton(context);
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),

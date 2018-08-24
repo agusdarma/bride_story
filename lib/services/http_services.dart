@@ -18,6 +18,8 @@ class HttpServices {
   static final getAllVenueUrl = baseUrl + "/getListVenue";
   static final getVenueWithIdVenueUrl = baseUrl + "//getVenueById";
   static final createUpdateBookingUrl = baseUrl + "/createUpdateBooking";
+  static final getListSimilarVenueUrl = baseUrl + "/getListSimilarVenue";
+  
   
 
   Future<Post> fetchDataPost() async {
@@ -134,6 +136,18 @@ class HttpServices {
   Future<List<dynamic>> getVenueWithIdVenue(String parameter) async {
     final String response = await _netUtil
         .post(getVenueWithIdVenueUrl, body: parameter);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    MessageVo a = new MessageVo.fromJson(messageVO);
+
+    List<dynamic> listVenue = decoder.convert(a.otherMessage);
+    return listVenue;
+  }
+
+  Future<List<dynamic>> getListSimilarVenue(String parameter) async {
+    final String response = await _netUtil
+        .post(getListSimilarVenueUrl, body: parameter);
 
     const JsonDecoder decoder = const JsonDecoder();
     Map messageVO = decoder.convert(response);

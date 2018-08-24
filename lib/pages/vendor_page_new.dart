@@ -47,6 +47,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   VenueModel venueModel;
   FilterParam parameter;
   String urlVenueImage;
+  String urlSimilarVenueImage;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
   GoogleMapOverlayController previewMap;
@@ -54,10 +55,10 @@ class _VendorPageNewState extends State<VendorPageNew>
   int _markerCount = 0;
   static final LatLng center = const LatLng(-6.1541491, 106.8893441);
   final formatter = new NumberFormat("#,###");
-
+  // List<Widget> listWidgetSimilarVenue = [];
   Animation<double> animation;
   AnimationController controller;
-
+  List<VenueModel> listSimilarVenueData = new List<VenueModel>();
   String _convertBulan(int month) {
     String bulan = "";
     if (1 == month) {
@@ -88,8 +89,176 @@ class _VendorPageNewState extends State<VendorPageNew>
     return bulan;
   }
 
+  // Widget banner = new Padding(
+  //   padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+  //   child: new Container(
+  //       width: 200.0,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.only(
+  //             // topLeft: Radius.circular(15.0),
+  //             // bottomRight: Radius.circular(15.0)
+  //             ),
+  //         color: Colors.white,
+  //       ),
+  //       padding: const EdgeInsets.all(6.0),
+  //       child: new Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: <Widget>[
+  //           new Text(
+  //             'Hotel Hilton',
+  //             style: TextStyle(
+  //               fontSize: 14.0,
+  //             ),
+  //           ),
+  //           new Text(
+  //             'Jakarta, Indonesia',
+  //             style: TextStyle(
+  //               fontSize: 12.0,
+  //             ),
+  //           ),
+  //           new Text(
+  //             'Venue',
+  //             style: TextStyle(
+  //               fontSize: 12.0,
+  //             ),
+  //           ),
+  //         ],
+  //       )),
+  //   // ),
+  //   //  ),
+  // );
+
+  void _populateResultData(List<dynamic> listVenue) {
+    for (var items in listVenue) {
+      Map venue = items; //store each map
+      Map venue2 = venue['venue'];
+      List<dynamic> listBookingDate = venue['listBookingDates'];
+      int isDay;
+      int isNight;
+      int isDayFlag;
+      int isNightFlag;
+      int bookingDateVal;
+      for (var bookingDate in listBookingDate) {
+        if (bookingDate['bookingDate'] == parameter.bookingDate) {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          isDayFlag = bookingDate['isDay'];
+          isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
+        } else {
+          isDay = bookingDate['isDay'];
+          isNight = bookingDate['isNight'];
+          // isDayFlag = bookingDate['isDay'];
+          // isNightFlag = bookingDate['isNight'];
+          bookingDateVal = bookingDate['bookingDate'];
+        }
+      }
+      int id = venue2['id'];
+      String linkImageVenue = venue2['linkImageVenue'];
+      String titleVenue = venue2['titleVenue'];
+      String addressVenue = venue2['addressVenue'];
+      String capacityVisitor = venue2['capacityVisitor'];
+      String capacityParkir = venue2['capacityParkir'];
+      String luasBangunan = venue2['luasBangunan'];
+      String luasTanah = venue2['luasTanah'];
+      String hargaVenue = formatter.format(int.parse(venue2['hargaVenue']));
+      int idCity = venue2['idCity'];
+      double latitude = venue2['latitude'];
+      double longitude = venue2['longitude'];
+      String locationVenue = venue2['locationVenue'];
+      listSimilarVenueData.add(new VenueModel(
+          id,
+          linkImageVenue,
+          titleVenue,
+          addressVenue,
+          capacityVisitor,
+          capacityParkir,
+          luasBangunan,
+          luasTanah,
+          hargaVenue,
+          idCity,
+          locationVenue,
+          isDay,
+          isNight,
+          isDayFlag,
+          isNightFlag,
+          bookingDateVal,
+          listBookingDate,
+          latitude,
+          longitude));
+    }
+    print(listSimilarVenueData.length);
+  }
+
+  // List<Widget> _populateSimilarVenueImages(List<dynamic> listVenue) {
+  //   // List<Widget> listSimilarVenue;
+  //   for (var items in listVenue) {
+  //     Map venue = items; //store each map
+  //     Map venue2 = venue['venue'];
+  //     String fileName = venue2['linkImageVenue'];
+  //     urlSimilarVenueImage = HttpServices.getImageByName +
+  //         kParamImageName.replaceAll('<img>', '$fileName');
+  //     Widget similar = new Stack(
+  //       children: <Widget>[
+  //         new Container(
+  //             padding: EdgeInsets.all(5.0),
+  //             margin: EdgeInsets.only(right: 5.0),
+  //             width: 200.0,
+  //             height: 200.0,
+  //             decoration: new BoxDecoration(
+  //                 shape: BoxShape.rectangle,
+  //                 image: new DecorationImage(
+  //                   fit: BoxFit.fill,
+  //                   image: new NetworkImage(urlSimilarVenueImage),
+  //                 ))),
+  //         new Padding(
+  //           padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+  //           child: new Container(
+  //               width: 200.0,
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.only(
+  //                     // topLeft: Radius.circular(15.0),
+  //                     // bottomRight: Radius.circular(15.0)
+  //                     ),
+  //                 color: Colors.white,
+  //               ),
+  //               padding: const EdgeInsets.all(6.0),
+  //               child: new Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   new Text(
+  //                     venue2['titleVenue'],
+  //                     style: TextStyle(
+  //                       fontSize: 14.0,
+  //                     ),
+  //                   ),
+  //                   new Text(
+  //                     'Jakarta, Indonesia',
+  //                     style: TextStyle(
+  //                       fontSize: 12.0,
+  //                     ),
+  //                   ),
+  //                   new Text(
+  //                     'Venue',
+  //                     style: TextStyle(
+  //                       fontSize: 12.0,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               )),
+  //           // ),
+  //           //  ),
+  //         ),
+  //       ],
+  //     );
+  //     listWidgetSimilarVenue.add(similar);
+  //   }
+  //   return listWidgetSimilarVenue;
+  // }
+
   initState() {
     super.initState();
+    similarVenueData();
     _add();
     displayedDate = '28 Agustus 2018';
     int year =
@@ -131,8 +300,12 @@ class _VendorPageNewState extends State<VendorPageNew>
     // for (var items in listVenue) {
     for (var bookingDate in venueModel.listBookingDate) {
       if (bookingDate['bookingDate'] == parameter.bookingDate) {
-        venueModel.isDayFlag = venueModel.isDay;
-        venueModel.isNightFlag = venueModel.isNight;
+        // venueModel.isDayFlag = venueModel.isDay;
+        // venueModel.isNightFlag = venueModel.isNight;
+        venueModel.isDayFlag = bookingDate['isDay'];
+        venueModel.isNightFlag = bookingDate['isNight'];
+        // items.isDayFlag = bookingDate['isDay'];
+        //   items.isNightFlag = bookingDate['isNight'];
         break;
       } else {
         venueModel.isDayFlag = 0;
@@ -164,12 +337,27 @@ class _VendorPageNewState extends State<VendorPageNew>
       builder: (BuildContext context) {
         // return object of type Dialog
         return CustomAlertDialog(
-          title: new Text("Info"),
-          content: new Text(response['otherMessage']),
+          title: new Text("Info",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(response['otherMessage'],
+              style: TextStyle(
+                fontSize: 18.0,
+                // color: Colors.red,
+                // fontWeight: FontWeight.bold,
+              )),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    // color: Colors.red,
+                    // fontWeight: FontWeight.bold,
+                  )),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -181,15 +369,8 @@ class _VendorPageNewState extends State<VendorPageNew>
   }
 
   void _updateVenueData(List<dynamic> listVenue) {
-    // print('existing');
-    // print(venueModel.isDay);
-    // print(venueModel.isNight);
-    // print(venueModel.isDayFlag);
-    // print(venueModel.isNightFlag);
-    // print('db');
     for (var items in listVenue) {
       Map venue = items; //store each map
-      Map venue2 = venue['venue'];
       List<dynamic> listBookingDate = venue['listBookingDates'];
       int isDay;
       int isNight;
@@ -206,60 +387,37 @@ class _VendorPageNewState extends State<VendorPageNew>
         } else {
           isDay = bookingDate['isDay'];
           isNight = bookingDate['isNight'];
-          // isDayFlag = bookingDate['isDay'];
-          // isNightFlag = bookingDate['isNight'];
           bookingDateVal = bookingDate['bookingDate'];
         }
       }
-      int id = venue2['id'];
-      String linkImageVenue = venue2['linkImageVenue'];
-      String titleVenue = venue2['titleVenue'];
-      String addressVenue = venue2['addressVenue'];
-      String capacityVisitor = venue2['capacityVisitor'];
-      String capacityParkir = venue2['capacityParkir'];
-      String luasBangunan = venue2['luasBangunan'];
-      String luasTanah = venue2['luasTanah'];
-      String hargaVenue = formatter.format(int.parse(venue2['hargaVenue']));
-      int idCity = venue2['idCity'];
-      double latitude = venue2['latitude'];
-      double longitude = venue2['longitude'];
-      String locationVenue = venue2['locationVenue'];
       setState(() {
-        venueModel.id = id;
-        venueModel.linkImageVenue = linkImageVenue;
-        venueModel.titleVenue = titleVenue;
-        venueModel.addressVenue = addressVenue;
-        venueModel.capacityVisitor = capacityVisitor;
-        venueModel.capacityParkir = capacityParkir;
         venueModel.isDay = isDay;
         venueModel.isNight = isNight;
         venueModel.isDayFlag = isDayFlag;
         venueModel.isNightFlag = isNightFlag;
         venueModel.listBookingDate = listBookingDate;
       });
-
-      // listVenueData.add(new VenueModel(
-      //     id,
-      //     linkImageVenue,
-      //     titleVenue,
-      //     addressVenue,
-      //     capacityVisitor,
-      //     capacityParkir,
-      //     luasBangunan,
-      //     luasTanah,
-      //     hargaVenue,
-      //     idCity,
-      //     locationVenue,
-      //     isDay,
-      //     isNight,
-      //     isDayFlag,
-      //     isNightFlag,
-      //     bookingDateVal,
-      //     listBookingDate,
-      //     latitude,
-      //     longitude));
-      print(venueModel.listBookingDate);
     }
+  }
+
+  void similarVenueData() {
+    HttpServices http = new HttpServices();
+    const JsonEncoder encoder = const JsonEncoder();
+    String parameterJson = encoder.convert(parameter);
+    // print(parameter.idVenue);
+    http.getListSimilarVenue(parameterJson).then((List<dynamic> listVenue) {
+      setState(() {
+        if (listVenue.length > 0) {
+          // print(listVenue.length);
+          // print('list similar awal' + listWidgetSimilarVenue.length.toString());
+          // listWidgetSimilarVenue = _populateSimilarVenueImages(listVenue);
+          // print(listWidgetSimilarVenue.length);
+          _populateResultData(listVenue);
+          // print(
+          //     'list similar akhir' + listWidgetSimilarVenue.length.toString());
+        }
+      });
+    });
   }
 
   void refreshVenue() {
@@ -333,196 +491,75 @@ class _VendorPageNewState extends State<VendorPageNew>
           )),
     );
 
-    Widget banner = new Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
-      child: new Container(
-          width: 200.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                // topLeft: Radius.circular(15.0),
-                // bottomRight: Radius.circular(15.0)
+    Widget otherVenueImagesNew(BuildContext context, int index) {
+      String fileName = listSimilarVenueData.elementAt(index).linkImageVenue;
+      urlSimilarVenueImage = HttpServices.getImageByName +
+          kParamImageName.replaceAll('<img>', '$fileName');
+      return new Stack(
+        children: <Widget>[
+          new Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.only(right: 5.0),
+              width: 200.0,
+              height: 200.0,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new NetworkImage(urlSimilarVenueImage),
+                  ))),
+          new Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+            child: new Container(
+                width: 200.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      // topLeft: Radius.circular(15.0),
+                      // bottomRight: Radius.circular(15.0)
+                      ),
+                  color: Colors.white,
                 ),
-            color: Colors.white,
+                padding: const EdgeInsets.all(6.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(
+                      listSimilarVenueData.elementAt(index).titleVenue,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    new Text(
+                      listSimilarVenueData.elementAt(index).locationVenue +
+                          ', Indonesia',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    new Text(
+                      'Venue',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ],
+                )),
+            // ),
+            //  ),
           ),
-          padding: const EdgeInsets.all(6.0),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Text(
-                'Hotel Hilton',
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
-              ),
-              new Text(
-                'Jakarta, Indonesia',
-                style: TextStyle(
-                  fontSize: 12.0,
-                ),
-              ),
-              new Text(
-                'Venue',
-                style: TextStyle(
-                  fontSize: 12.0,
-                ),
-              ),
-            ],
-          )),
-      // ),
-      //  ),
-    );
+        ],
+      );
+    }
 
     Widget otherVenueImages = new Container(
-      width: screenWidth,
+      // width: screenWidth,
       height: 200.0,
-      child: new ListView(
+      child: new ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/2.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/3.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/4.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/2.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/1.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/2.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/3.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/1.jpg"),
-                      ))),
-              banner,
-            ],
-          ),
-          new Stack(
-            children: <Widget>[
-              new Container(
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.only(right: 5.0),
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new AssetImage("assets/images/4.jpg"),
-                      ))),
-              banner,
-            ],
-          )
-        ],
+        itemCount: listSimilarVenueData.length,
+        itemBuilder: (BuildContext context, int index) {
+          return otherVenueImagesNew(context, index);
+        },
       ),
     );
 

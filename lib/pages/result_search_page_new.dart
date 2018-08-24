@@ -114,9 +114,11 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
   void _updateBookingDate(List<VenueModel> listVenue) {
     for (var items in listVenue) {
       for (var bookingDate in items.listBookingDate) {
+        // items.isDayFlag = 0;
+        // items.isNightFlag = 0;
         if (bookingDate['bookingDate'] == parameter.bookingDate) {
-          items.isDayFlag = items.isDay;
-          items.isNightFlag = items.isNight;
+          items.isDayFlag = bookingDate['isDay'];
+          items.isNightFlag = bookingDate['isNight'];
           break;
         } else {
           items.isDayFlag = 0;
