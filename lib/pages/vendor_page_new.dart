@@ -325,7 +325,7 @@ class _VendorPageNewState extends State<VendorPageNew>
               return new BookingEntryDialog.add(
                   venueModel.id, parameter.bookingDate);
             },
-            fullscreenDialog: true));
+            fullscreenDialog: false));
     print(save);
     if (save != null) {
       _showDialogCustom(save);
@@ -452,7 +452,7 @@ class _VendorPageNewState extends State<VendorPageNew>
         children: <Widget>[
           new Text("Similar Venue", style: TextStyle(fontSize: 14.0)),
           new GestureDetector(
-            child: new Text("View All (5) >", style: TextStyle(fontSize: 14.0)),
+            child: new Text("View All ("+listSimilarVenueData.length.toString()+") >", style: TextStyle(fontSize: 14.0)),
             onTap: () {
               // _navigateProjectListPage(context);
             },

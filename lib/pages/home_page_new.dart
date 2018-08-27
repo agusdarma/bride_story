@@ -313,6 +313,19 @@ class _HomePageNewState extends State<HomePageNew> {
     return SafeArea(
         child: new Scaffold(
             backgroundColor: Colors.cyan[100],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: 0, // this will be set when a new tab is tapped
+              items: [
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.home),
+                  title: new Text('Home'),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.mail),
+                  title: new Text('Order Booking'),
+                ),                
+              ],
+            ),
             body: new SingleChildScrollView(
               child: new Column(
                 children: <Widget>[
