@@ -191,6 +191,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
               // ),
               new Flexible(
                 child: new TextField(
+                  keyboardType: TextInputType.text,
                   onChanged: (text) {
                     setState(() {
                       _namaPernikahan = text;
@@ -222,6 +223,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
             children: <Widget>[
               new Flexible(
                 child: new TextField(
+                  keyboardType: TextInputType.text,
                   onChanged: (text) {
                     setState(() {
                       _penanggungJawab1 = text;
@@ -252,6 +254,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
             children: <Widget>[
               new Flexible(
                 child: new TextField(
+                  keyboardType: TextInputType.number,
                   onChanged: (text) {
                     setState(() {
                       _handphone1 = text;
@@ -281,6 +284,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
             children: <Widget>[
               new Flexible(
                 child: new TextField(
+                  keyboardType: TextInputType.text,
                   onChanged: (text) {
                     setState(() {
                       _penanggungJawab2 = text;
@@ -311,6 +315,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
             children: <Widget>[
               new Flexible(
                 child: new TextField(
+                  keyboardType: TextInputType.number,
                   onChanged: (text) {
                     setState(() {
                       _handphone2 = text;
