@@ -193,9 +193,9 @@ class _VendorPageNewState extends State<VendorPageNew>
   void _updateBookingDate(VenueModel venueModel) {
     // for (var items in listVenue) {
     for (var bookingDate in venueModel.listBookingDate) {
-      if (bookingDate['bookingDate'] == parameter.bookingDate) {        
+      if (bookingDate['bookingDate'] == parameter.bookingDate) {
         venueModel.isDayFlag = bookingDate['isDay'];
-        venueModel.isNightFlag = bookingDate['isNight'];        
+        venueModel.isNightFlag = bookingDate['isNight'];
         break;
       } else {
         venueModel.isDayFlag = 0;
@@ -293,11 +293,11 @@ class _VendorPageNewState extends State<VendorPageNew>
   void similarVenueData() {
     HttpServices http = new HttpServices();
     const JsonEncoder encoder = const JsonEncoder();
-    String parameterJson = encoder.convert(parameter);    
+    String parameterJson = encoder.convert(parameter);
     http.getListSimilarVenue(parameterJson).then((List<dynamic> listVenue) {
       setState(() {
-        if (listVenue.length > 0) {          
-          _populateResultData(listVenue);          
+        if (listVenue.length > 0) {
+          _populateResultData(listVenue);
         }
       });
     });
@@ -351,7 +351,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           color: Colors.blue,
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
-            onTap: () {              
+            onTap: () {
               _openAddEntryDialog();
             },
             child: Padding(
@@ -377,59 +377,64 @@ class _VendorPageNewState extends State<VendorPageNew>
       String fileName = listSimilarVenueData.elementAt(index).linkImageVenue;
       urlSimilarVenueImage = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
-      return new Stack(
-        children: <Widget>[
-          new Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(right: 5.0),
-              width: 200.0,
-              height: 200.0,
-              decoration: new BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new NetworkImage(urlSimilarVenueImage),
-                  ))),
-          new Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
-            child: new Container(
+      return GestureDetector(
+        onTap: () {
+                _navigateVendorPage(context, listSimilarVenueData.elementAt(index));
+              },
+        child: new Stack(
+          children: <Widget>[
+            new Container(
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.only(right: 5.0),
                 width: 200.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      // topLeft: Radius.circular(15.0),
-                      // bottomRight: Radius.circular(15.0)
+                height: 200.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: new NetworkImage(urlSimilarVenueImage),
+                    ))),
+            new Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+              child: new Container(
+                  width: 200.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        // topLeft: Radius.circular(15.0),
+                        // bottomRight: Radius.circular(15.0)
+                        ),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(6.0),
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Text(
+                        listSimilarVenueData.elementAt(index).titleVenue,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
                       ),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(6.0),
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Text(
-                      listSimilarVenueData.elementAt(index).titleVenue,
-                      style: TextStyle(
-                        fontSize: 14.0,
+                      new Text(
+                        listSimilarVenueData.elementAt(index).locationVenue +
+                            ', Indonesia',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                        ),
                       ),
-                    ),
-                    new Text(
-                      listSimilarVenueData.elementAt(index).locationVenue +
-                          ', Indonesia',
-                      style: TextStyle(
-                        fontSize: 12.0,
+                      new Text(
+                        'Venue',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                        ),
                       ),
-                    ),
-                    new Text(
-                      'Venue',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ],
-                )),
-            // ),
-            //  ),
-          ),
-        ],
+                    ],
+                  )),
+              // ),
+              //  ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -452,7 +457,9 @@ class _VendorPageNewState extends State<VendorPageNew>
         children: <Widget>[
           new Text("Similar Venue", style: TextStyle(fontSize: 14.0)),
           new GestureDetector(
-            child: new Text("View All ("+listSimilarVenueData.length.toString()+") >", style: TextStyle(fontSize: 14.0)),
+            child: new Text(
+                "View All (" + listSimilarVenueData.length.toString() + ") >",
+                style: TextStyle(fontSize: 14.0)),
             onTap: () {
               // _navigateProjectListPage(context);
             },
@@ -481,7 +488,6 @@ class _VendorPageNewState extends State<VendorPageNew>
       padding: EdgeInsets.only(left: 7.0, top: 7.0, bottom: 7.0),
       child: new Text(venueModel.titleVenue, style: TextStyle(fontSize: 18.0)),
     );
-    
 
     Widget bgImage = new Container(
       height: screenHeight / 3,
@@ -755,6 +761,22 @@ class _VendorPageNewState extends State<VendorPageNew>
                 lng: venueModel.longitude,
                 title: venueModel.titleVenue,
                 subTitle: parameter.cityName + ',Indonesia',
+              )),
+    );
+  }
+
+  _navigateVendorPage(BuildContext context, VenueModel venueModel) {
+    parameter.idVenue = venueModel.id;
+    // Navigator.pushNamed(context, "/vendorPage");
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+          builder: (context) => new VendorPageNew(
+                mapController: mapController,
+                overlayController: overlayController,
+                allPages: allPages,
+                venueModel: venueModel,
+                parameter: parameter,
               )),
     );
   }
