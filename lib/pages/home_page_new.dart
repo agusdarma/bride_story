@@ -68,7 +68,7 @@ class _HomePageNewState extends State<HomePageNew> {
 
   void initState() {
     super.initState();
-    print(overlayController.hashCode);
+    // print(overlayController.hashCode);
     displayedString = "Jakarta";
     displayedDate = "Please Select Date Here";
     // int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
@@ -124,7 +124,7 @@ class _HomePageNewState extends State<HomePageNew> {
     }
 
     _navigateSearchButton(BuildContext context) {
-      print(parameter.bookingDate);
+      // print(parameter.bookingDate);
       // Navigator.pushNamed(context, "/searchResult");
       Navigator.push(
         context,

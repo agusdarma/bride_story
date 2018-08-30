@@ -108,7 +108,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           latitude,
           longitude));
     }
-    print(listVenueData.length);
+    // print(listVenueData.length);
   }
 
   void _updateBookingDate(List<VenueModel> listVenue) {

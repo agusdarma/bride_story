@@ -308,7 +308,7 @@ class _VendorPageNewState extends State<VendorPageNew>
     HttpServices http = new HttpServices();
     const JsonEncoder encoder = const JsonEncoder();
     String parameterJson = encoder.convert(parameter);
-    print(parameter.idVenue);
+    // print(parameter.idVenue);
     http.getVenueWithIdVenue(parameterJson).then((List<dynamic> listVenue) {
       setState(() {
         if (listVenue.length > 0) {
@@ -327,7 +327,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   venueModel.id, parameter.bookingDate);
             },
             fullscreenDialog: false));
-    print(save);
+    // print(save);
     if (save != null) {
       _showDialogCustom(save);
       refreshVenue();
@@ -378,7 +378,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       String fileName = listSimilarVenueData.elementAt(index).linkImageVenue;
       urlSimilarVenueImage = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
-          print(listSimilarVenueData.elementAt(index).longitude);
+          // print(listSimilarVenueData.elementAt(index).longitude);
       return GestureDetector(
         onTap: () {
                 _navigateVendorPage(context, listSimilarVenueData.elementAt(index));

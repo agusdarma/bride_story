@@ -108,7 +108,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
           latitude,
           longitude));
     }
-    print(listVenueData.length);
+    // print(listVenueData.length);
   }
 
   void _updateBookingDate(List<VenueModel> listVenue) {
@@ -263,7 +263,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
     _navigateVendorPage(BuildContext context, VenueModel venueModel) {
       parameter.idVenue = venueModel.id;
       // Navigator.pushNamed(context, "/vendorPage");
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => new VendorPageNew(
