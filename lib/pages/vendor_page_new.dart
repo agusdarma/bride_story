@@ -6,6 +6,7 @@ import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/booking_entry_dialog.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
+import 'package:bride_story/pages/similar_venue_search_page.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/services/http_services.dart';
@@ -377,6 +378,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       String fileName = listSimilarVenueData.elementAt(index).linkImageVenue;
       urlSimilarVenueImage = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
+          print(listSimilarVenueData.elementAt(index).longitude);
       return GestureDetector(
         onTap: () {
                 _navigateVendorPage(context, listSimilarVenueData.elementAt(index));
@@ -461,7 +463,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                 "View All (" + listSimilarVenueData.length.toString() + ") >",
                 style: TextStyle(fontSize: 14.0)),
             onTap: () {
-              // _navigateProjectListPage(context);
+              _navigateSimilarList(context);
             },
           )
         ],
@@ -780,6 +782,21 @@ class _VendorPageNewState extends State<VendorPageNew>
               )),
     );
   }
+
+  _navigateSimilarList(BuildContext context) {
+      // print(parameter.bookingDate);
+      // Navigator.pushNamed(context, "/searchResult");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new SimilarVenueSearchPage(
+                  mapController: mapController,
+                  overlayController: overlayController,
+                  allPages: allPages,
+                  parameter: parameter,
+                )),
+      );
+    }
 
   void _navigateTo4DPage(BuildContext context) {
     Navigator.push(
