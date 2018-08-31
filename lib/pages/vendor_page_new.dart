@@ -6,6 +6,7 @@ import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/booking_entry_dialog.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
+import 'package:bride_story/pages/login_page.dart';
 import 'package:bride_story/pages/similar_venue_search_page.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
@@ -366,7 +367,8 @@ class _VendorPageNewState extends State<VendorPageNew>
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
             onTap: () {
-              _openAddEntryDialog();
+              // _openAddEntryDialog();
+              _navigateLoginPage(context);
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),
@@ -800,6 +802,14 @@ class _VendorPageNewState extends State<VendorPageNew>
                 venueModel: venueModel,
                 parameter: parameter,
               )),
+    );
+  }
+
+  _navigateLoginPage(BuildContext context) {
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+          builder: (context) => new LoginScreen()),
     );
   }
 

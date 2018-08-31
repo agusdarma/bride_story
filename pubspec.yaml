@@ -93,6 +93,8 @@ flutter:
     - assets/images/4.jpg
     - assets/images/calendar-clock.png
     - assets/images/scale-bathroom.png
+    - assets/images/login.jpg
+    - assets/images/tick.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

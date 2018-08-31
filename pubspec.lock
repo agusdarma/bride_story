@@ -60,7 +60,7 @@ packages:
     description:
       path: "packages/google_maps_flutter"
       ref: HEAD
-      resolved-ref: "99a2efadf212019519a3f2584e35b6b7325d00f3"
+      resolved-ref: d8f3f5069995541e76322c3a64e6236935fbe955
       url: "git://github.com/flutter/plugins"
     source: git
     version: "0.0.1"
