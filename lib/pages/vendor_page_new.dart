@@ -18,32 +18,45 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 
 class VendorPageNew extends StatefulWidget {
-  final GoogleMapController mapController;
-  final GoogleMapOverlayController overlayController;
+  // final GoogleMapController mapController;
+  // final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
   final VenueModel venueModel;
   final FilterParam parameter;
 
   VendorPageNew(
       {Key key,
-      this.mapController,
-      this.overlayController,
+      // this.mapController,
+      // this.overlayController,
       this.allPages,
       this.venueModel,
       this.parameter})
       : super(key: key);
 
   @override
-  _VendorPageNewState createState() => _VendorPageNewState(
-      mapController, overlayController, allPages, venueModel, parameter);
+  _VendorPageNewState createState() =>
+      _VendorPageNewState(allPages, venueModel, parameter);
 }
 
 class _VendorPageNewState extends State<VendorPageNew>
     with SingleTickerProviderStateMixin {
-  _VendorPageNewState(this.mapController, this.overlayController, this.allPages,
-      this.venueModel, this.parameter);
+  _VendorPageNewState(this.allPages, this.venueModel, this.parameter);
+  // GoogleMapController mapController;
+  // GoogleMapOverlayController overlayController;
   GoogleMapController mapController;
-  GoogleMapOverlayController overlayController;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 270.0,
+        target: LatLng(venueModel.latitude, venueModel.longitude),
+        tilt: 30.0,
+        zoom: 17.0,
+      ),
+    ));
+  }
+
   List<PageNew> allPages;
   VenueModel venueModel;
   FilterParam parameter;
@@ -51,7 +64,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   String urlSimilarVenueImage;
   int selectedDate = new DateTime.now().millisecondsSinceEpoch;
   String displayedDate = "";
-  GoogleMapOverlayController previewMap;
+  // GoogleMapOverlayController previewMap;
   List<BookingData> weightSaves = new List();
   int _markerCount = 0;
   static final LatLng center = const LatLng(-6.1541491, 106.8893441);
@@ -176,19 +189,19 @@ class _VendorPageNewState extends State<VendorPageNew>
     String fileName = venueModel.linkImageVenue;
     urlVenueImage = HttpServices.getImageByName +
         kParamImageName.replaceAll('<img>', '$fileName');
-    previewMap = GoogleMapOverlayController.fromSize(
-      width: 450.0,
-      height: 200.0,
-      options: GoogleMapOptions(
-          cameraPosition: CameraPosition(
-            bearing: 270.0,
-            target: LatLng(venueModel.latitude, venueModel.longitude),
-            tilt: 10.0,
-            zoom: 16.0,
-          ),
-          trackCameraPosition: true,
-          scrollGesturesEnabled: true),
-    );
+    // previewMap = GoogleMapOverlayController.fromSize(
+    //   width: 450.0,
+    //   height: 200.0,
+    //   options: GoogleMapOptions(
+    //       cameraPosition: CameraPosition(
+    //         bearing: 270.0,
+    //         target: LatLng(venueModel.latitude, venueModel.longitude),
+    //         tilt: 10.0,
+    //         zoom: 16.0,
+    //       ),
+    //       trackCameraPosition: true,
+    //       scrollGesturesEnabled: true),
+    // );
   }
 
   void _updateBookingDate(VenueModel venueModel) {
@@ -207,15 +220,15 @@ class _VendorPageNewState extends State<VendorPageNew>
   }
 
   void _add() {
-    mapController.addMarker(MarkerOptions(
-      position: LatLng(
-        // center.latitude + sin(_markerCount * pi / 6.0) / 20.0,
-        // center.longitude + cos(_markerCount * pi / 6.0) / 20.0,
-        center.latitude,
-        center.longitude,
-      ),
-      infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
-    ));
+    // mapController.addMarker(MarkerOptions(
+    //   position: LatLng(
+    //     // center.latitude + sin(_markerCount * pi / 6.0) / 20.0,
+    //     // center.longitude + cos(_markerCount * pi / 6.0) / 20.0,
+    //     center.latitude,
+    //     center.longitude,
+    //   ),
+    //   infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
+    // ));
     setState(() {
       _markerCount += 1;
     });
@@ -378,11 +391,11 @@ class _VendorPageNewState extends State<VendorPageNew>
       String fileName = listSimilarVenueData.elementAt(index).linkImageVenue;
       urlSimilarVenueImage = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
-          // print(listSimilarVenueData.elementAt(index).longitude);
+      // print(listSimilarVenueData.elementAt(index).longitude);
       return GestureDetector(
         onTap: () {
-                _navigateVendorPage(context, listSimilarVenueData.elementAt(index));
-              },
+          _navigateVendorPage(context, listSimilarVenueData.elementAt(index));
+        },
         child: new Stack(
           children: <Widget>[
             new Container(
@@ -717,7 +730,14 @@ class _VendorPageNewState extends State<VendorPageNew>
               GestureDetector(
                 child: Stack(
                   children: <Widget>[
-                    GoogleMapOverlay(controller: previewMap),
+                    new SizedBox(
+                      width: 450.0,
+                      height: 200.0,
+                      child: GoogleMap(
+                          onMapCreated: _onMapCreated,
+                          options: GoogleMapOptions.defaultOptions),
+                    ),
+                    // GoogleMapOverlay(controller: previewMap),
                     bannerMap,
                   ],
                 ),
@@ -757,8 +777,8 @@ class _VendorPageNewState extends State<VendorPageNew>
       context,
       new MaterialPageRoute(
           builder: (context) => new GoogleMapsDetailNew(
-                mapController: page.controller.mapController,
-                overlayController: page.controller,
+                // mapController: page.controller.mapController,
+                // overlayController: page.controller,
                 lat: venueModel.latitude,
                 lng: venueModel.longitude,
                 title: venueModel.titleVenue,
@@ -774,8 +794,8 @@ class _VendorPageNewState extends State<VendorPageNew>
       context,
       new MaterialPageRoute(
           builder: (context) => new VendorPageNew(
-                mapController: mapController,
-                overlayController: overlayController,
+                // mapController: mapController,
+                // overlayController: overlayController,
                 allPages: allPages,
                 venueModel: venueModel,
                 parameter: parameter,
@@ -784,19 +804,19 @@ class _VendorPageNewState extends State<VendorPageNew>
   }
 
   _navigateSimilarList(BuildContext context) {
-      // print(parameter.bookingDate);
-      // Navigator.pushNamed(context, "/searchResult");
-      Navigator.push(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => new SimilarVenueSearchPage(
-                  mapController: mapController,
-                  overlayController: overlayController,
-                  allPages: allPages,
-                  parameter: parameter,
-                )),
-      );
-    }
+    // print(parameter.bookingDate);
+    // Navigator.pushNamed(context, "/searchResult");
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+          builder: (context) => new SimilarVenueSearchPage(
+                // mapController: mapController,
+                // overlayController: overlayController,
+                allPages: allPages,
+                parameter: parameter,
+              )),
+    );
+  }
 
   void _navigateTo4DPage(BuildContext context) {
     Navigator.push(

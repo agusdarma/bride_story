@@ -101,7 +101,7 @@ void main() {
   // }));
 
   initSharedPreferences();
-  GoogleMapController.init();
+  // GoogleMapController.init();
   runApp(new MyApp(
     router: router,
   ));
@@ -134,23 +134,23 @@ class MyApp extends StatelessWidget {
       GoogleMapsDetailNew(),
     ];
     final List<NavigatorObserver> observers = <NavigatorObserver>[];
-    for (PageNew p in _allPages) {
-      observers.add(p.controller.overlayController);
-    }
-    final GoogleMapOverlayController controller =
-        GoogleMapOverlayController.fromSize(
-      width: 100.0,
-      height: 100.0,
-      options: GoogleMapOptions(
-          cameraPosition: const CameraPosition(
-            bearing: 270.0,
-            target: LatLng(-6.1541491, 106.8893441),
-            tilt: 10.0,
-            zoom: 16.0,
-          ),
-          trackCameraPosition: true,
-          scrollGesturesEnabled: true),
-    );
+    // for (PageNew p in _allPages) {
+    //   observers.add(p.controller.overlayController);
+    // }
+    // final GoogleMapOverlayController controller =
+    //     GoogleMapOverlayController.fromSize(
+    //   width: 100.0,
+    //   height: 100.0,
+    //   options: GoogleMapOptions(
+    //       cameraPosition: const CameraPosition(
+    //         bearing: 270.0,
+    //         target: LatLng(-6.1541491, 106.8893441),
+    //         tilt: 10.0,
+    //         zoom: 16.0,
+    //       ),
+    //       trackCameraPosition: true,
+    //       scrollGesturesEnabled: true),
+    // );
     // final Widget mapWidget = GoogleMapOverlay(controller: controller);
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -161,8 +161,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
       ),
       home: HomePageNew(
-        mapController: controller.mapController,
-        overlayController: controller,
+        // mapController: controller.mapController,
+        // overlayController: controller,
         allPages: _allPages,
       ),
       onGenerateRoute: router.generator,

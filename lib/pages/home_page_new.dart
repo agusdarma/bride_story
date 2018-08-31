@@ -10,24 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePageNew extends StatefulWidget {
-  final GoogleMapController mapController;
-  final GoogleMapOverlayController overlayController;
+  // final GoogleMapController mapController;
+  // final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
 
   HomePageNew(
-      {Key key, this.mapController, this.overlayController, this.allPages})
+      {Key key,  this.allPages})
       : super(key: key);
 
   @override
   _HomePageNewState createState() =>
-      _HomePageNewState(mapController, overlayController, allPages);
+      _HomePageNewState(allPages);
 }
 
 class _HomePageNewState extends State<HomePageNew> {
-  _HomePageNewState(this.mapController, this.overlayController, this.allPages);
-  GoogleMapController mapController;
+  _HomePageNewState(this.allPages);
+  // GoogleMapController mapController;
 
-  GoogleMapOverlayController overlayController;
+  // GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
 
   String displayedString = "";
@@ -130,8 +130,8 @@ class _HomePageNewState extends State<HomePageNew> {
         context,
         new MaterialPageRoute(
             builder: (context) => new ResultSearchPageNew(
-                  mapController: mapController,
-                  overlayController: overlayController,
+                  // mapController: mapController,
+                  // overlayController: overlayController,
                   allPages: allPages,
                   parameter: parameter,
                 )),

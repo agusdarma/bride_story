@@ -14,30 +14,29 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SimilarVenueSearchPage extends StatefulWidget {
-  final GoogleMapController mapController;
-  final GoogleMapOverlayController overlayController;
+  // final GoogleMapController mapController;
+  // final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
   final FilterParam parameter;
 
   SimilarVenueSearchPage(
       {Key key,
-      this.mapController,
-      this.overlayController,
+      // this.mapController,
+      // this.overlayController,
       this.allPages,
       this.parameter})
       : super(key: key);
 
   @override
   _SimilarVenueSearchPageState createState() => _SimilarVenueSearchPageState(
-      mapController, overlayController, allPages, parameter);
+      allPages, parameter);
 }
 
 class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
-  _SimilarVenueSearchPageState(this.mapController, this.overlayController,
-      this.allPages, this.parameter);
-  GoogleMapController mapController;
+  _SimilarVenueSearchPageState(this.allPages, this.parameter);
+  // GoogleMapController mapController;
   final formatter = new NumberFormat("#,###");
-  GoogleMapOverlayController overlayController;
+  // GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
   FilterParam parameter;
 
@@ -267,8 +266,8 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
         context,
         new MaterialPageRoute(
             builder: (context) => new VendorPageNew(
-                  mapController: mapController,
-                  overlayController: overlayController,
+                  // mapController: mapController,
+                  // overlayController: overlayController,
                   allPages: allPages,
                   venueModel: venueModel,
                   parameter: parameter,

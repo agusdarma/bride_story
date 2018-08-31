@@ -14,30 +14,29 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultSearchPageNew extends StatefulWidget {
-  final GoogleMapController mapController;
-  final GoogleMapOverlayController overlayController;
+  // final GoogleMapController mapController;
+  // final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
   final FilterParam parameter;
 
   ResultSearchPageNew(
       {Key key,
-      this.mapController,
-      this.overlayController,
+      // this.mapController,
+      // this.overlayController,
       this.allPages,
       this.parameter})
       : super(key: key);
 
   @override
-  _ResultSearchPageNewState createState() => _ResultSearchPageNewState(
-      mapController, overlayController, allPages, parameter);
+  _ResultSearchPageNewState createState() =>
+      _ResultSearchPageNewState(allPages, parameter);
 }
 
 class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
-  _ResultSearchPageNewState(this.mapController, this.overlayController,
-      this.allPages, this.parameter);
-  GoogleMapController mapController;
+  _ResultSearchPageNewState(this.allPages, this.parameter);
+  // GoogleMapController mapController;
   final formatter = new NumberFormat("#,###");
-  GoogleMapOverlayController overlayController;
+  // GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
   FilterParam parameter;
 
@@ -252,8 +251,8 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
         context,
         new MaterialPageRoute(
             builder: (context) => new VendorPageNew(
-                  mapController: mapController,
-                  overlayController: overlayController,
+                  // mapController: mapController,
+                  // overlayController: overlayController,
                   allPages: allPages,
                   venueModel: venueModel,
                   parameter: parameter,

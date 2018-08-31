@@ -3,69 +3,96 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapsDetailNew extends PageNew {
-  final GoogleMapController mapController;
+  // final GoogleMapController mapController;
   final double lat;
   final double lng;
   final String title;
   final String subTitle;
-  final GoogleMapOverlayController overlayController;
+  // final GoogleMapOverlayController overlayController;
 
   GoogleMapsDetailNew(
-      {this.overlayController,
-      this.mapController,
+      {
+      //   this.overlayController,
+      // this.mapController,
       this.lat,
       this.lng,
       this.title,
       this.subTitle})
-      : super(mapController, lat, lng, title, overlayController);
+      : super(lat, lng, title);
 
   @override
-  _GoogleMapsDetailNewState createState() => _GoogleMapsDetailNewState(
-      mapController, lat, lng, title, subTitle, overlayController, controller);
+  _GoogleMapsDetailNewState createState() =>
+      _GoogleMapsDetailNewState(lat, lng, title, subTitle);
 
-  @override
-  final GoogleMapOverlayController controller =
-      GoogleMapOverlayController.fromSize(
-    width: 500.0,
-    height: 300.0,
-    options: GoogleMapOptions(
-      cameraPosition: const CameraPosition(
-        bearing: 270.0,
-        target: LatLng(-6.1541491, 106.8893441),
-        tilt: 10.0,
-        zoom: 16.0,
-      ),
-      trackCameraPosition: true,
-    ),
-  );
+  // @override
+  // final GoogleMapOverlayController controller =
+  //     GoogleMapOverlayController.fromSize(
+  //   width: 500.0,
+  //   height: 300.0,
+  //   options: GoogleMapOptions(
+  //     cameraPosition: const CameraPosition(
+  //       bearing: 270.0,
+  //       target: LatLng(-6.1541491, 106.8893441),
+  //       tilt: 10.0,
+  //       zoom: 16.0,
+  //     ),
+  //     trackCameraPosition: true,
+  //   ),
+  // );
 }
 
 class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
-  _GoogleMapsDetailNewState(this.mapController, this.lat, this.lng, this.title,
-      this.subTitle, this.overlayController, this.overlayAwal);
-  GoogleMapController mapController;
-  GoogleMapOverlayController overlayController;
-  GoogleMapOverlayController overlayAwal;
+  _GoogleMapsDetailNewState(this.lat, this.lng, this.title, this.subTitle);
+  // GoogleMapController mapController;
+  // GoogleMapOverlayController overlayController;
+  // GoogleMapOverlayController overlayAwal;
   double lat;
   double lng;
   int _markerCount = 0;
   String title;
   String subTitle;
 
+  GoogleMapController mapController;
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 270.0,
+        target: LatLng(lat, lng),
+        tilt: 30.0,
+        zoom: 17.0,
+      ),
+    ));
+  }
+
   initState() {
     super.initState();
-    _addMarker();
-    print('ini overlay awal ' +
-        overlayAwal.overlayController.hashCode.toString());
+    // _addMarker();
+    // print('ini overlay awal ' +
+    //     overlayAwal.overlayController.hashCode.toString());
 
-    print('ini overlay controller ' +
-        overlayController.overlayController.hashCode.toString());
+    // print('ini overlay controller ' +
+    //     overlayController.overlayController.hashCode.toString());
 
-    mapController.animateCamera(
-      CameraUpdate.newLatLng(
-        LatLng(lat, lng),
-      ),
-    );
+    // mapController.animateCamera(
+    //   CameraUpdate.newLatLng(
+    //     LatLng(lat, lng),
+    //   ),
+    // );
+    // mapController.animateCamera(
+    //   CameraUpdate.newLatLng(
+    //     LatLng(lat, lng),
+    //   ),
+    // );
+    // mapController.animateCamera(CameraUpdate.newCameraPosition(
+    //   const CameraPosition(
+    //     bearing: 270.0,
+    //     target: LatLng(51.5160895, -0.1294527),
+    //     tilt: 30.0,
+    //     zoom: 17.0,
+    //   ),
+    // ));
   }
 
   dispose() {
@@ -73,13 +100,13 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
   }
 
   void _addMarker() {
-    overlayController.mapController.addMarker(MarkerOptions(
-      position: LatLng(
-        lat,
-        lng,
-      ),
-      infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
-    ));
+    // overlayController.mapController.addMarker(MarkerOptions(
+    //   position: LatLng(
+    //     lat,
+    //     lng,
+    //   ),
+    //   infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
+    // ));
     setState(() {
       _markerCount += 1;
     });
@@ -120,9 +147,16 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            GoogleMapOverlay(
-              controller: overlayController,
+            new SizedBox(
+              width: 500.0,
+              height: 300.0,
+              child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  options: GoogleMapOptions.defaultOptions),
             ),
+            // GoogleMapOverlay(
+            //   controller: overlayController,
+            // ),
           ],
         ),
       ),
