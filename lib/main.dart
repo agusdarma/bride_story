@@ -112,13 +112,24 @@ void initSharedPreferences() {
   String filterParamJson =
       '{"categoryName":"All Categories","countryName":"Indonesia","cityName":"Jakarta"}';
   saveCategoryNameInSharedPreferences(filterParamJson, keyFilterParam);
+
+  String loginDataJson =
+      '{"phoneNo":"","password":"","sessionData":""}';
+  saveLoginDataInSharedPreferences(loginDataJson, keyLoginParam);
 }
 
 void saveCategoryNameInSharedPreferences(
     String categoryName, String key) async {
-  print("aaaa");
+  // print("aaaa");
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(key, categoryName);
+}
+
+void saveLoginDataInSharedPreferences(
+    String loginData, String key) async {
+      print("saveLoginDataInSharedPreferences");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(key, loginData);
 }
 
 class MyApp extends StatelessWidget {

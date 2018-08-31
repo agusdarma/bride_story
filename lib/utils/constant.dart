@@ -7,6 +7,7 @@
 
 const String lblTitleApplication = 'Bride Story';
 const String keyFilterParam = 'keyFilterParam';
+const String keyLoginParam = 'keyLoginParam';
 const String kParamImageName = '?n=<img>';
 const String api_key_google_maps = 'AIzaSyCfAa89YDWArgJPm6c4_ggVgeGh9_kvwzQ';
 
