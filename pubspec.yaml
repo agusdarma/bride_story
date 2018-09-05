@@ -54,6 +54,8 @@ dependencies:
      url: git://github.com/flutter/plugins
      path: packages/google_maps_flutter
 
+  validate: ^1.7.0
+
   #google maps 
   # uri: ^0.11.3
   # quiver: '>=0.17.0<0.26.0'
