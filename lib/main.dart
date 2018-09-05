@@ -114,7 +114,7 @@ void initSharedPreferences() {
   saveCategoryNameInSharedPreferences(filterParamJson, keyFilterParam);
 
   String loginDataJson =
-      '{"phoneNo":"","password":"","sessionData":""}';
+      '{"phoneNo":"","password":"","sessionData":"","sessionDate":""}';
   saveLoginDataInSharedPreferences(loginDataJson, keyLoginParam);
 }
 

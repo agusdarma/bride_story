@@ -7,6 +7,7 @@ import 'package:bride_story/pages/booking_entry_dialog.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/login_page.dart';
+import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/pages/similar_venue_search_page.dart';
 import 'package:bride_story/pages/webview_page.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
@@ -17,6 +18,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:ui';
 
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VendorPageNew extends StatefulWidget {
   // final GoogleMapController mapController;
@@ -368,7 +370,17 @@ class _VendorPageNewState extends State<VendorPageNew>
           child: InkWell(
             onTap: () {
               // _openAddEntryDialog();
-              _navigateLoginPage(context);
+              getLoginDataSharedPreferences(keyLoginParam).then((String json) {
+                const JsonDecoder decoder = const JsonDecoder();
+                Map loginParamVO = decoder.convert(json);
+                String sessionData = loginParamVO['sessionData'];
+                String sessionDate = loginParamVO['sessionDate'];
+                String phoneNo = loginParamVO['phoneNo'];
+                String password = loginParamVO['password'];
+                if (sessionData.isEmpty) {
+                  _navigateLoginPage(context);
+                }
+              });
             },
             child: Padding(
               padding: EdgeInsets.all(12.0),
@@ -805,11 +817,19 @@ class _VendorPageNewState extends State<VendorPageNew>
     );
   }
 
+  Future<String> getLoginDataSharedPreferences(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String json = "";
+    json = (prefs.getString(key) ?? "");
+    print("getLoginDataSharedPreferences " + json);
+    return json;
+  }
+
   _navigateLoginPage(BuildContext context) {
     Navigator.push(
       context,
-      new MaterialPageRoute(
-          builder: (context) => new LoginScreen()),
+      // new MaterialPageRoute(builder: (context) => new LoginScreen()),
+      new MaterialPageRoute(builder: (context) => new LoginPage()),
     );
   }
 
