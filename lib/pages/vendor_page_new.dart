@@ -516,7 +516,7 @@ class _VendorPageNewState extends State<VendorPageNew>
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Icon(Icons.add_location),
+          new Icon(Icons.add_location,color: Colors.blue,),
           Expanded(
             flex: 1,
             child: new Text(venueModel.addressVenue,
@@ -700,7 +700,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.date_range),
+                  Icon(Icons.date_range,color: Colors.blue,),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
                     child: new Text(displayedDate,
@@ -711,7 +711,8 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Padding(padding: EdgeInsets.all(5.0)),
                   Column(
                     children: <Widget>[
-                      Icon(Icons.wb_sunny),
+                      Icon(Icons.wb_sunny,color: Colors.red,),
+                      Text("Day event"),
                       Text(venueModel.isDayFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
@@ -722,7 +723,8 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Padding(padding: EdgeInsets.all(5.0)),
                   Column(
                     children: <Widget>[
-                      Icon(Icons.wb_cloudy),
+                      Icon(Icons.wb_cloudy,color: Colors.blue,),
+                      Text("Night event"),
                       Text(venueModel.isNightFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
