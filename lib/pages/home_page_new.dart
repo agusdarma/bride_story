@@ -8,19 +8,17 @@ import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePageNew extends StatefulWidget {
   // final GoogleMapController mapController;
   // final GoogleMapOverlayController overlayController;
   final List<PageNew> allPages;
 
-  HomePageNew(
-      {Key key,  this.allPages})
-      : super(key: key);
+  HomePageNew({Key key, this.allPages}) : super(key: key);
 
   @override
-  _HomePageNewState createState() =>
-      _HomePageNewState(allPages);
+  _HomePageNewState createState() => _HomePageNewState(allPages);
 }
 
 class _HomePageNewState extends State<HomePageNew> {
@@ -29,6 +27,9 @@ class _HomePageNewState extends State<HomePageNew> {
 
   // GoogleMapOverlayController overlayController;
   List<PageNew> allPages;
+  List<BottomNavigationBarItem> itemsBottom = [];
+  List<Widget> _children = [new Text('0'),new Text('1')];
+  int _currentIndex = 0;
 
   String displayedString = "";
   String displayedDate = "";
@@ -66,20 +67,18 @@ class _HomePageNewState extends State<HomePageNew> {
     return bulan;
   }
 
+  Future<String> getLoginDataSharedPreferences(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String json = "";
+    json = (prefs.getString(key) ?? "");
+    print("getLoginDataSharedPreferences " + json);
+    return json;
+  }
+
   void initState() {
     super.initState();
-    // print(overlayController.hashCode);
     displayedString = "Jakarta";
-    displayedDate = "Please Select Date Here";
-    // int year = new DateTime.fromMillisecondsSinceEpoch(selectedDate).year;
-    //       int month =
-    //           new DateTime.fromMillisecondsSinceEpoch(selectedDate).month;
-    //       int day = new DateTime.fromMillisecondsSinceEpoch(selectedDate).day;
-    //       displayedDate = day.toString() +
-    //           ' ' +
-    //           _convertBulan(month) +
-    //           ' ' +
-    //           year.toString();
+    displayedDate = "Please Select Date Here";    
     parameter = new FilterParam('', 0, '', 0, 'Jakarta', 1, 0);
   }
 
@@ -310,12 +309,23 @@ class _HomePageNewState extends State<HomePageNew> {
           )),
     );
 
+    void onTabTapped(int index) {
+      setState(() {
+        _currentIndex = index;
+        print(_currentIndex);
+      });
+    }
+
     return SafeArea(
         child: new Scaffold(
             backgroundColor: Colors.cyan[100],
             bottomNavigationBar: BottomNavigationBar(
-              currentIndex: 0, // this will be set when a new tab is tapped
-              items: [
+              onTap: onTabTapped,
+              currentIndex:
+                  _currentIndex, // this will be set when a new tab is tapped
+              items: 
+              // itemsBottom,
+              [
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.home),
                   title: new Text('Home'),
@@ -323,7 +333,7 @@ class _HomePageNewState extends State<HomePageNew> {
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.mail),
                   title: new Text('Order Booking'),
-                ),                
+                ),
               ],
             ),
             body: new SingleChildScrollView(
