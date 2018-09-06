@@ -2,27 +2,18 @@ import 'dart:convert';
 
 import 'package:bride_story/data/login_data_vo.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
-import 'package:bride_story/pages/signup_page.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validate/validate.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _LoginPageState();
+  State<StatefulWidget> createState() => new _SignUpState();
 }
 
-// class _LoginData {
-//   String email = '';
-//   String password = '';
-//   String sessionData = '';
-//   String sessionDate = '';
-
-// }
-
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   LoginDataVo _data = new LoginDataVo("", "", "", 0);
 
@@ -123,28 +114,13 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void signUp(){
-    _navigateSignUpPage(context);
-  }
-
-  void forgetPassword(){
-    // _navigateSignUpPage(context);
-  }
-
-  _navigateSignUpPage(BuildContext context) {
-    Navigator.push(
-      context,
-      new MaterialPageRoute(builder: (context) => new SignUpPage()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Login'),
+        title: new Text('Sign Up'),
       ),
       body: new Container(
           padding: new EdgeInsets.all(20.0),
@@ -174,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: screenSize.width,
                   child: new RaisedButton(
                     child: new Text(
-                      'Login',
+                      'Sign Up',
                       style: new TextStyle(color: Colors.white),
                     ),
                     onPressed: this.submit,
@@ -184,16 +160,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 new FlatButton(
                   child: Text(
-                    "Don't have an account? Sign Up",
+                    "Have an account? Login",
                   ),
-                  onPressed: signUp,
+                  onPressed: null,
                 ),
-                new FlatButton(
-                  child: Text(
-                    "Forgot password? Reset Password",
-                  ),
-                  onPressed: forgetPassword,
-                )
               ],
             ),
           )),

@@ -20,6 +20,7 @@ class SignUp extends StatelessWidget {
             color: Colors.white,
             fontSize: 12.0),
       ),
-    ));
+    )
+    );
   }
 }

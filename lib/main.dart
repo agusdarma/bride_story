@@ -115,7 +115,7 @@ void initSharedPreferences() {
       '{"categoryName":"All Categories","countryName":"Indonesia","cityName":"Jakarta"}';
   saveCategoryNameInSharedPreferences(filterParamJson, keyFilterParam);
   String loginDataJson =
-      '{"email":"","password":"","sessionData":"","sessionDate":""}';
+      '{"email":"","password":"","sessionData":"","sessionDate":0,"timeOutLoginSetting":300}';
   saveLoginDataInSharedPreferences(loginDataJson, keyLoginParam);
 
   // getLoginDataSharedPreferences(keyLoginParam).then((String json) {

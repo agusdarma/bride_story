@@ -374,13 +374,25 @@ class _VendorPageNewState extends State<VendorPageNew>
                 const JsonDecoder decoder = const JsonDecoder();
                 Map loginParamVO = decoder.convert(json);
                 String sessionData = loginParamVO['sessionData'];
-                // int sessionDate = loginParamVO['sessionDate'];
+                int sessionDate = loginParamVO['sessionDate'];
+                int timeOutLogin = loginParamVO['timeOutLoginSetting'];
                 // String phoneNo = loginParamVO['phoneNo'];
                 // String password = loginParamVO['password'];
                 if (sessionData.isEmpty) {
                   _navigateLoginPage(context);
-                }else{
-                  _openAddEntryDialog();
+                } else {
+                  DateTime currentTime = new DateTime.now();
+                  DateTime sessionTime =
+                      DateTime.fromMillisecondsSinceEpoch(sessionDate);
+                  print(currentTime);
+                  print(sessionTime);
+                  print(currentTime.difference(sessionTime).inSeconds);
+                  if (currentTime.difference(sessionTime).inSeconds >
+                      timeOutLogin) {
+                    _navigateLoginPage(context);
+                  } else {
+                    _openAddEntryDialog();
+                  }
                 }
               });
             },
