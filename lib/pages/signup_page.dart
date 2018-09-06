@@ -44,6 +44,41 @@ class _SignUpState extends State<SignUpPage> {
     prefs.setString(key, loginData);
   }
 
+  void _showDialogSuccess(String message) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Info",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(message,
+              style: TextStyle(
+                fontSize: 18.0,
+              )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  )),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showDialogError(String message) {
     // flutter defined function
     showDialog(
@@ -88,7 +123,8 @@ class _SignUpState extends State<SignUpPage> {
         if (0 == rc) {
           // saveLoginDataInSharedPreferences(
           //     response['otherMessage'], keyLoginParam);
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          _showDialogSuccess(response['otherMessage']);
         } else {
           _showDialogError(response['messageRc']);
         }
