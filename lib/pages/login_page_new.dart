@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:bride_story/data/login_data_vo.dart';
+import 'package:bride_story/pages/custom_alert_dialog.dart';
+import 'package:bride_story/services/http_services.dart';
+import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validate/validate.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,7 +18,7 @@ class LoginPage extends StatefulWidget {
 //   String password = '';
 //   String sessionData = '';
 //   String sessionDate = '';
-  
+
 // }
 
 class _LoginPageState extends State<LoginPage> {
@@ -39,14 +45,80 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
+  void saveLoginDataInSharedPreferences(String loginData, String key) async {
+    // print("saveLoginDataInSharedPreferences");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, loginData);
+  }
+
+  void _showDialogError(String message) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Warning",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(message,
+              style: TextStyle(
+                fontSize: 18.0,                
+              )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,                    
+                  )),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _loginToEngine(BuildContext context, LoginDataVo _data) {
+    HttpServices http = new HttpServices();
+    const JsonEncoder encoder = const JsonEncoder();
+    String parameterJson = encoder.convert(_data);    
+    http.loginProcess(parameterJson).then((dynamic response) {
+      setState(() {
+        int rc = response['rc'];
+        if (0 == rc) {
+          saveLoginDataInSharedPreferences(
+              response['otherMessage'], keyLoginParam);
+              Navigator.of(context).pop();
+        } else {
+          _showDialogError(response['messageRc']);
+        }
+        // const JsonDecoder decoder = const JsonDecoder();
+        // Map loginDataVo = decoder.convert(response['otherMessage']);
+        // print(response['otherMessage']);
+        // print(loginDataVo['sessionData']);
+
+        // print(response['messageRc']);
+        // print(response['rc']);
+      });
+    });
+  }
+
   void submit() {
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 
-      print('Printing the login data.');
-      print('Email: ${_data.email}');
-      print('Password: ${_data.password}');
+      // print('Printing the login data.');
+      // print('Email: ${_data.email}');
+      // print('Password: ${_data.password}');
+      _loginToEngine(context, _data);
     }
   }
 
@@ -59,53 +131,44 @@ class _LoginPageState extends State<LoginPage> {
         title: new Text('Login'),
       ),
       body: new Container(
-        padding: new EdgeInsets.all(20.0),
-        child: new Form(
-          key: this._formKey,
-          child: new ListView(
-            children: <Widget>[
-              new TextFormField(
-                keyboardType: TextInputType.emailAddress, // Use email input type for emails.
-                decoration: new InputDecoration(
-                  hintText: 'you@example.com',
-                  labelText: 'E-mail Address'
-                ),
-                validator: this._validateEmail,
-                onSaved: (String value) {
-                  this._data.setEmail = value;
-                }
-              ),
-              new TextFormField(
-                obscureText: true, // Use secure text for passwords.
-                decoration: new InputDecoration(
-                  hintText: 'Password',
-                  labelText: 'Enter your password'
-                ),
-                validator: this._validatePassword,
-                onSaved: (String value) {
-                  this._data.setPassword = value;
-                }
-              ),
-              new Container(
-                width: screenSize.width,
-                child: new RaisedButton(
-                  child: new Text(
-                    'Login',
-                    style: new TextStyle(
-                      color: Colors.white
+          padding: new EdgeInsets.all(20.0),
+          child: new Form(
+            key: this._formKey,
+            child: new ListView(
+              children: <Widget>[
+                new TextFormField(
+                    keyboardType: TextInputType
+                        .emailAddress, // Use email input type for emails.
+                    decoration: new InputDecoration(
+                        hintText: 'you@example.com',
+                        labelText: 'E-mail Address'),
+                    validator: this._validateEmail,
+                    onSaved: (String value) {
+                      this._data.setEmail = value;
+                    }),
+                new TextFormField(
+                    obscureText: true, // Use secure text for passwords.
+                    decoration: new InputDecoration(
+                        hintText: 'Password', labelText: 'Enter your password'),
+                    validator: this._validatePassword,
+                    onSaved: (String value) {
+                      this._data.setPassword = value;
+                    }),
+                new Container(
+                  width: screenSize.width,
+                  child: new RaisedButton(
+                    child: new Text(
+                      'Login',
+                      style: new TextStyle(color: Colors.white),
                     ),
+                    onPressed: this.submit,
+                    color: Colors.blue,
                   ),
-                  onPressed: this.submit,
-                  color: Colors.blue,
-                ),
-                margin: new EdgeInsets.only(
-                  top: 20.0
-                ),
-              )
-            ],
-          ),
-        )
-      ),
+                  margin: new EdgeInsets.only(top: 20.0),
+                )
+              ],
+            ),
+          )),
     );
   }
 }

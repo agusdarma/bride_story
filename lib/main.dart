@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bride_story/pages/booking_page.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
 import 'package:bride_story/pages/home_page_new.dart';
@@ -112,10 +114,20 @@ void initSharedPreferences() {
   String filterParamJson =
       '{"categoryName":"All Categories","countryName":"Indonesia","cityName":"Jakarta"}';
   saveCategoryNameInSharedPreferences(filterParamJson, keyFilterParam);
-
   String loginDataJson =
-      '{"phoneNo":"","password":"","sessionData":"","sessionDate":""}';
+      '{"email":"","password":"","sessionData":"","sessionDate":""}';
   saveLoginDataInSharedPreferences(loginDataJson, keyLoginParam);
+
+  // getLoginDataSharedPreferences(keyLoginParam).then((String json) {
+  //   const JsonDecoder decoder = const JsonDecoder();
+  //   Map loginParamVO = decoder.convert(json);
+  //   String sessionData = loginParamVO['sessionData'];
+  //   if (sessionData.isEmpty) {
+  //     String loginDataJson =
+  //         '{"email":"","password":"","sessionData":"","sessionDate":""}';
+  //     saveLoginDataInSharedPreferences(loginDataJson, keyLoginParam);
+  //   }
+  // });
 }
 
 void saveCategoryNameInSharedPreferences(
@@ -125,9 +137,16 @@ void saveCategoryNameInSharedPreferences(
   prefs.setString(key, categoryName);
 }
 
-void saveLoginDataInSharedPreferences(
-    String loginData, String key) async {
-      print("saveLoginDataInSharedPreferences");
+Future<String> getLoginDataSharedPreferences(String key) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String json = "";
+  json = (prefs.getString(key) ?? "");
+  print("getLoginDataSharedPreferences " + json);
+  return json;
+}
+
+void saveLoginDataInSharedPreferences(String loginData, String key) async {
+  print("saveLoginDataInSharedPreferences");
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(key, loginData);
 }

@@ -374,11 +374,13 @@ class _VendorPageNewState extends State<VendorPageNew>
                 const JsonDecoder decoder = const JsonDecoder();
                 Map loginParamVO = decoder.convert(json);
                 String sessionData = loginParamVO['sessionData'];
-                String sessionDate = loginParamVO['sessionDate'];
-                String phoneNo = loginParamVO['phoneNo'];
-                String password = loginParamVO['password'];
+                // int sessionDate = loginParamVO['sessionDate'];
+                // String phoneNo = loginParamVO['phoneNo'];
+                // String password = loginParamVO['password'];
                 if (sessionData.isEmpty) {
                   _navigateLoginPage(context);
+                }else{
+                  _openAddEntryDialog();
                 }
               });
             },

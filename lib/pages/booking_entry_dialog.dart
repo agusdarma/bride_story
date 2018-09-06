@@ -196,9 +196,9 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                     setState(() {
                       _namaPernikahan = text;
                     });
-                  },
+                  },                
                   decoration:
-                      const InputDecoration(helperText: "Nama Pernikahan : "),
+                      const InputDecoration(hintText: "Nama Pernikahan : "),
                   // style: Theme.of(context).textTheme.body1,
                 ),
               ),
@@ -230,7 +230,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                     });
                   },
                   decoration: const InputDecoration(
-                      helperText: "Penanggung Jawab 1 : "),
+                      hintText: "Penanggung Jawab 1 : "),
                 ),
               ),
             ],
@@ -260,7 +260,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                       _handphone1 = text;
                     });
                   },
-                  decoration: const InputDecoration(helperText: "Handphone : "),
+                  decoration: const InputDecoration(hintText: "Handphone : "),
                 ),
               ),
             ],
@@ -291,7 +291,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                     });
                   },
                   decoration: const InputDecoration(
-                      helperText: "Penanggung Jawab 2 : "),
+                      hintText: "Penanggung Jawab 2 : "),
                 ),
               ),
             ],
@@ -322,7 +322,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                     });
                   },
                   decoration:
-                      const InputDecoration(helperText: "Handphone 2 : "),
+                      const InputDecoration(hintText: "Handphone 2 : "),
                 ),
               ),
             ],
