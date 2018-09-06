@@ -6,7 +6,6 @@ import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/booking_entry_dialog.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/google_maps_detail_new.dart';
-import 'package:bride_story/pages/login_page.dart';
 import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/pages/similar_venue_search_page.dart';
 import 'package:bride_story/pages/webview_page.dart';
@@ -358,7 +357,7 @@ class _VendorPageNewState extends State<VendorPageNew>
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenWidth = MediaQuery.of(context).size.width;
 
     var buttonBooking = Container(
       width: MediaQuery.of(context).size.width,

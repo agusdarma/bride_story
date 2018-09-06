@@ -23,11 +23,11 @@ class LoginDataVo {
   String get email => _email;
   String get password => _password;
 
-  void set setEmail(String email) {
+  set setEmail(String email) {
     this._email = email;
   }
 
-  void set setPassword(String password) {
+  set setPassword(String password) {
     this._password = password;
   }
 

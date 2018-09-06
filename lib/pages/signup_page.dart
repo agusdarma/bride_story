@@ -4,7 +4,6 @@ import 'package:bride_story/data/signUp_data_vo.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/services/http_services.dart';
-import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validate/validate.dart';
