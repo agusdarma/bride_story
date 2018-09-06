@@ -20,6 +20,8 @@ class HttpServices {
   static final createUpdateBookingUrl = baseUrl + "/createUpdateBooking";
   static final getListSimilarVenueUrl = baseUrl + "/getListSimilarVenue";
   static final loginProcessUrl = baseUrl + "/loginProcess";
+  static final signUpProcessUrl = baseUrl + "/signUpProcess";
+  
   
 
   Future<Post> fetchDataPost() async {
@@ -36,6 +38,19 @@ class HttpServices {
     Post a = new Post.fromJson(post);
     print(a.title);
     return null;
+  }
+
+  Future<dynamic> signUpProcess(String globalParam) async {
+    final String response = await _netUtil
+        .post(signUpProcessUrl, body: globalParam);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    // MessageVo a = new MessageVo.fromJson(messageVO);
+
+    // String responseMessage = decoder.convert(a.otherMessage);
+    // String responseMessage = messageVO['otherMessage'];
+    return messageVO;
   }
 
   Future<dynamic> loginProcess(String globalParam) async {

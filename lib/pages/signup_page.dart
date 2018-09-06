@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:bride_story/data/login_data_vo.dart';
+import 'package:bride_story/data/signUp_data_vo.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
+import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  LoginDataVo _data = new LoginDataVo("", "", "", 0);
+  SignUpDataVo _data = new SignUpDataVo("", "");
 
   String _validateEmail(String value) {
     // If empty value, the isEmail function throw a error.
@@ -77,32 +78,37 @@ class _SignUpState extends State<SignUpPage> {
     );
   }
 
-  _loginToEngine(BuildContext context, LoginDataVo _data) {
+  _signUpToEngine(BuildContext context, SignUpDataVo _data) {
     HttpServices http = new HttpServices();
     const JsonEncoder encoder = const JsonEncoder();
     String parameterJson = encoder.convert(_data);
-    http.loginProcess(parameterJson).then((dynamic response) {
+    http.signUpProcess(parameterJson).then((dynamic response) {
       setState(() {
         int rc = response['rc'];
         if (0 == rc) {
-          saveLoginDataInSharedPreferences(
-              response['otherMessage'], keyLoginParam);
+          // saveLoginDataInSharedPreferences(
+          //     response['otherMessage'], keyLoginParam);
           Navigator.of(context).pop();
         } else {
           _showDialogError(response['messageRc']);
         }
-        // const JsonDecoder decoder = const JsonDecoder();
-        // Map loginDataVo = decoder.convert(response['otherMessage']);
-        // print(response['otherMessage']);
-        // print(loginDataVo['sessionData']);
-
-        // print(response['messageRc']);
-        // print(response['rc']);
       });
     });
   }
 
-  void submit() {
+  _navigateLoginPage(BuildContext context) {
+    Navigator.push(
+      context,
+      // new MaterialPageRoute(builder: (context) => new LoginScreen()),
+      new MaterialPageRoute(builder: (context) => new LoginPage()),
+    );
+  }
+
+  void login() {
+    _navigateLoginPage(context);
+  }
+
+  void signUp() {
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
@@ -110,7 +116,7 @@ class _SignUpState extends State<SignUpPage> {
       // print('Printing the login data.');
       // print('Email: ${_data.email}');
       // print('Password: ${_data.password}');
-      _loginToEngine(context, _data);
+      _signUpToEngine(context, _data);
     }
   }
 
@@ -153,7 +159,7 @@ class _SignUpState extends State<SignUpPage> {
                       'Sign Up',
                       style: new TextStyle(color: Colors.white),
                     ),
-                    onPressed: this.submit,
+                    onPressed: this.signUp,
                     color: Colors.blue,
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
@@ -162,7 +168,7 @@ class _SignUpState extends State<SignUpPage> {
                   child: Text(
                     "Have an account? Login",
                   ),
-                  onPressed: null,
+                  onPressed: login,
                 ),
               ],
             ),
