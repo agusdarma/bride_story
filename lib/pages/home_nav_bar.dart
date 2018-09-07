@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
-import 'package:bride_story/pages/home_nav_bar.dart';
-import 'package:bride_story/pages/my_booking_nav_bar.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
@@ -12,21 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePageNew extends StatefulWidget {
+class HomePageNewBar extends StatefulWidget {
   final List<PageNew> allPages;
 
-  HomePageNew({Key key, this.allPages}) : super(key: key);
+  HomePageNewBar({Key key, this.allPages}) : super(key: key);
 
   @override
-  _HomePageNewState createState() => _HomePageNewState(allPages);
+  _HomePageNewBarState createState() => _HomePageNewBarState(allPages);
 }
 
-class _HomePageNewState extends State<HomePageNew> {
-  _HomePageNewState(this.allPages);  
-  List<PageNew> allPages;  
-  // List<Widget> _children = [HomeWidget(Colors.yellow), new Text('1')];
-  List<Widget> _children = [];
-  int _currentIndex = 0;
+class _HomePageNewBarState extends State<HomePageNewBar> {
+  _HomePageNewBarState(this.allPages);
+  List<PageNew> allPages;
 
   String displayedString = "";
   String displayedDate = "";
@@ -75,9 +70,7 @@ class _HomePageNewState extends State<HomePageNew> {
     super.initState();
     displayedString = "Jakarta";
     displayedDate = "Please Select Date Here";
-    parameter = new FilterParam('', 0, '', 0, 'Jakarta', 1, 0); 
-    _children.add(HomePageNewBar(allPages: allPages,));
-    _children.add(MyBookingPage());   
+    parameter = new FilterParam('', 0, '', 0, 'Jakarta', 1, 0);
   }
 
   @override
@@ -118,11 +111,11 @@ class _HomePageNewState extends State<HomePageNew> {
       );
     }
 
-    _navigateSearchButton(BuildContext context) {      
+    _navigateSearchButton(BuildContext context) {
       Navigator.push(
         context,
         new MaterialPageRoute(
-            builder: (context) => new ResultSearchPageNew(                  
+            builder: (context) => new ResultSearchPageNew(
                   allPages: allPages,
                   parameter: parameter,
                 )),
@@ -162,7 +155,7 @@ class _HomePageNewState extends State<HomePageNew> {
           var filterParamNew = new FilterParam.fromJson(filterParamMap);
           displayedString = filterParamNew.cityName;
           parameter.cityId = filterParamNew.cityId;
-          parameter.cityName = filterParamNew.cityName;          
+          parameter.cityName = filterParamNew.cityName;
         });
       }
     }
@@ -299,57 +292,16 @@ class _HomePageNewState extends State<HomePageNew> {
           )),
     );
 
-    void onTabTapped(int index) {
-      setState(() {
-        _currentIndex = index;
-        print(_currentIndex);
-      });
-    }
-
-    Widget home = new SingleChildScrollView(
-              child: new Column(
-                children: <Widget>[
-                  logoView,
-                  searchCitiesView,
-                  searchDateView,
-                  buttonSearchView,
-                  // mapWidget,
-                ],
-              ),
-            );
-
-    return SafeArea(
-        child: new Scaffold(
-            backgroundColor: Colors.cyan[100],
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: onTabTapped,
-              currentIndex:
-                  _currentIndex, // this will be set when a new tab is tapped
-              items: 
-              // itemsBottom,
-              [
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.home),
-                  title: new Text('Home'),
-                ),
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.mail),
-                  title: new Text('My Booking'),
-                ),
-              ],
-            ),
-            // body: new SingleChildScrollView(
-            //   child: new Column(
-            //     children: <Widget>[
-            //       logoView,
-            //       searchCitiesView,
-            //       searchDateView,
-            //       buttonSearchView,
-            //       // mapWidget,
-            //     ],
-            //   ),
-            // )
-            body: _children[_currentIndex]
-            ));
+    return new SingleChildScrollView(
+      child: new Column(
+        children: <Widget>[
+          logoView,
+          searchCitiesView,
+          searchDateView,
+          buttonSearchView,
+          // mapWidget,
+        ],
+      ),
+    );
   }
 }
