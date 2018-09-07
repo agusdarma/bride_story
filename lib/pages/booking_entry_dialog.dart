@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'package:bride_story/models/booking_model.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/services/http_services.dart';
+import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingEntryDialog extends StatefulWidget {
   final int idVenue;
@@ -40,6 +42,7 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
   String _handphone1;
   String _penanggungJawab2;
   String _handphone2;
+  String _userEmailBooking;
   int _idVenue;
   // TextEditingController _textController;
 
@@ -143,7 +146,8 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
                       _penanggungJawab1,
                       _handphone1,
                       _penanggungJawab2,
-                      _handphone2));
+                      _handphone2,
+                      _userEmailBooking));
             }
           },
           child: new Text('SAVE',
@@ -156,11 +160,25 @@ class BookingEntryDialogState extends State<BookingEntryDialog> {
     );
   }
 
+  Future<String> getLoginDataSharedPreferences(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String json = "";
+    json = (prefs.getString(key) ?? "");
+    print("getLoginDataSharedPreferences " + json);
+    return json;
+  }
+
   @override
   void initState() {
     super.initState();
     _dateTime = DateTime.fromMillisecondsSinceEpoch(dateTimeMilisecond);
     // _textController = new TextEditingController(text: _note);
+    getLoginDataSharedPreferences(keyLoginParam).then((String json) {
+      const JsonDecoder decoder = const JsonDecoder();
+      Map loginParamVO = decoder.convert(json);
+      String email = loginParamVO['email'];
+      _userEmailBooking = email;   
+    });
   }
 
   Widget namaPernikahan(BuildContext context) {
