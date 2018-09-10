@@ -209,12 +209,12 @@ class _HomePageNewBarState extends State<HomePageNewBar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.search),
+                  Icon(Icons.search,color: Colors.blue,),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
                     child: new Text(displayedString,
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 14.0,
                         )),
                   ),
                   Icon(Icons.arrow_forward),
@@ -243,12 +243,12 @@ class _HomePageNewBarState extends State<HomePageNewBar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.date_range),
+                  Icon(Icons.date_range,color: Colors.blue,),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
                     child: new Text(displayedDate,
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 14.0,
                         )),
                   ),
                   Icon(Icons.arrow_forward),
@@ -283,7 +283,7 @@ class _HomePageNewBarState extends State<HomePageNewBar> {
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   new Text('Search',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       )),
                 ],

@@ -230,7 +230,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           padding: EdgeInsets.only(top: 5.0),
           child: Text(parameter.cityName,
               style: TextStyle(
-                fontSize: 17.0,
+                fontSize: 16.0,
                 fontWeight: FontWeight.bold,
               )),
         ),
@@ -238,7 +238,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
           padding: EdgeInsets.only(top: 5.0),
           child: Text(countSearch + ' available venue',
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 13.0,
               )),
         )
       ],
@@ -304,18 +304,18 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.date_range),
+                  Icon(Icons.date_range,color: Colors.blue,),
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   Expanded(
                     child: new Text(displayedDate,
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 14.0,
                         )),
                   ),
                   Text('Changes',
                       style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 14.0,
+                          fontSize: 13.0,
                           fontStyle: FontStyle.italic)),
                 ],
               ),
@@ -351,12 +351,12 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
               child: Text(listVenueData.elementAt(index).titleVenue,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   )),
             ),
             Row(
               children: <Widget>[
-                Icon(Icons.store),
+                Icon(Icons.store,color: Colors.blue,),
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -365,7 +365,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -373,7 +373,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             ),
             Row(
               children: <Widget>[
-                Icon(Icons.view_module),
+                Icon(Icons.view_module,color: Colors.blue,),
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -382,7 +382,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -390,7 +390,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
             ),
             Row(
               children: <Widget>[
-                Icon(Icons.local_parking),
+                Icon(Icons.local_parking,color: Colors.blue,),
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -399,7 +399,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -447,7 +447,7 @@ class _ResultSearchPageNewState extends State<ResultSearchPageNew> {
                   child: Text('Rp.' + listVenueData.elementAt(index).hargaVenue,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                       )),
                 ),
               ],

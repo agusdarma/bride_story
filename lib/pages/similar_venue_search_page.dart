@@ -245,7 +245,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
           padding: EdgeInsets.only(top: 5.0),
           child: Text('Similar Venue',
               style: TextStyle(
-                fontSize: 17.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               )),
         ),
@@ -253,7 +253,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
           padding: EdgeInsets.only(top: 5.0),
           child: Text(countSearch + ' available venue',
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 12.0,
               )),
         )
       ],
@@ -324,13 +324,13 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
                   Expanded(
                     child: new Text(displayedDate,
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 13.0,
                         )),
                   ),
                   Text('Changes',
                       style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                           fontStyle: FontStyle.italic)),
                 ],
               ),
@@ -366,7 +366,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
               child: Text(listVenueData.elementAt(index).titleVenue,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   )),
             ),
             Row(
@@ -380,7 +380,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -397,7 +397,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -414,7 +414,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         )),
                   ),
                 ),
@@ -462,7 +462,7 @@ class _SimilarVenueSearchPageState extends State<SimilarVenueSearchPage> {
                   child: Text('Rp.' + listVenueData.elementAt(index).hargaVenue,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                       )),
                 ),
               ],

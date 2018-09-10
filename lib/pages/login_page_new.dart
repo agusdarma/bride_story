@@ -96,9 +96,9 @@ class _LoginPageState extends State<LoginPage> {
         if (0 == rc) {
           saveLoginDataInSharedPreferences(
               response['otherMessage'], keyLoginParam);
-              print('abis login');
-           const JsonDecoder decoder = const JsonDecoder();
-        Map loginDataVo = decoder.convert(response['otherMessage']);
+          print('abis login');
+          const JsonDecoder decoder = const JsonDecoder();
+          Map loginDataVo = decoder.convert(response['otherMessage']);
           Navigator.of(context).pop(loginDataVo);
         } else {
           _showDialogError(response['messageRc']);
@@ -126,11 +126,11 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void signUp(){
+  void signUp() {
     _navigateSignUpPage(context);
   }
 
-  void forgetPassword(){
+  void forgetPassword() {
     // _navigateSignUpPage(context);
   }
 
@@ -147,7 +147,12 @@ class _LoginPageState extends State<LoginPage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Login'),
+        title: new Text(
+          'Login',
+          style: new TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
       ),
       body: new Container(
           padding: new EdgeInsets.all(20.0),
@@ -156,6 +161,9 @@ class _LoginPageState extends State<LoginPage> {
             child: new ListView(
               children: <Widget>[
                 new TextFormField(
+                    style: new TextStyle(
+                      fontSize: 14.0,
+                    ),
                     keyboardType: TextInputType
                         .emailAddress, // Use email input type for emails.
                     decoration: new InputDecoration(
@@ -166,6 +174,9 @@ class _LoginPageState extends State<LoginPage> {
                       this._data.setEmail = value;
                     }),
                 new TextFormField(
+                    style: new TextStyle(
+                      fontSize: 14.0,
+                    ),
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
                         hintText: 'Password', labelText: 'Enter your password'),
@@ -178,7 +189,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: new RaisedButton(
                     child: new Text(
                       'Login',
-                      style: new TextStyle(color: Colors.white),
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.0,
+                      ),
                     ),
                     onPressed: this.submit,
                     color: Colors.blue,
@@ -186,15 +200,17 @@ class _LoginPageState extends State<LoginPage> {
                   margin: new EdgeInsets.only(top: 20.0),
                 ),
                 new FlatButton(
-                  child: Text(
-                    "Don't have an account? Sign Up",
-                  ),
+                  child: Text("Don't have an account? Sign Up",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      )),
                   onPressed: signUp,
                 ),
                 new FlatButton(
-                  child: Text(
-                    "Forgot password? Reset Password",
-                  ),
+                  child: Text("Forgot password? Reset Password",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      )),
                   onPressed: forgetPassword,
                 )
               ],

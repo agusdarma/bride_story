@@ -405,7 +405,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   new Text('Booking',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -454,20 +454,20 @@ class _VendorPageNewState extends State<VendorPageNew>
                       new Text(
                         listSimilarVenueData.elementAt(index).titleVenue,
                         style: TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                         ),
                       ),
                       new Text(
                         listSimilarVenueData.elementAt(index).locationVenue +
                             ', Indonesia',
                         style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 11.0,
                         ),
                       ),
                       new Text(
                         'Venue',
                         style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 11.0,
                         ),
                       ),
                     ],
@@ -497,11 +497,11 @@ class _VendorPageNewState extends State<VendorPageNew>
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Text("Similar Venue", style: TextStyle(fontSize: 14.0)),
+          new Text("Similar Venue", style: TextStyle(fontSize: 12.0)),
           new GestureDetector(
             child: new Text(
                 "View All (" + listSimilarVenueData.length.toString() + ") >",
-                style: TextStyle(fontSize: 14.0)),
+                style: TextStyle(fontSize: 12.0)),
             onTap: () {
               _navigateSimilarList(context);
             },
@@ -519,7 +519,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           Expanded(
             flex: 1,
             child: new Text(venueModel.addressVenue,
-                style: TextStyle(fontSize: 14.0)),
+                style: TextStyle(fontSize: 12.0)),
           )
         ],
       ),
@@ -528,7 +528,7 @@ class _VendorPageNewState extends State<VendorPageNew>
     Widget namaVendor = new Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 7.0, top: 7.0, bottom: 7.0),
-      child: new Text(venueModel.titleVenue, style: TextStyle(fontSize: 18.0)),
+      child: new Text(venueModel.titleVenue, style: TextStyle(fontSize: 16.0)),
     );
 
     Widget bgImage = new Container(
@@ -613,7 +613,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           padding: EdgeInsets.only(top: 5.0),
           child: Text(venueModel.titleVenue,
               style: TextStyle(
-                fontSize: 17.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.bold,
               )),
         ),
@@ -621,7 +621,7 @@ class _VendorPageNewState extends State<VendorPageNew>
           padding: EdgeInsets.only(top: 5.0),
           child: Text(parameter.cityName + ',Indonesia',
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 12.0,
               )),
         )
       ],
@@ -704,7 +704,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                   Expanded(
                     child: new Text(displayedDate,
                         style: TextStyle(
-                          fontSize: 15.0,
+                          fontSize: 13.0,
                         )),
                   ),
                   Padding(padding: EdgeInsets.all(5.0)),
@@ -715,7 +715,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                       Text(venueModel.isDayFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
-                            fontSize: 14.0,
+                            fontSize: 12.0,
                           )),
                     ],
                   ),
@@ -727,7 +727,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                       Text(venueModel.isNightFlag == 1 ? 'Booked' : 'Available',
                           style: TextStyle(
                             color: Colors.blue,
-                            fontSize: 14.0,
+                            fontSize: 12.0,
                           )),
                     ],
                   ),

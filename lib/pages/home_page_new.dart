@@ -89,13 +89,13 @@ class _HomePageNewState extends State<HomePageNew> {
           return CustomAlertDialog(
             title: new Text("Warning",
                 style: TextStyle(
-                  fontSize: 28.0,
+                  fontSize: 26.0,
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                 )),
             content: new Text(message,
                 style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                   // color: Colors.red,
                   // fontWeight: FontWeight.bold,
                 )),
@@ -104,7 +104,7 @@ class _HomePageNewState extends State<HomePageNew> {
               new FlatButton(
                 child: new Text("Close",
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                       // color: Colors.red,
                       // fontWeight: FontWeight.bold,
                     )),
@@ -187,7 +187,7 @@ class _HomePageNewState extends State<HomePageNew> {
                 children: <Widget>[
                   new Text('Bride Customer',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -290,7 +290,7 @@ class _HomePageNewState extends State<HomePageNew> {
                   Padding(padding: EdgeInsets.only(right: 16.0)),
                   new Text('Search',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
