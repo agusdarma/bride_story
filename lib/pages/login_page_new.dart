@@ -96,7 +96,10 @@ class _LoginPageState extends State<LoginPage> {
         if (0 == rc) {
           saveLoginDataInSharedPreferences(
               response['otherMessage'], keyLoginParam);
-          Navigator.of(context).pop();
+              print('abis login');
+           const JsonDecoder decoder = const JsonDecoder();
+        Map loginDataVo = decoder.convert(response['otherMessage']);
+          Navigator.of(context).pop(loginDataVo);
         } else {
           _showDialogError(response['messageRc']);
         }

@@ -18,18 +18,22 @@ class _MyBookingPageState extends State<MyBookingPage> {
   List<ResultMyBookingModel> listMyBookingData =
       new List<ResultMyBookingModel>();
 
-  BookingParam parameter;
+  BookingParam parameter = new BookingParam('');
 
   void _populateResultData(List<dynamic> listBooking) {
     for (var items in listBooking) {
       Map booking = items;
-      String namaPernikahan = booking['namaPernikahan'];
-      String namaPenanggungJawab1 = booking['namaPenanggungJawab1'];
-      String handPhone1 = booking['handPhone1'];
-      String namaPenanggungJawab2 = booking['namaPenanggungJawab2'];
-      String handPhone2 = booking['handPhone2'];
-      String userEmailBooking = booking['userEmailBooking'];
-      String titleVenue = booking['titleVenue'];
+      Map bookingDateVO = booking['bookingDateVO'];
+      Map venueVO = booking['venueVO'];
+      Map venue = venueVO['venue'];
+      String namaPernikahan = bookingDateVO['namaPernikahan'];
+      String namaPenanggungJawab1 = bookingDateVO['namaPenanggungJawab1'];
+      String handPhone1 = bookingDateVO['handPhone1'];
+      String namaPenanggungJawab2 = bookingDateVO['namaPenanggungJawab2'];
+      String handPhone2 = bookingDateVO['handPhone2'];
+      String userEmailBooking = bookingDateVO['userEmailBooking'];
+      String titleVenue = venue['titleVenue'];
+      int dateTimeMilisecond = bookingDateVO['dateTimeMilisecond'];
       listMyBookingData.add(new ResultMyBookingModel(
           namaPernikahan,
           namaPenanggungJawab1,
@@ -37,7 +41,8 @@ class _MyBookingPageState extends State<MyBookingPage> {
           namaPenanggungJawab2,
           handPhone2,
           userEmailBooking,
-          titleVenue));
+          titleVenue,
+          dateTimeMilisecond));
     }
   }
 
@@ -49,13 +54,42 @@ class _MyBookingPageState extends State<MyBookingPage> {
     return json;
   }
 
-  _navigateLoginPage(BuildContext context) {
-    Navigator.push(
+  _navigateLoginPage(BuildContext context) async {
+    final result = await Navigator.push(
       context,
       // new MaterialPageRoute(builder: (context) => new LoginScreen()),
       new MaterialPageRoute(builder: (context) => new LoginPage()),
     );
+    if (result != null) {
+      setState(() {
+        print(result);
+        // Map temp = result;
+        parameter.email = result['email'];
+        HttpServices http = new HttpServices();
+        const JsonEncoder encoder = const JsonEncoder();
+        String parameterJson = encoder.convert(parameter);
+        http.getListMyBooking(parameterJson).then((List<dynamic> listBooking) {
+          setState(() {
+            _populateResultData(listBooking);
+          });
+        });
+      });
+    }
   }
+
+  // _navigateAndDisplaySelection(BuildContext context) async {
+  //     final result = await Navigator.pushNamed(context, '/searchCity');
+  //     if (result != null) {
+  //       setState(() {
+  //         const JsonDecoder decoder = const JsonDecoder();
+  //         Map filterParamMap = decoder.convert(result);
+  //         var filterParamNew = new FilterParam.fromJson(filterParamMap);
+  //         displayedString = filterParamNew.cityName;
+  //         parameter.cityId = filterParamNew.cityId;
+  //         parameter.cityName = filterParamNew.cityName;
+  //       });
+  //     }
+  //   }
 
   @override
   void initState() {
@@ -97,6 +131,54 @@ class _MyBookingPageState extends State<MyBookingPage> {
     });
   }
 
+  String _convertBulan(int month) {
+    String bulan = "";
+    if (1 == month) {
+      bulan = januari;
+    } else if (2 == month) {
+      bulan = februari;
+    } else if (3 == month) {
+      bulan = maret;
+    } else if (4 == month) {
+      bulan = april;
+    } else if (5 == month) {
+      bulan = mei;
+    } else if (6 == month) {
+      bulan = juni;
+    } else if (7 == month) {
+      bulan = juli;
+    } else if (8 == month) {
+      bulan = agustus;
+    } else if (9 == month) {
+      bulan = september;
+    } else if (10 == month) {
+      bulan = oktober;
+    } else if (11 == month) {
+      bulan = november;
+    } else if (12 == month) {
+      bulan = desember;
+    }
+    return bulan;
+  }
+
+  // String tglBooking(int bookingDate) {
+  //   int year = new DateTime.fromMillisecondsSinceEpoch(bookingDate).year;
+  //   int month = new DateTime.fromMillisecondsSinceEpoch(bookingDate).month;
+  //   int day = new DateTime.fromMillisecondsSinceEpoch(bookingDate).day;
+  //   String displayedDate =
+  //       day.toString() + ' ' + _convertBulan(month) + ' ' + year.toString();
+  //   return displayedDate;
+  // }
+
+  Widget tglBooking(int bookingDate){
+    int year = new DateTime.fromMillisecondsSinceEpoch(bookingDate).year;
+    int month = new DateTime.fromMillisecondsSinceEpoch(bookingDate).month;
+    int day = new DateTime.fromMillisecondsSinceEpoch(bookingDate).day;
+    String displayedDate =
+        day.toString() + ' ' + _convertBulan(month) + ' ' + year.toString();
+      return Text(displayedDate);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget card(BuildContext context, int index) {
@@ -114,10 +196,10 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 size: 26.0,
               ),
               title: new Text(
-                "Balai Samudra",
+                listMyBookingData.elementAt(index).titleVenue,
                 style: new TextStyle(fontWeight: FontWeight.w400),
               ),
-              subtitle: new Text("7 Agustus 2019"),
+              subtitle: tglBooking(listMyBookingData.elementAt(index).dateTime),
             ),
             // new Divider(
             //   color: Colors.blue,
@@ -130,7 +212,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 size: 26.0,
               ),
               title: new Text(
-                "Hendra & Santi",
+                listMyBookingData.elementAt(index).namaPernikahan,
                 style: new TextStyle(fontWeight: FontWeight.w400),
               ),
             ),
@@ -141,7 +223,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
                 size: 26.0,
               ),
               title: new Text(
-                "085694949393",
+                listMyBookingData.elementAt(index).handPhone1,
                 style: new TextStyle(fontWeight: FontWeight.w400),
               ),
             ),

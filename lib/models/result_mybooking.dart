@@ -6,6 +6,7 @@ class ResultMyBookingModel {
   String handPhone2;
   String userEmailBooking;
   String titleVenue;  	
+  int dateTime;
 
   ResultMyBookingModel(
       this.namaPernikahan,
@@ -14,5 +15,6 @@ class ResultMyBookingModel {
       this.namaPenanggungJawab2,
       this.handPhone2,
       this.userEmailBooking,
-      this.titleVenue);
+      this.titleVenue,
+      this.dateTime);
 }
