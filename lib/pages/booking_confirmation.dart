@@ -1,6 +1,9 @@
 import 'package:bride_story/models/result_mybooking.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 
 class BookingConfirmation extends StatefulWidget {
   final ResultMyBookingModel bookingData;
@@ -13,7 +16,7 @@ class BookingConfirmation extends StatefulWidget {
 
 class _BookingConfirmationState extends State<BookingConfirmation> {
   _BookingConfirmationState(this.bookingData);
-
+  File image;
   ResultMyBookingModel bookingData;
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,18 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
       return bulan;
     }
 
+    //  To use Gallery or File Manager to pick Image
+//  Comment Line No. 19 and uncomment Line number 20
+    picker() async {
+      print('Picker is called');
+      // File img = await ImagePicker.pickImage(source: ImageSource.camera);
+      File img = await ImagePicker.pickImage(source: ImageSource.gallery);
+      if (img != null) {
+        image = img;
+        setState(() {});
+      }
+    }
+
     Widget tglBooking(int bookingDate) {
       int year = new DateTime.fromMillisecondsSinceEpoch(bookingDate).year;
       int month = new DateTime.fromMillisecondsSinceEpoch(bookingDate).month;
@@ -59,6 +74,7 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
     Widget card(BuildContext context) {
       return new Card(
         child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Divider(
               color: Colors.blue,
@@ -116,6 +132,44 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
                 style: new TextStyle(fontWeight: FontWeight.w400),
               ),
             ),
+            Row(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Text('Upload Bukti Pembayaran :'),
+                ),
+                GestureDetector(
+                  child: new Icon(
+                    Icons.file_upload,
+                    color: Colors.blue,
+                    size: 26.0,
+                  ),
+                  onTap: picker,
+                ),
+
+                // new FloatingActionButton(
+                //   onPressed: picker,
+                //   child: new Icon(
+                //     Icons.camera_alt,
+                //     color: Colors.blue,
+                //     size: 26.0,
+                //   ),
+                // ),
+              ],
+            ),
+            new Divider(
+              height: 5.0,
+            ),
+            image == null
+                ? new Text('No Image to Show ')
+                : new Image.file(
+                    image,
+                    width: 200.0,
+                    height: 150.0,
+                  ),
           ],
         ),
       );
@@ -139,7 +193,19 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
 
     return SafeArea(
       child: new Scaffold(
-        appBar: new AppBar(title: new Text("Confirmation Booking")),
+        appBar: new AppBar(title: new Text("Confirmation Booking"),
+        actions: <Widget>[
+          new FlatButton(
+          onPressed: () {
+
+          },
+          child: new Text('Confirm',
+              style: Theme.of(context)
+                  .textTheme
+                  .subhead
+                  .copyWith(color: Colors.white)),
+        ),
+        ],),
         body: Column(
           children: <Widget>[
             new Expanded(

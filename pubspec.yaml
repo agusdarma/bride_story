@@ -55,6 +55,7 @@ dependencies:
      path: packages/google_maps_flutter
 
   validate: ^1.7.0
+  image_picker: ^0.4.10
 
   #google maps 
   # uri: ^0.11.3

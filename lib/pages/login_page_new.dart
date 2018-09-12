@@ -162,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 new TextFormField(
                     style: new TextStyle(
+                      color: Colors.black,
                       fontSize: 14.0,
                     ),
                     keyboardType: TextInputType
@@ -176,6 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                 new TextFormField(
                     style: new TextStyle(
                       fontSize: 14.0,
+                      color: Colors.black,
                     ),
                     obscureText: true, // Use secure text for passwords.
                     decoration: new InputDecoration(
