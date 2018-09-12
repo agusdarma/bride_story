@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:async/async.dart';
 import 'package:bride_story/models/result_mybooking.dart';
+import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class BookingConfirmation extends StatefulWidget {
   final ResultMyBookingModel bookingData;
@@ -191,21 +197,66 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
       );
     }
 
+    upload(File imageFile) async {
+      // open a bytestream
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      // get file length
+      var length = await imageFile.length();
+
+      // string to uri
+      var uri = Uri.parse("http://192.168.0.101:6556/bride-trx/uploadImages");
+
+      // create multipart request
+      var request = new http.MultipartRequest("POST", uri);
+
+      // multipart that takes file
+      var multipartFile = new http.MultipartFile('file', stream, length,
+          filename: basename(imageFile.path));
+
+      // add file to multipart
+      request.files.add(multipartFile);
+
+      // send
+      var response = await request.send();
+      print(response.statusCode);
+
+      // listen for response
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+    }
+
+    _uploadToEngine(BuildContext context, ResultMyBookingModel bookingData) {
+      // HttpServices http = new HttpServices();
+      // const JsonEncoder encoder = const JsonEncoder();
+      // String parameterJson = encoder.convert(bookingData);
+      // print(parameterJson);
+      // http.createUpdateBooking(parameterJson).then((dynamic response) {
+      //   setState(() {
+      //     Navigator.of(context).pop(response);
+      //   });
+      // });
+      upload(image);
+    }
+
     return SafeArea(
       child: new Scaffold(
-        appBar: new AppBar(title: new Text("Confirmation Booking"),
-        actions: <Widget>[
-          new FlatButton(
-          onPressed: () {
-
-          },
-          child: new Text('Confirm',
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white)),
+        appBar: new AppBar(
+          title: new Text("Confirmation Booking"),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                _uploadToEngine(context, bookingData);
+              },
+              child: new Text('Confirm',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subhead
+                      .copyWith(color: Colors.white)),
+            ),
+          ],
         ),
-        ],),
         body: Column(
           children: <Widget>[
             new Expanded(

@@ -16,7 +16,7 @@ class HttpServices {
   static final getImageByName = baseUrl + "/getImageByName";
   static final getAllCarouselImgUrl = baseUrl + "/allCarousel";
   static final getAllVenueUrl = baseUrl + "/getListVenue";
-  static final getVenueWithIdVenueUrl = baseUrl + "//getVenueById";
+  static final getVenueWithIdVenueUrl = baseUrl + "/getVenueById";
   static final createUpdateBookingUrl = baseUrl + "/createUpdateBooking";
   static final getListSimilarVenueUrl = baseUrl + "/getListSimilarVenue";
   static final loginProcessUrl = baseUrl + "/loginProcess";
