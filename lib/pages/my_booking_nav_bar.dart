@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bride_story/data/booking_param.dart';
 import 'package:bride_story/models/result_mybooking.dart';
+import 'package:bride_story/pages/booking_confirmation.dart';
 import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
@@ -170,17 +171,28 @@ class _MyBookingPageState extends State<MyBookingPage> {
   //   return displayedDate;
   // }
 
-  Widget tglBooking(int bookingDate){
+  Widget tglBooking(int bookingDate) {
     int year = new DateTime.fromMillisecondsSinceEpoch(bookingDate).year;
     int month = new DateTime.fromMillisecondsSinceEpoch(bookingDate).month;
     int day = new DateTime.fromMillisecondsSinceEpoch(bookingDate).day;
     String displayedDate =
         day.toString() + ' ' + _convertBulan(month) + ' ' + year.toString();
-      return Text(displayedDate);
+    return Text(displayedDate);
   }
 
   @override
   Widget build(BuildContext context) {
+    _navigateConfirmationPage(
+        BuildContext context, ResultMyBookingModel bookingData) {
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new BookingConfirmation(
+                  bookingData: bookingData,
+                )),
+      );
+    }
+
     Widget card(BuildContext context, int index) {
       return new Card(
         child: new Column(
@@ -189,18 +201,26 @@ class _MyBookingPageState extends State<MyBookingPage> {
               color: Colors.blue,
               indent: 1.0,
             ),
-            new ListTile(
-              leading: new Icon(
-                Icons.add_location,
-                color: Colors.blue,
-                size: 26.0,
+            GestureDetector(
+              child: new ListTile(
+                leading: new Icon(
+                  Icons.add_location,
+                  color: Colors.blue,
+                  size: 26.0,
+                ),
+                title: new Text(
+                  listMyBookingData.elementAt(index).titleVenue,
+                  style: new TextStyle(fontWeight: FontWeight.w400),
+                ),
+                subtitle:
+                    tglBooking(listMyBookingData.elementAt(index).dateTime),
               ),
-              title: new Text(
-                listMyBookingData.elementAt(index).titleVenue,
-                style: new TextStyle(fontWeight: FontWeight.w400),
-              ),
-              subtitle: tglBooking(listMyBookingData.elementAt(index).dateTime),
+              onTap: () {
+                _navigateConfirmationPage(
+                    context, listMyBookingData.elementAt(index));
+              },
             ),
+
             // new Divider(
             //   color: Colors.blue,
             //   indent: 16.0,
