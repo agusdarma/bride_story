@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:async/async.dart';
+import 'package:bride_story/data/confirm_data_vo.dart';
 import 'package:bride_story/models/result_mybooking.dart';
+import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/services/http_services.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ import 'package:path/path.dart';
 
 class BookingConfirmation extends StatefulWidget {
   final ResultMyBookingModel bookingData;
+  
 
   const BookingConfirmation({Key key, this.bookingData}) : super(key: key);
   @override
@@ -197,47 +201,101 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
       );
     }
 
-    upload(File imageFile) async {
-      // open a bytestream
-      var stream =
-          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-      // get file length
-      var length = await imageFile.length();
+    // upload(File imageFile) async {
+    //   String base64Image = base64Encode(imageFile.readAsBytesSync());
+    //   print(base64Image);
+    //   Uint8List a = base64Decode(base64Image);
+      
+    // }
 
-      // string to uri
-      var uri = Uri.parse("http://192.168.0.101:6556/bride-trx/uploadImages");
+    void _showDialogSuccess(String message) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Info",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(message,
+              style: TextStyle(
+                fontSize: 18.0,
+              )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  )),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-      // create multipart request
-      var request = new http.MultipartRequest("POST", uri);
+  void _showDialogError(String message) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Warning",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(message,
+              style: TextStyle(
+                fontSize: 18.0,
+              )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  )),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-      // multipart that takes file
-      var multipartFile = new http.MultipartFile('file', stream, length,
-          filename: basename(imageFile.path));
-
-      // add file to multipart
-      request.files.add(multipartFile);
-
-      // send
-      var response = await request.send();
-      print(response.statusCode);
-
-      // listen for response
-      response.stream.transform(utf8.decoder).listen((value) {
-        print(value);
+    _uploadToEngine(BuildContext context, ResultMyBookingModel bookingData) {      
+      String base64Image = base64Encode(image.readAsBytesSync());
+      // print(base64Image);
+      // Uint8List a = base64Decode(base64Image);
+      ConfirmDataVo confirmDataVo = new ConfirmDataVo(bookingData.emailUserLogin, base64Image, bookingData.bookingId);
+      HttpServices http = new HttpServices();
+      const JsonEncoder encoder = const JsonEncoder();
+      String parameterJson = encoder.convert(confirmDataVo);
+      http.confirmBooking(parameterJson).then((dynamic response) {
+        setState(() {
+          int rc = response['rc'];
+          if (0 == rc) {            
+            _showDialogSuccess(response['otherMessage']);
+          } else {
+            _showDialogError(response['messageRc']);
+          }
+        });
       });
-    }
-
-    _uploadToEngine(BuildContext context, ResultMyBookingModel bookingData) {
-      // HttpServices http = new HttpServices();
-      // const JsonEncoder encoder = const JsonEncoder();
-      // String parameterJson = encoder.convert(bookingData);
-      // print(parameterJson);
-      // http.createUpdateBooking(parameterJson).then((dynamic response) {
-      //   setState(() {
-      //     Navigator.of(context).pop(response);
-      //   });
-      // });
-      upload(image);
+      // upload(image);
     }
 
     return SafeArea(

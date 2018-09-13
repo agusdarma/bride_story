@@ -22,6 +22,7 @@ class HttpServices {
   static final loginProcessUrl = baseUrl + "/loginProcess";
   static final signUpProcessUrl = baseUrl + "/signUpProcess";
   static final getListMyBookingUrl = baseUrl + "/getListMyBooking";
+  static final uploadImagesUrl = baseUrl + "/uploadImages";
   
   
   
@@ -40,6 +41,19 @@ class HttpServices {
     Post a = new Post.fromJson(post);
     print(a.title);
     return null;
+  }
+
+  Future<dynamic> confirmBooking(String parameter) async {
+    final String response = await _netUtil
+        .post(uploadImagesUrl, body: parameter);
+
+    const JsonDecoder decoder = const JsonDecoder();
+    Map messageVO = decoder.convert(response);
+    // MessageVo a = new MessageVo.fromJson(messageVO);
+
+    // String responseMessage = decoder.convert(a.otherMessage);
+    // String responseMessage = messageVO['otherMessage'];
+    return messageVO;
   }
 
   Future<List<dynamic>> getListMyBooking(String parameter) async {

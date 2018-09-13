@@ -21,7 +21,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
 
   BookingParam parameter = new BookingParam('');
 
-  void _populateResultData(List<dynamic> listBooking) {
+  void _populateResultData(List<dynamic> listBooking,String emailUserLogin) {
     for (var items in listBooking) {
       Map booking = items;
       Map bookingDateVO = booking['bookingDateVO'];
@@ -35,6 +35,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
       String userEmailBooking = bookingDateVO['userEmailBooking'];
       String titleVenue = venue['titleVenue'];
       int dateTimeMilisecond = bookingDateVO['dateTimeMilisecond'];
+      int bookingId = bookingDateVO['id'];
       listMyBookingData.add(new ResultMyBookingModel(
           namaPernikahan,
           namaPenanggungJawab1,
@@ -43,7 +44,9 @@ class _MyBookingPageState extends State<MyBookingPage> {
           handPhone2,
           userEmailBooking,
           titleVenue,
-          dateTimeMilisecond));
+          dateTimeMilisecond,
+          bookingId,
+          emailUserLogin));
     }
   }
 
@@ -71,7 +74,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
         String parameterJson = encoder.convert(parameter);
         http.getListMyBooking(parameterJson).then((List<dynamic> listBooking) {
           setState(() {
-            _populateResultData(listBooking);
+            _populateResultData(listBooking,parameter.email);
           });
         });
       });
@@ -124,7 +127,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
               .getListMyBooking(parameterJson)
               .then((List<dynamic> listBooking) {
             setState(() {
-              _populateResultData(listBooking);
+              _populateResultData(listBooking,email);
             });
           });
         }
