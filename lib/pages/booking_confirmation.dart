@@ -269,6 +269,7 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
                   )),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
           ],
