@@ -278,7 +278,45 @@ class _BookingConfirmationState extends State<BookingConfirmation> {
     );
   }
 
-    _uploadToEngine(BuildContext context, ResultMyBookingModel bookingData) {      
+  void _showDialogError2(String message) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return CustomAlertDialog(
+          title: new Text("Warning",
+              style: TextStyle(
+                fontSize: 28.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              )),
+          content: new Text(message,
+              style: TextStyle(
+                fontSize: 18.0,
+              )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  )),
+              onPressed: () {
+                Navigator.of(context).pop();                
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+    _uploadToEngine(BuildContext context, ResultMyBookingModel bookingData) {   
+      if(image == null){
+        _showDialogError2('File Image harus dilampirkan.');
+        return;
+      }   
       String base64Image = base64Encode(image.readAsBytesSync());
       // print(base64Image);
       // Uint8List a = base64Decode(base64Image);

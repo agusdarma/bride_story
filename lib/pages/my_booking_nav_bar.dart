@@ -21,7 +21,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
 
   BookingParam parameter = new BookingParam('');
 
-  void _populateResultData(List<dynamic> listBooking,String emailUserLogin) {
+  void _populateResultData(List<dynamic> listBooking, String emailUserLogin) {
     for (var items in listBooking) {
       Map booking = items;
       Map bookingDateVO = booking['bookingDateVO'];
@@ -74,7 +74,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
         String parameterJson = encoder.convert(parameter);
         http.getListMyBooking(parameterJson).then((List<dynamic> listBooking) {
           setState(() {
-            _populateResultData(listBooking,parameter.email);
+            _populateResultData(listBooking, parameter.email);
           });
         });
       });
@@ -127,7 +127,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
               .getListMyBooking(parameterJson)
               .then((List<dynamic> listBooking) {
             setState(() {
-              _populateResultData(listBooking,email);
+              _populateResultData(listBooking, email);
             });
           });
         }
@@ -228,27 +228,39 @@ class _MyBookingPageState extends State<MyBookingPage> {
             //   color: Colors.blue,
             //   indent: 16.0,
             // ),
-            new ListTile(
-              leading: new Icon(
-                Icons.people,
-                color: Colors.blue,
-                size: 26.0,
+            GestureDetector(
+              child: new ListTile(
+                leading: new Icon(
+                  Icons.people,
+                  color: Colors.blue,
+                  size: 26.0,
+                ),
+                title: new Text(
+                  listMyBookingData.elementAt(index).namaPernikahan,
+                  style: new TextStyle(fontWeight: FontWeight.w400),
+                ),
               ),
-              title: new Text(
-                listMyBookingData.elementAt(index).namaPernikahan,
-                style: new TextStyle(fontWeight: FontWeight.w400),
-              ),
+              onTap: () {
+                _navigateConfirmationPage(
+                    context, listMyBookingData.elementAt(index));
+              },
             ),
-            new ListTile(
-              leading: new Icon(
-                Icons.phone,
-                color: Colors.blue,
-                size: 26.0,
+            GestureDetector(
+              child: new ListTile(
+                leading: new Icon(
+                  Icons.phone,
+                  color: Colors.blue,
+                  size: 26.0,
+                ),
+                title: new Text(
+                  listMyBookingData.elementAt(index).handPhone1,
+                  style: new TextStyle(fontWeight: FontWeight.w400),
+                ),
               ),
-              title: new Text(
-                listMyBookingData.elementAt(index).handPhone1,
-                style: new TextStyle(fontWeight: FontWeight.w400),
-              ),
+              onTap: () {
+                _navigateConfirmationPage(
+                    context, listMyBookingData.elementAt(index));
+              },
             ),
           ],
         ),
