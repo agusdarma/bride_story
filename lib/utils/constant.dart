@@ -24,3 +24,6 @@ const String oktober = 'Oktober';
 const String november = 'November';
 const String desember = 'Desember';
 
+const int userTypeCust = 1;
+const int userTypeVendor = 2;
+

@@ -4,6 +4,7 @@ import 'package:bride_story/data/signUp_data_vo.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/login_page_new.dart';
 import 'package:bride_story/services/http_services.dart';
+import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validate/validate.dart';
@@ -15,7 +16,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  SignUpDataVo _data = new SignUpDataVo("", "");
+  SignUpDataVo _data = new SignUpDataVo("", "",0);
 
   String _validateEmail(String value) {
     // If empty value, the isEmail function throw a error.
@@ -151,6 +152,7 @@ class _SignUpState extends State<SignUpPage> {
       // print('Printing the login data.');
       // print('Email: ${_data.email}');
       // print('Password: ${_data.password}');
+      _data.setUserType = userTypeCust;
       _signUpToEngine(context, _data);
     }
   }
