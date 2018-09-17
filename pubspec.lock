@@ -60,7 +60,7 @@ packages:
     description:
       path: "packages/google_maps_flutter"
       ref: HEAD
-      resolved-ref: d8f3f5069995541e76322c3a64e6236935fbe955
+      resolved-ref: "1aef7d92e9e77e929ad767320e3f96cbb26efacc"
       url: "git://github.com/flutter/plugins"
     source: git
     version: "0.0.1"
@@ -112,7 +112,7 @@ packages:
       name: numberpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.7"
   path:
     dependency: transitive
     description:
