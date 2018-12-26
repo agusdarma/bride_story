@@ -24,7 +24,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  LoginDataVo _data = new LoginDataVo("", "", "", 0);
+  LoginDataVo _data = new LoginDataVo("", "", "", 0,1);
 
   String _validateEmail(String value) {
     // If empty value, the isEmail function throw a error.
