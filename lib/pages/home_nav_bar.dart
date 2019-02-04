@@ -1,6 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 
+
+
+import 'package:bride_story/pages/screens/ProductList/index.dart';
+
+import '../plugins/components/Buttons/buyNowButton.dart';
+
+import '../plugins/components/trending.dart';
+
+import '../theme/style.dart';
+
+import '../plugins/components/CircleImage.dart';
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
@@ -115,12 +126,23 @@ class _HomePageNewBarState extends State<HomePageNewBar> {
       Navigator.push(
         context,
         new MaterialPageRoute(
-            builder: (context) => new ResultSearchPageNew(
+            builder: (context) => new ProductList(
                   allPages: allPages,
                   parameter: parameter,
                 )),
       );
     }
+
+//    _navigateSearchButton(BuildContext context) {
+//      Navigator.push(
+//        context,
+//        new MaterialPageRoute(
+//            builder: (context) => new ResultSearchPageNew(
+//              allPages: allPages,
+//              parameter: parameter,
+//            )),
+//      );
+//    }
 
     Future<Null> _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
@@ -292,16 +314,283 @@ class _HomePageNewBarState extends State<HomePageNewBar> {
           )),
     );
 
-    return new SingleChildScrollView(
-      child: new Column(
-        children: <Widget>[
-          logoView,
-          searchCitiesView,
-          searchDateView,
-          buttonSearchView,
-          // mapWidget,
+//    return new SingleChildScrollView(
+//      padding: const EdgeInsets.only(
+//          left: 5.0, top: 10.0, bottom: 10.0, right: 5.0),
+//      child: new Column(
+//        children: <Widget>[
+//          logoView,
+//          new Card(
+//              child: new SingleChildScrollView(
+//                scrollDirection: Axis.horizontal,
+//                child: new GestureDetector(
+//                  onTap: () {
+//                    Navigator.of(context).pushNamed('/shopmen');
+//                  },
+//                  child: new Row(children: <Widget>[
+//                    new CircleImage(
+//                      picture: new AssetImage("assets/images/circle1.png"),
+//                      text: 'MEN',
+//                    ),
+//                    new CircleImage(
+//                      picture: new AssetImage("assets/images/circle2.png"),
+//                      text: 'WOMEN',
+//                    ),
+//                    new CircleImage(
+//                      picture: new AssetImage("assets/images/circle3.png"),
+//                      text: 'KIDS',
+//                    ),
+//                    new CircleImage(
+//                      picture: new AssetImage("assets/images/circle4.png"),
+//                      text: 'HOME',
+//                    ),
+//                    new CircleImage(
+//                      picture: new AssetImage("assets/images/circle5.png"),
+//                      text: 'EOS',
+//                    ),
+//                  ]),
+//                ),
+//              )),
+//          searchCitiesView,
+//          searchDateView,
+//          buttonSearchView,
+//          // mapWidget,
+//        ],
+//      ),
+//    );
+
+    return new Scaffold(
+      appBar: new AppBar(
+        backgroundColor: whiteColor,
+        centerTitle: true,
+        title: new Text(
+          "LookUp",
+          style: textStylew600,
+        ),
+        actions: <Widget>[
+//          new Icon(
+//            Icons.search,
+//            color: Colors.black,
+//          ),
         ],
       ),
-    );
+      body: new ListView(
+        padding: const EdgeInsets.only(
+            left: 5.0, top: 10.0, bottom: 10.0, right: 5.0),
+          children: <Widget>[
+//            new Card(
+//                child: new SingleChildScrollView(
+//                  scrollDirection: Axis.horizontal,
+//                  child: new GestureDetector(
+//                    onTap: () {
+//                      Navigator.of(context).pushNamed('/shopmen');
+//                    },
+//                    child: new Row(children: <Widget>[
+//                      new CircleImage(
+//                        picture: new AssetImage("assets/images/circle1.png"),
+//                        text: 'MEN',
+//                      ),
+//                      new CircleImage(
+//                        picture: new AssetImage("assets/images/circle2.png"),
+//                        text: 'WOMEN',
+//                      ),
+//                      new CircleImage(
+//                        picture: new AssetImage("assets/images/circle3.png"),
+//                        text: 'KIDS',
+//                      ),
+//                      new CircleImage(
+//                        picture: new AssetImage("assets/images/circle4.png"),
+//                        text: 'HOME',
+//                      ),
+//                      new CircleImage(
+//                        picture: new AssetImage("assets/images/circle5.png"),
+//                        text: 'EOS',
+//                      ),
+//                    ]),
+//                  ),
+//                )),
+            searchCitiesView,
+            searchDateView,
+            buttonSearchView,
+//            new Card(
+//              child: new Padding(
+//                  padding: const EdgeInsets.only(
+//                      left: 10.0, top: 10.0, bottom: 10.0, right: 10.0),
+//                  child: new GestureDetector(
+//                      onTap: () {
+//                        Navigator.of(context).pushNamed('/product');
+//                      },
+//                      child: new Image(
+//                        image: new ExactAssetImage("assets/images/bannersale.png"),
+//                      ))),
+//            ),
+//            new Card(
+//                child: new Column(
+//                  children: [
+//                    new Container(
+//                      margin: const EdgeInsets.only(
+//                          top: 0.0, bottom: 0.0, right: 5.0, left: 0.0),
+//                      padding: const EdgeInsets.only(
+//                          top: 0.0, bottom: 0.0, left: 0.0, right: 2.0),
+//                      height: 40.0,
+//                      color: Colors.white,
+//                      child: new ListTile(
+//                        title: new Text(
+//                          "Trending Now",
+//                          style: textStyleheader,
+//                        ),
+//                      ),
+//                    ),
+//                    new SingleChildScrollView(
+//                      scrollDirection: Axis.horizontal,
+//                      child: new GestureDetector(
+//                        onTap: () {
+//                          Navigator.of(context).pushNamed('/productList');
+//                        },
+//                        child: new Row(
+//                          children: <Widget>[
+//                            new Column(children: <Widget>[
+//                              new Trending(
+//                                picture: new ExactAssetImage("assets/images/women.png"),
+//                              ),
+//                              new Text(
+//                                "The Grunge Collection!",
+//                                style: textStylesubTitle,
+//                              ),
+//                              new Padding(
+//                                padding: const EdgeInsets.only(
+//                                    left: 0.0, top: 5.0, bottom: 10.0, right: 0.0),
+//                                child: new Text(
+//                                  "Born For the Road",
+//                                  style: textStylesubTitleLight,
+//                                ),
+//                              ),
+//                            ]),
+//                            new Column(children: <Widget>[
+//                              new Trending(
+//                                picture: new ExactAssetImage("assets/images/b4.png"),
+//                              ),
+//                              new Text(
+//                                "On Point!",
+//                                style: textStylesubTitle,
+//                              ),
+//                              new Padding(
+//                                padding: const EdgeInsets.only(
+//                                    left: 0.0, top: 5.0, bottom: 10.0, right: 0.0),
+//                                child: new Text(
+//                                  "Premium Bags That Steal The Spotlight",
+//                                  style: textStylesubTitleLight,
+//                                ),
+//                              ),
+//                            ]),
+//                            new Column(children: <Widget>[
+//                              new Trending(
+//                                picture: new ExactAssetImage("assets/images/b3.png"),
+//                              ),
+//                              new Text(
+//                                "A Fresh Edge To Everyday Wear ",
+//                                style: textStylesubTitle,
+//                              ),
+//                              new Padding(
+//                                padding: const EdgeInsets.only(
+//                                    left: 0.0, top: 5.0, bottom: 10.0, right: 0.0),
+//                                child: new Text(
+//                                  "Printed Tees",
+//                                  style: textStylesubTitleLight,
+//                                ),
+//                              ),
+//                            ]),
+//                            new Column(children: <Widget>[
+//                              new Trending(
+//                                picture: new ExactAssetImage("assets/images/women.png"),
+//                              ),
+//                              new Text(
+//                                "Up to 50% Off",
+//                                style: textStylesubTitle,
+//                              ),
+//                              new Padding(
+//                                padding: const EdgeInsets.only(
+//                                    left: 0.0, top: 5.0, bottom: 10.0, right: 0.0),
+//                                child: new Text(
+//                                  "Born For the Road",
+//                                  style: textStylesubTitleLight,
+//                                ),
+//                              ),
+//                            ]),
+//                          ],
+//                        ),
+//                      ),
+//                    ),
+//                  ],
+//                )),
+//            new Column(
+//              children: <Widget>[
+//                new Row(
+//                  children: <Widget>[
+//                    new Padding(
+//                      padding: const EdgeInsets.only(
+//                          left: 6.0, top: 5.0, bottom: 8.0, right: 4.0),
+//                      child: new Column(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        children: <Widget>[
+//                          new Text(
+//                            ' United Colors of Benetton ',
+//                            style: textStylesubTitle,
+//                          ),
+//                          new Text(
+//                            ' United Colors of Benetton Men Coral red Solid  ',
+//                            style: textStylesubTitleLighter,
+//                          ),
+//                          new Text(
+//                            ' Polo Collar T-Shirt',
+//                            style: textStylesubTitleLighter,
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                    new BuynowButton(
+//                      text: 'BUY NOW',
+//                    )
+//                  ],
+//                ),
+//              ],
+//            ),
+//            new Column(
+//              children: <Widget>[
+//                new Row(
+//                  children: <Widget>[
+//                    new Padding(
+//                      padding: const EdgeInsets.only(
+//                          left: 10.0, top: 10.0, bottom: 10.0, right: 10.0),
+//                      child: new Text('\$900'),
+//                    ),
+//                    new Padding(
+//                      padding: const EdgeInsets.only(
+//                          left: 0.0, top: 10.0, bottom: 10.0, right: 0.0),
+//                      child: new Text(
+//                        "\$1,499",
+//                        style: new TextStyle(
+//                          color: Colors.grey,
+//                          decoration: TextDecoration.lineThrough,
+//                          fontStyle: FontStyle.italic,
+//                        ),
+//                      ),
+//                    ),
+//                    new Padding(
+//                      padding: const EdgeInsets.only(
+//                          left: 10.0, top: 10.0, bottom: 10.0, right: 10.0),
+//                      child: new Text(
+//                        '40%off',
+//                        style: new TextStyle(
+//                          color: gotobagColor,
+//                        ),
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ],
+//            )
+          ]),
+      );
   }
 }

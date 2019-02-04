@@ -6,6 +6,7 @@ import 'package:bride_story/pages/custom_alert_dialog.dart';
 import 'package:bride_story/pages/home_nav_bar.dart';
 import 'package:bride_story/pages/my_booking_nav_bar.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
+import '../plugins/components/CircleImage.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:bride_story/utils/constant.dart';
 import 'package:flutter/material.dart';

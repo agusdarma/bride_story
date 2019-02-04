@@ -98,6 +98,48 @@ flutter:
     - assets/images/scale-bathroom.png
     - assets/images/login.jpg
     - assets/images/tick.png
+    - assets/images/shoppingcart.png
+    - assets/images/background.png
+    - assets/images/facebook.png
+    - assets/images/women.png
+    - assets/images/c4.png
+    - assets/images/bannersale.png
+    - assets/images/women.png
+    - assets/images/sanket.png
+    - assets/images/b4.png
+    - assets/images/b3.png
+    - assets/images/b2.png
+    - assets/images/mantastic.png
+    - assets/images/circle1.png
+    - assets/images/circle2.png
+    - assets/images/6.png
+    - assets/images/7.png
+    - assets/images/circle3.png
+    - assets/images/circle4.png
+    - assets/images/circle5.png
+    - assets/images/b5.png
+    - assets/images/KidsThumb.png
+    - assets/images/loginCover1.png
+    - assets/images/last-chance-to-stock-up.png
+    - assets/images/brandLogo.png
+    - assets/images/brandLogo2.png
+    - assets/images/18.png
+    - assets/images/ProfileCoverPic.png
+    - assets/images/1.png
+    - assets/images/8.png
+    - assets/images/launchscreen.png
+    - assets/images/2.png
+    - assets/images/3.png
+    - assets/images/4.png
+    - assets/images/5.png
+    - assets/images/13.png
+    - assets/images/1.png
+    - assets/images/26.png
+    - assets/images/10.png
+    - assets/images/model1.png
+    - assets/images/model2.png
+    - assets/images/model3.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

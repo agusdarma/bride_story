@@ -6,6 +6,7 @@ import 'package:bride_story/pages/home_page_new.dart';
 
 import 'package:bride_story/pages/price_list_page.dart';
 import 'package:bride_story/pages/result_search_page_new.dart';
+import 'package:bride_story/pages/screens/ProductList/index.dart';
 import 'package:bride_story/pages/vendor_page_new.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
 
@@ -63,7 +64,7 @@ void main() {
   // Define our result search page new.
   router.define('/searchResult', handler: new Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-    return new ResultSearchPageNew();
+    return new ProductList();
   }));
 
   // // Define our vendor page.
