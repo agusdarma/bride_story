@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ProductDetails extends StatelessWidget {
   final String name;
-  final String picture;
+  final ExactAssetImage picture;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class ProductDetails extends StatelessWidget {
                                     builder: (BuildContext context) =>
                                         new ProductDetail(
                                           name: name,
-                                          pic: picture,
+//                                          pic: picture,
                                         ),
                                   )),
                           child: new Container(
                             height: screenSize.height / 2.8,
                             width: screenSize.width / 2.2,
                             child: new Image(
-                              image: new NetworkImage(picture),
+                              image: picture,
                               fit: BoxFit.cover,
                             ),
                           ),

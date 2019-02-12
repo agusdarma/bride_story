@@ -3,8 +3,11 @@ import 'package:bride_story/plugins/components/ProductListCard.dart';
 import 'package:flutter/material.dart';
 
 
-class ProductDetails extends StatelessWidget {
+class BuildingDetails extends StatelessWidget {
   final String name;
+  final String capacityVisitor;
+  final String capacityParkir;
+  final String hargaVenue;
   final String picture;
 
   @override
@@ -12,8 +15,8 @@ class ProductDetails extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
 
     return new Container(
-        height: screenSize.height / 1.9,
-        width: screenSize.width / 2.0,
+      color: Colors.white,
+
         padding: new EdgeInsets.all(2.0),
         child: new Card(
             child: new Padding(
@@ -53,10 +56,14 @@ class ProductDetails extends StatelessWidget {
                       text3: "\$500 Off ",
                       text4: 'Super Slim Fit Formal Suit ',
                       icon: Icons.bookmark_border,
+                      capacityVisitor: capacityVisitor,
+                      capacityParkir: capacityParkir,
+                      hargaVenue: hargaVenue,
                     ),
                   ],
-                ))));
+                )))
+    );
   }
 
-  ProductDetails({this.name, this.picture});
+  BuildingDetails({this.name, this.picture,this.capacityVisitor,this.capacityParkir,this.hargaVenue});
 }

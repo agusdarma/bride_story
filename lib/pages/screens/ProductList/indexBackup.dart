@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:bride_story/data/filter_param.dart';
 import 'package:bride_story/models/result_search_model.dart';
 import 'package:bride_story/models/venue_model.dart';
-import 'package:bride_story/plugins/components/BuildingDetails.dart';
 import 'package:bride_story/plugins/components/ProductDetails.dart';
 import 'package:bride_story/plugins/components/Sort.dart';
 import 'package:bride_story/plugins/library_map/page_new.dart';
@@ -229,29 +228,13 @@ class ProductListState extends State<ProductList>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> listWidgetBuilding = <Widget>[];
-
-    for (var venue in listVenueData) {
-      String fileName = venue.linkImageVenue;
-      String url = HttpServices.getImageByName +
-          kParamImageName.replaceAll('<img>', '$fileName');
-      listWidgetBuilding.add(new BuildingDetails(name: venue.titleVenue, picture: url, capacityVisitor: venue.capacityVisitor, capacityParkir: venue.capacityParkir, hargaVenue: venue.hargaVenue,));
-    } // for
-
-    double _height = MediaQuery.of(context).size.height - 156.0;
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-//    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemHeight = (size.height) / 2;
-    final double itemWidth = size.width / 2;
     return new Scaffold(
       key: _scaffoldKey,
       appBar: new AppBar(
         backgroundColor: whiteColor,
         centerTitle: true,
         title: new Text(
-          "Building List",
+          "PRODUCT LIST",
           style: textStylew600,
         ),
         actions: <Widget>[
@@ -268,26 +251,114 @@ class ProductListState extends State<ProductList>
               color: Colors.black,
             ),
             onPressed: () {
-//              Navigator.of(context).pushNamed("/product");
-              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed("/product");
             }),
       ),
-      body: new Container(
-        height: _height,
-        child: new Scrollbar(
-          child: new GridView.count(
-            scrollDirection: Axis.vertical,
-            controller: new ScrollController(keepScrollOffset: false),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            childAspectRatio: (itemWidth / itemHeight),
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            padding: const EdgeInsets.all(2.0),
-            children: listWidgetBuilding,
+      body: new ListView(
+        padding:
+            const EdgeInsets.only(left: 0.0, top: 5.0, bottom: 5.0, right: 0.0),
+        children: <Widget>[
+          new Card(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10.0, top: 5.0, bottom: 5.0, right: 10.0),
+                  child: new Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      new Row(
+                        children: <Widget>[
+                          new IconButton(
+                              icon: new Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.grey,
+                              ),
+                              onPressed: _showModalSheet),
+                          new Text(
+                            'SORT',
+                            style: textStylesubTitleLightBAg,
+                          ),
+                        ],
+                      ),
+                      new Text(
+                        '|',
+                        style:
+                            new TextStyle(fontSize: 28.0, color: Colors.grey),
+                      ),
+                      new Row(
+                        children: <Widget>[
+                          new IconButton(
+                            icon: new Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.grey,
+                            ),
+                            // onPressed: _showModalSheet
+                          ),
+                          new Text(
+                            'REFINE',
+                            style: textStylesubTitleLightBAg,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
-    )
+          new Row(
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Blackberry",
+//                  picture: model1,
+                )
+              ]),
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Van Heusen",
+//                  picture: model2,
+                )
+              ]),
+            ],
+          ),
+          new Row(
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Louis Philipe",
+//                  picture: model3,
+                )
+              ]),
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Raymonds",
+//                  picture: model4,
+                )
+              ]),
+            ],
+          ),
+          new Row(
+            children: <Widget>[
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Louis Vuitton",
+//                  picture: model5,
+                )
+              ]),
+              new Column(children: <Widget>[
+                new ProductDetails(
+                  name: "Michael Kors",
+//                  picture: model6,
+                )
+              ]),
+            ],
+          ),
+        ],
+      ),
 //      bottomNavigationBar: new HomeWithTab(),
     );
   }

@@ -8,7 +8,7 @@ import 'style.dart';
 
 class ProductDetail extends StatefulWidget {
   final String name;
-  final String pic;
+  final ExactAssetImage pic;
 
   ProductDetail({
     this.name,
@@ -25,7 +25,7 @@ enum MyDialogAction { yes }
 class ProductDetailState extends State<ProductDetail>
     with TickerProviderStateMixin {
   final String name;
-  final String pic;
+  final ExactAssetImage pic;
 
   ProductDetailState({this.name, this.pic});
 
@@ -184,7 +184,7 @@ class ProductDetailState extends State<ProductDetail>
                                             right: 20.0,
                                             bottom: 40.0),
                                         child: new Image(
-                                          image: new NetworkImage(pic),
+                                          image: pic,
                                           height: screenSize.height / 2.3,
                                           width: screenSize.width / 1.4,
                                         ),
