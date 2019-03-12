@@ -235,7 +235,7 @@ class ProductListState extends State<ProductList>
       String fileName = venue.linkImageVenue;
       String url = HttpServices.getImageByName +
           kParamImageName.replaceAll('<img>', '$fileName');
-      listWidgetBuilding.add(new BuildingDetails(name: venue.titleVenue, picture: url, capacityVisitor: venue.capacityVisitor, capacityParkir: venue.capacityParkir, hargaVenue: venue.hargaVenue,));
+      listWidgetBuilding.add(new BuildingDetails(name: venue.titleVenue, picture: url, capacityVisitor: venue.capacityVisitor, capacityParkir: venue.capacityParkir, hargaVenue: venue.hargaVenue,allPages: allPages, parameter: parameter,venueModel: venue,));
     } // for
 
     double _height = MediaQuery.of(context).size.height - 156.0;

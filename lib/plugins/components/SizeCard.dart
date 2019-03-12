@@ -10,10 +10,10 @@ class SizeCard extends StatelessWidget {
     return new GestureDetector(
         onTap: changstate,
         child: new Container(
-          width: 35.0,
+          width: 60.0,
           height: 35.0,
           decoration: new BoxDecoration(
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
             border: new Border.all(
               color: color,
               width: 1.0,
@@ -30,7 +30,7 @@ class SizeCard extends StatelessWidget {
             width: 180.0,
             height: 180.0,
             decoration: new BoxDecoration(
-              shape: BoxShape.circle,
+              shape: BoxShape.rectangle,
               color: Colors.white,
             ),
           ),

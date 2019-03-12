@@ -9,7 +9,7 @@ class HttpServices {
   NetworkUtil _netUtil = new NetworkUtil();
   // static final baseUrl = "http://192.168.100.7:6556/bride-trx";
   static final baseUrl = "http://192.168.0.93:6556/bride-trx";
-  // static final baseUrl = "http://api.sablonbalon.com:8888/bride-trx";
+//   static final baseUrl = "http://api.sablonbalon.com:8888/bride-trx";
   static final categoryUrl = baseUrl + "/cat";
   static final countryUrl = baseUrl + "/country";
   static final cityUrl = baseUrl + "/city";

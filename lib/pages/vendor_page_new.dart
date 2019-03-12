@@ -764,7 +764,7 @@ class _VendorPageNewState extends State<VendorPageNew>
                       height: 200.0,
                       child: GoogleMap(
                           onMapCreated: _onMapCreated,
-                          options: GoogleMapOptions.defaultOptions),
+                          ),
                     ),
                     // GoogleMapOverlay(controller: previewMap),
                     bannerMap,

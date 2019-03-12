@@ -1,18 +1,57 @@
+import 'package:bride_story/data/filter_param.dart';
+import 'package:bride_story/models/venue_model.dart';
 import 'package:bride_story/pages/screens/ProductDetail/index.dart';
+import 'package:bride_story/pages/vendor_page_new.dart';
 import 'package:bride_story/plugins/components/ProductListCard.dart';
+import 'package:bride_story/plugins/library_map/page_new.dart';
 import 'package:flutter/material.dart';
 
 
 class BuildingDetails extends StatelessWidget {
+  final List<PageNew> allPages;
+  final FilterParam parameter;
   final String name;
   final String capacityVisitor;
   final String capacityParkir;
   final String hargaVenue;
   final String picture;
+  final VenueModel venueModel;
 
   @override
   Widget build(BuildContext context) {
+    _navigateVendorPage(BuildContext context, VenueModel venueModel) {
+      parameter.idVenue = venueModel.id;
+      // Navigator.pushNamed(context, "/vendorPage");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new VendorPageNew(
+              // mapController: mapController,
+              // overlayController: overlayController,
+              allPages: allPages,
+              venueModel: venueModel,
+              parameter: parameter,
+            )),
+      );
+    }
+
     Size screenSize = MediaQuery.of(context).size;
+
+    _navigateBuildingDetailPage(BuildContext context, VenueModel venueModel) {
+      parameter.idVenue = venueModel.id;
+      // Navigator.pushNamed(context, "/vendorPage");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new VendorPageNew(
+              // mapController: mapController,
+              // overlayController: overlayController,
+              allPages: allPages,
+              venueModel: venueModel,
+              parameter: parameter,
+            )),
+      );
+    }
 
     return new Container(
       color: Colors.white,
@@ -30,12 +69,21 @@ class BuildingDetails extends StatelessWidget {
                       tag: name,
                       child: new Material(
                         child: new InkWell(
+//                          onTap: () {
+//                            _navigateVendorPage(context, venueModel);
+//                          },
+//                          onTap: () {
+//                            _navigateBuildingDetailPage(context, venueModel);
+//                          },
                           onTap: () =>
                               Navigator.of(context).push(new MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         new ProductDetail(
                                           name: name,
                                           pic: picture,
+                                          allPages: allPages,
+                                          parameter: parameter,
+                                          venueModel: venueModel,
                                         ),
                                   )),
                           child: new Container(
@@ -65,5 +113,5 @@ class BuildingDetails extends StatelessWidget {
     );
   }
 
-  BuildingDetails({this.name, this.picture,this.capacityVisitor,this.capacityParkir,this.hargaVenue});
+  BuildingDetails({this.name, this.picture,this.capacityVisitor,this.capacityParkir,this.hargaVenue,this.allPages,this.parameter,this.venueModel});
 }

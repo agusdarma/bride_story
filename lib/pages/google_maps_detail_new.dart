@@ -152,7 +152,7 @@ class _GoogleMapsDetailNewState extends State<GoogleMapsDetailNew> {
               height: 300.0,
               child: GoogleMap(
                   onMapCreated: _onMapCreated,
-                  options: GoogleMapOptions.defaultOptions),
+                  ),
             ),
             // GoogleMapOverlay(
             //   controller: overlayController,
