@@ -95,34 +95,34 @@ class BagState extends State<Bag> with TickerProviderStateMixin {
 //              ),
 //            ),
 //          ),
-//          new Padding(
-//            padding: const EdgeInsets.only(
-//                left: 5.0, top: 10.0, bottom: 0.0, right: 2.0),
-//            child: new Text(
-//              "OPTIONS",
-//              style: textStylesubTitle,
-//            ),
-//          ),
-//          new Padding(
-//            padding: const EdgeInsets.only(
-//                left: 0.0, top: 10.0, bottom: 10.0, right: 0.0),
-//            child: new Card(
-//              child: new Column(
-//                children: <Widget>[
-//                  new CustomCard(
-//                    icon: Icons.settings,
-//                    text: "Apply Coupon",
-//                    trailingIcon: Icons.arrow_forward_ios,
-//                  ),
+          new Padding(
+            padding: const EdgeInsets.only(
+                left: 5.0, top: 10.0, bottom: 0.0, right: 2.0),
+            child: new Text(
+              "OPTIONS",
+              style: textStylesubTitle,
+            ),
+          ),
+          new Padding(
+            padding: const EdgeInsets.only(
+                left: 0.0, top: 10.0, bottom: 10.0, right: 0.0),
+            child: new Card(
+              child: new Column(
+                children: <Widget>[
+                  new CustomCard(
+                    icon: Icons.settings,
+                    text: "Apply Coupon",
+                    trailingIcon: Icons.arrow_forward_ios,
+                  ),
 //                  new CustomCard(
 //                    icon: Icons.card_giftcard,
 //                    text: "Gift Wrap for \$25",
 //                    trailingIcon: Icons.arrow_forward_ios,
 //                  ),
-//                ],
-//              ),
-//            ),
-//          ),
+                ],
+              ),
+            ),
+          ),
           new Padding(
             padding: const EdgeInsets.only(
                 left: 5.0, top: 10.0, bottom: 0.0, right: 2.0),
