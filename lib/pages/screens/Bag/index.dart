@@ -17,6 +17,12 @@ class Bag extends StatefulWidget {
 
 class BagState extends State<Bag> with TickerProviderStateMixin {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
+  String _namaPernikahan;
+  String _namaPenanggungJawab1;
+  String _handPhone1;
+  String _namaPenanggungJawab2;
+  String _handPhone2;
+  String _userEmailBooking;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +125,127 @@ class BagState extends State<Bag> with TickerProviderStateMixin {
 //                    text: "Gift Wrap for \$25",
 //                    trailingIcon: Icons.arrow_forward_ios,
 //                  ),
+                ],
+              ),
+            ),
+          ),
+          new Padding(
+            padding: const EdgeInsets.only(
+                left: 5.0, top: 10.0, bottom: 0.0, right: 2.0),
+            child: new Text(
+              "CONTACTS DETAILS",
+              style: textStylesubTitle,
+            ),
+          ),
+          new Padding(
+            padding: const EdgeInsets.only(
+                left: 0.0, top: 10.0, bottom: 0.0, right: 0.0),
+            child: new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.4,
+                              color: Colors.grey,
+                            ))),
+                    padding: const EdgeInsets.only(
+                        left: 6.0, right: 10.0, top: 0.0, bottom: 0.0),
+                    child: new TextFormField(
+//                      validator: (value) =>
+//                      !value.contains('@') ? 'Not a valid email.' : null,
+                      onSaved: (val) => _namaPernikahan = val,
+                      decoration: new InputDecoration(
+                        hintText: 'Input Nama Pernikahan',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.4,
+                              color: Colors.grey,
+                            ))),
+                    padding: const EdgeInsets.only(
+                        left: 6.0, right: 10.0, top: 0.0, bottom: 0.0),
+                    child: new TextFormField(
+                      onSaved: (val) => _namaPenanggungJawab1 = val,
+                      decoration: new InputDecoration(
+                        hintText: 'Input Penanggung Jawab 1',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.4,
+                              color: Colors.grey,
+                            ))),
+                    padding: const EdgeInsets.only(
+                        left: 6.0, right: 10.0, top: 0.0, bottom: 0.0),
+                    child: new TextFormField(
+                      onSaved: (val) => _handPhone1 = val,
+                      decoration: new InputDecoration(
+                        hintText: 'Input Handphone 1',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.4,
+                              color: Colors.grey,
+                            ))),
+                    padding: const EdgeInsets.only(
+                        left: 6.0, right: 10.0, top: 0.0, bottom: 0.0),
+                    child: new TextFormField(
+                      onSaved: (val) => _namaPenanggungJawab2 = val,
+                      decoration: new InputDecoration(
+                        hintText: 'Input Nama Penanggung Jawab 2',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    height: 40.0,
+                    decoration: new BoxDecoration(
+                        color: Colors.greenAccent,
+                        border: new Border(
+                            bottom: new BorderSide(
+                              width: 0.4,
+                              color: Colors.grey,
+                            ))),
+                    padding: const EdgeInsets.only(
+                        left: 6.0, right: 10.0, top: 0.0, bottom: 0.0),
+                    child: new TextFormField(
+                      onSaved: (val) => _handPhone2 = val,
+                      decoration: new InputDecoration(
+                        hintText: 'Input Handphone 2',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  new CustomCardAmount(
+                    text: "Email Booking",
+                    text1: "xxx@yahoo.com",
+                    color: const Color.fromRGBO(85, 85, 85, 1.0),
+                    fontWeight: FontWeight.w300,
+                  ),
                 ],
               ),
             ),
